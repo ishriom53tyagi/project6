@@ -1,0 +1,871 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    {{~#if config.injectJs}}{{{config.injectJs}}}{{/if}}
+    <title>{{title}}</title>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    {{#if admin}}
+    <link rel="icon" type="image/png" href="/images/favicon.png" />
+    <!--[if IE]><link rel="SHORTCUT ICON" href="/images/favicon.png"/><![endif]-->
+    {{else}}
+    <link rel="icon" type="image/png" href="/favicon.png" />
+    <!--[if IE]><link rel="SHORTCUT ICON" href="/favicon.ico"/><![endif]-->
+    {{/if}}
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    {{#if productDescription}}
+    <meta name="description" content="{{snip productDescription}}">
+    {{else}}
+    {{#if metaDescription}}
+    <meta name="description" content="{{snip metaDescription}}">
+    {{else}}
+    <meta name="description" content="{{snip config.cartDescription}}">
+    {{/if}}
+    {{/if}}
+    <meta name="csrfToken" content="{{csrfToken}}">
+    <meta name="keywords" content="{{config.cartTitle}}">
+    <!-- CSS only -->
+    {{!-- <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous"> --}}
+    <link rel="stylesheet" href="/stylesheets/bootstrap.css">
+
+    <!-- JS, Popper.js, and jQuery -->
+    <link rel="stylesheet" href="/stylesheets/pushy{{config.env}}.css">
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Source+Sans+Pro&display=swap" rel="stylesheet">
+    {{#if admin}}
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/gijgo/1.9.13/combined/css/gijgo.min.css"
+        integrity="sha256-bH0WSMuCFoG/dxeox/5aOWmaZl729yDg4ylckwSRTfU=" crossorigin="anonymous" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.20.2/codemirror.min.css"
+        integrity="sha256-MdzaXfGXzZdeHw/XEV2LNNycipsLk4uZ0FYzO3hbuvI=" crossorigin="anonymous" />
+    {{/if}}
+    <link rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-tokenfield/0.12.0/css/bootstrap-tokenfield.min.css"
+        integrity="sha256-4qBzeX420hElp9/FzsuqUNqVobcClz1BjnXoxUDSYQ0=" crossorigin="anonymous" />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+    <link rel="stylesheet" href="/stylesheets/codemirror-style.min.css">
+    <link rel="stylesheet" href="/stylesheets/etalage.css">
+    {{!-- <link rel="stylesheet" href="/stylesheets/style{{config.env}}.css"> --}}
+    {{#if admin}}
+    <link rel="stylesheet" href="/stylesheets/admin{{config.env}}.css">
+    {{/if}}
+    <link rel="stylesheet" href="/stylesheets/owl.carousel.min.css">
+    {{!-- <link rel="stylesheet" href="/stylesheets/vendor.css"> --}}
+    <link rel="stylesheet" href="/stylesheets/style.css">
+    {{!-- <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script> --}}
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"
+        integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
+        integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous">
+    </script>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.3.14/angular.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+    <script src="https://kit.fontawesome.com/da9abaff04.js" crossorigin="anonymous"></script>
+    {{!-- <script src="/javascripts/fontawesome.js"></script> --}}
+    <script src="/javascripts/bootstrap.js"></script>
+    {{!-- <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js" integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI" crossorigin="anonymous"></script> --}}
+    {{#if admin}}
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.min.js"
+        integrity="sha256-4iQZ6BVL4qNKlQ27TExEhBN1HFPvAvAMbFavKKosSWQ=" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gijgo/1.9.13/combined/js/gijgo.min.js"
+        integrity="sha256-YZhUu69bCn9uTqQyKwwQ3GyRypS7eaxp/wmVS282sDI=" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.20.2/codemirror.min.js"
+        integrity="sha256-K1exjHe1X4MP24jRizgBaSbUDUrNhFDRSwGoEYGmtJE=" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.20.2/mode/css/css.min.js"
+        integrity="sha256-D5oJ11cOmRhXSYWELwG2U/XYH3YveZJr9taRYLZ2DSM=" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.20.2/mode/xml/xml.min.js"
+        integrity="sha256-ERFGS58tayDq5kkyNwd/89iZZ+HglMH7eYXxG1hxTvA=" crossorigin="anonymous"></script>
+    {{/if}}
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/feather-icons/4.25.0/feather.min.js"
+        integrity="sha256-NvgyqkM9Vu1DLHkzxTxXQxZNdDymUlwhXcSJEqUfPiU=" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/numeral.js/2.0.6/numeral.min.js"
+        integrity="sha256-LlHVI5rUauudM5ZcZaD6hHPHKrA7CSefHHnKgq+/AZc=" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.4.7/js/tether.min.js"
+        integrity="sha256-4lietOiwRDBKx1goZZbRiwB06L+/bPYEGDIKZt82bgg=" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/1000hz-bootstrap-validator/0.11.9/validator.min.js"></script>
+    <script src="/javascripts/jquery.bootpag.min.js"></script>
+    <script src="/javascripts/cssbeautify.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.touchswipe/1.6.4/jquery.touchSwipe.min.js"></script>
+    <script src="/javascripts/jquery.etalage.min.js"></script>
+    <script src="/javascripts/index.js"></script>
+    <script src="/javascripts/common{{config.env}}.js"></script>
+    <script src="/javascripts/expressCart{{config.env}}.js"></script>
+    {{#if admin}}
+    <script src="/javascripts/admin{{config.env}}.js"></script>
+    {{/if}}
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-tokenfield/0.12.0/bootstrap-tokenfield.min.js"
+        integrity="sha256-jdwX0QzXB7z7Xc7Vz0ovtIHWO5qIZWg0aLcGv44JDgE=" crossorigin="anonymous"></script>
+    <!-- SEO data -->
+    {{#if pageUrl}}
+    <link rel="canonical" href="{{pageUrl}}" />
+    {{else}}
+    <link rel="canonical" href="{{config.baseUrl}}" />
+    {{/if}}
+    <meta name="referrer" content="origin" />
+    {{#if @root.config.facebookAppId}}
+    <meta property="fb:app_id" content="{{@root.config.facebookAppId}}" />
+    {{/if}}
+    <meta property="og:site_name" content="{{config.cartTitle}}" />
+    {{#if result.productTitle}}
+    <meta property="og:type" content="product" />
+    {{else}}
+    <meta property="og:type" content="website" />
+    {{/if}}
+    <meta property="og:title" content="{{title}}" />
+    {{#if pageUrl}}
+    <meta property="og:url" content="{{pageUrl}}" />
+    {{else}}
+    <meta property="og:url" content="{{config.baseUrl}}" />
+    {{/if}}
+    {{#if result.productImage}}
+    <meta property="og:image" content="{{config.baseUrl}}{{result.productImage}}" />
+    {{/if}}
+    {{#if productDescription}}
+    <meta property="og:description" content="{{snip productDescription}}">
+    {{else}}
+    {{#if metaDescription}}
+    <meta property="og:description" content="{{snip metaDescription}}">
+    {{else}}
+    <meta property="og:description" content="{{snip config.cartDescription}}">
+    {{/if}}
+    {{/if}}
+    {{#if @root.config.twitterHandle}}
+    <meta property="twitter:site" content="{{@root.config.twitterHandle}}">
+    {{/if}}
+    {{#if result.productTitle}}
+    <meta property="twitter:card" content="product" />
+    {{else}}
+    <meta property="twitter:card" content="summary" />
+    {{/if}}
+    <meta property="twitter:title" content="{{title}}" />
+    {{#if pageUrl}}
+    <meta property="twitter:url" content="{{pageUrl}}" />
+    {{else}}
+    <meta property="twitter:url" content="{{config.baseUrl}}" />
+    {{/if}}
+    {{#unless result.productTitle}}
+    <script type="application/ld+json">
+        {
+            "@context": "https://schema.org/",
+            {
+                {
+                    #
+                    if result.productTitle
+                }
+            }
+            "@type": "Product",
+            "name": "{{result.productTitle}}",
+            "offers": {
+                "price": "{{result.productPrice}}",
+                "priceCurrency": "{{config.currencyISO}}",
+                "description": "{{snip productDescription}}",
+                "sku": "{{result._id}}",
+                "url": "{{pageUrl}}"
+            },
+            {
+                {
+                    else
+                }
+            }
+            "publisher": "{{config.cartTitle}}",
+            "@type": "WebSite",
+            {
+                {
+                    /if}} { {#
+                    if result.productImage
+                }
+            }
+            "image": "{{config.baseUrl}}{{result.productImage}}",
+            {
+                {
+                    /if}} { {#
+                    if productDescription
+                }
+            }
+            "description": "{{snip productDescription}}",
+            {
+                {
+                    /if}} { {#
+                    if result.productTitle
+                }
+            }
+            "sku": "{{result._id}}",
+            {
+                {
+                    /if}} { {#
+                    if pageUrl
+                }
+            }
+            "url": "{{pageUrl}}" {
+                {
+                    else
+                }
+            }
+            "url": "{{config.baseUrl}}" {
+                    {
+                        /if}}
+                    }
+    </script>
+    {{/unless}}
+    <!-- SEO data -->
+    {{~#if config.googleAnalytics}}{{{config.googleAnalytics}}}{{/if}}
+    {{~#if config.customCss}}<style>
+        {
+                {
+                    {
+                    config.customCss
+                }
+            }
+        }
+    </style>{{/if}}
+    {{#if admin}}
+    <link rel="stylesheet" href="/stylesheets/admin{{config.env}}.css">
+    {{else}}
+    {{#if config.theme}}
+    <link rel="stylesheet" href="/{{config.theme}}/style{{config.env}}.css">
+    <script src="/{{config.theme}}/index{{config.env}}.js"></script>
+    {{/if}}
+    {{/if}}
+</head>
+{{#if admin}}
+
+<body class="admin">
+    {{else}}
+
+    <body>
+        {{/if}}
+        {{#unless admin}}
+        <!-- Sign in / sign up modal-->
+        <div class="modal fade" id="signin-modal" tabindex="-1" role="dialog">
+            <div class="modal-dialog modal-dialog-centered" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <ul class="nav nav-tabs card-header-tabs" role="tablist">
+                            <li class="nav-item"><a class="nav-link active" href="#signin-tab" data-toggle="tab"
+                                    role="tab" aria-selected="true"><i class="czi-unlocked mr-2 mt-n1"></i>Sign in</a>
+                            </li>
+                            {{!-- <li class="nav-item"><a class="nav-link" href="#signup-tab" data-toggle="tab" role="tab"
+                                    aria-selected="false"><i class="czi-user mr-2 mt-n1"></i>Sign up</a></li> --}}
+                        </ul>
+                        <button class="close" type="button" data-dismiss="modal" aria-label="Close"><span
+                                aria-hidden="true">&times;</span></button>
+                    </div>
+                    <div class="modal-body tab-content py-4">
+                        <form class="needs-validation tab-pane fade show active" autocomplete="off" novalidate
+                            id="signin-tab">
+                            <div class="form-group">
+                                <label for="si-email">Email address</label>
+                                <input class="form-control" type="email" id="email" name="email"
+                                    placeholder="johndoe@example.com" required>
+                                <div class="invalid-feedback">Please provide a valid email address.</div>
+                            </div>
+                            <div class="form-group">
+                                <label for="si-password">Password</label>
+                                <div class="password-toggle">
+                                    <input class="form-control" type="password" id="password" name="password" required>
+                                    <label class="password-toggle-btn">
+                                        <input class="custom-control-input password-show" type="checkbox"><i
+                                            class="czi-eye password-toggle-indicator"></i><span class="sr-only">Show
+                                            password</span>
+                                    </label>
+                                </div>
+                            </div>
+                            <div class="form-group d-flex flex-wrap justify-content-between">
+                                <div class="custom-control custom-checkbox mb-2">
+                                    <input class="custom-control-input" type="checkbox" id="si-remember">
+                                    <label class="custom-control-label" for="si-remember">Remember me</label>
+                                </div><a class="font-size-sm" href="/customer/forgot-password">Forgot password?</a>
+                            </div>
+                            <button class="btn btn-primary btn-block btn-shadow" id="customerloginForm"
+                                type="submit">Sign in</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <header class="box-shadow-sm fixed-top" id="top">
+            <div class="bg-light">
+                <div class="navbar navbar-expand-lg navbar-light">
+                    <div class="container"><a class="navbar-brand d-none d-sm-block mr-3 flex-shrink-0" href="/"
+                            style="min-width: 7rem;"><img width="142" src="/images/300Light.png"
+                                alt="Cartzilla" /></a><a class="navbar-brand d-sm-none mr-2" href="/"
+                            style="min-width: 4.625rem;"><img width="55" src="/images/200Light.png"
+                                alt="Cartzilla" /></a>
+                        <form class="input-group-overlay d-none d-lg-flex mx-4">
+                            <input class="form-control appended-form-control" name="frm_search" id="frm_search" type="search" aria-label="Search"
+                                placeholder="Search for products">
+                            <button class="input-group-append-overlay search-button" id="btn_search" type="submit"><span class="input-group-text"><i
+                                        class="czi-search"></i></span></button>
+                   </form>
+                        {{!-- <div class="input-group">
+                            <input class="form-control"  placeholder="{{ @root.__ "Search shop" }}" >
+                            <div class="input-group-append">
+                                <button class="btn btn-outline-success" >{{ @root.__ "Search" }}</button>
+                            </div>
+                        </div> --}}
+                        <div class="navbar-toolbar d-flex flex-shrink-0 align-items-center">
+                            <button class="navbar-toggler" type="button" data-toggle="collapse"
+                                data-target="#navbarCollapse"><span class="navbar-toggler-icon"></span></button><a
+                                class="navbar-tool navbar-stuck-toggler" href="#"><span
+                                    class="navbar-tool-tooltip">Expand menu</span>
+                                <div class="navbar-tool-icon-box"><i class="navbar-tool-icon czi-menu"></i></div>
+                            </a><a class="navbar-tool d-none d-lg-flex" href="account-wishlist.html"><span
+                                    class="navbar-tool-tooltip">Wishlist</span>
+                                <div class="navbar-tool-icon-box"><i class="navbar-tool-icon czi-heart"></i></div>
+                            </a>
+                            {{#if @root.session.customerPresent}}
+                            <div class="dropdown ml-1 ml-lg-0 mr-n1 mr-lg-2">
+                                <button class="btn dropdown-toggle" type="button" id="dropdownMenuButton"
+                                    data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    <i class="navbar-tool-icon czi-user"></i>
+                                </button>
+                                <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                    <li><a class="dropdown-item" href="/customer/account">Account</a></li>
+                                    <li><a class="dropdown-item" href="/checkout/cart">Cart</a></li>
+                                    <li><a class="dropdown-item" href="/customer/logout">Logout</a></li>
+                                </div>
+                            </div>
+                            {{else}}
+                            <a class="navbar-tool ml-1 ml-lg-0 mr-n1 mr-lg-2" href="#signin-modal" data-toggle="modal">
+                                <div class="navbar-tool-icon-box"><i class="navbar-tool-icon czi-user"></i></div>
+                                <div class="navbar-tool-text ml-n3"><small>Hello, Sign in</small>My Account</div>
+                            </a>
+                            {{/if}}
+
+                            {{!-- Cart Starts here --}}
+                            <div class="navbar-tool dropdown ml-3">
+                                {{#if @root.session.cart}}
+                                <a class="navbar-tool-icon-box bg-secondary dropdown-toggle" href="/checkout/information">
+                                    <span class="navbar-tool-label"
+                                        id="cart-count">{{@root.session.totalCartItems}}</span>
+                                    <i class="navbar-tool-icon czi-cart"></i>
+                                </a>
+                                <a class="navbar-tool-text" href="/checkout/information"><small>My
+                                        Cart</small>{{currencySymbol config.currencySymbol}}{{formatAmount @root.session.totalCartAmount}}</a>
+                                {{else}}
+                                <a class="navbar-tool-icon-box bg-secondary dropdown-toggle" href="/checkout/information">
+                                    <span class="navbar-tool-label" id="cart-count">0</span>
+                                    <i class="navbar-tool-icon czi-cart"></i>
+                                </a>
+                                <a class="navbar-tool-text" href="/checkout/information"><small>My
+                                        Cart</small>{{currencySymbol @root.config.currencySymbol}}0</a>
+                                {{/if}}
+                                <!-- Cart dropdown-->
+                                <div class="dropdown-menu dropdown-menu-right" style="width: 20rem;">
+                                    <div class="widget widget-cart px-3 pt-2 pb-3">
+                                        <div data-simplebar data-simplebar-auto-hide="false">
+                                            {{#each @root.session.cart}}
+                                            <div class="widget-cart-item py-2 border-bottom">
+                                                <div class="cart-delete">
+                                                    <button class="close btn-delete-from-cart"
+                                                        data-cartid="{{@key}}"
+                                                        type="button"><span class="czi-trash"
+                                                            aria-hidden="true"></span></button>
+                                                </div>
+                                                <div class="media align-items-center">
+                                                    {{#if productImage}}
+                                                    <a class="d-block mr-2" href="/product/{{this.link}}">
+                                                        <img width="64" src="{{this.productImage.[0].path}}"
+                                                            alt="{{this.title}} product image">
+                                                    </a>
+                                                    {{else}}
+                                                    <a class="d-block mr-2" href="/product/{{this.link}}">
+                                                        <img width="64" src="/uploads/placeholder.png"
+                                                            alt="{{this.title}} product image">
+                                                    </a>
+                                                    {{/if}}
+                                                    <div class="media-body">
+                                                        <h6 class="widget-product-title"><a
+                                                                href="/product/{{this.link}}">{{this.title}}</a>
+                                                        </h6>
+                                                        <div class="widget-product-meta cart-buttons">
+                                                            {{currencySymbol @root.config.currencySymbol}} <span
+                                                                class="text-accent mr-2">{{formatAmount this.totalItemPrice}}</span>
+                                                            {{#ifCond @root.cartReadOnly '!=' true}}
+                                                            <div class="cart-quantity">
+                                                                <button class="btn-qty-minus" type="button"><i
+                                                                        class="fas fa-minus"></i></button>
+                                                                <input type="number"
+                                                                    class="cart-product-quantity text-center"
+                                                                    data-cartid="{{@key}}"
+                                                                    data-id="{{../this.productId}}" maxlength="2"
+                                                                    value="{{../this.quantity}}">
+                                                                <button class="btn-qty-add" type="button"><i
+                                                                        class="fas fa-plus"></i></button>
+                                                            </div>
+
+                                                            {{else}}
+                                                            <div
+                                                                class="col-4 col-md-6 col-lg-5 col-xl-7 no-pad-left mb-2">
+                                                            </div>
+                                                            {{/ifCond}}
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            {{/each}}
+                                        </div>
+
+                                        <div class="d-flex flex-wrap justify-content-between align-items-center py-3">
+                                            <div class="font-size-sm mr-2 py-2"><span
+                                                    class="text-muted">Subtotal:</span><span
+                                                    class="text-accent font-size-base ml-1">{{currencySymbol @root.config.currencySymbol}}{{formatAmount @root.session.totalCartAmount}}</span>
+                                            </div>
+                                        </div><a class="btn btn-primary btn-sm btn-block" href="/checkout/information"><i
+                                                class="czi-card mr-2 font-size-base align-middle"></i>Checkout</a>
+                                    </div>
+
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="navbar navbar-expand-lg navbar-light navbar-stuck-menu mt-n2 pt-0 pb-2">
+                    <div class="container">
+                        <div class="collapse navbar-collapse" id="navbarCollapse">
+                            <!-- Search-->
+                            <div class="input-group-overlay d-lg-none my-3">
+                                <div class="input-group-prepend-overlay search"><span class="input-group-text"><i
+                                            class="czi-search"></i></span></div>
+                                <input class="form-control prepended-form-control" type="search"
+                                    placeholder="Search for products" aria-label="Search">
+                            </div>
+
+                            <!-- Primary menu-->
+                            <ul class="navbar-nav mx-auto">
+                                <li class="nav-item dropdown"><a class="nav-link dropdown-toggle" href="#"
+                                        data-toggle="dropdown">Fruits</a>
+                                    <ul class="dropdown-menu">
+                                        <li class="dropdown position-static mb-0"><a
+                                                class="dropdown-item py-2 border-bottom"
+                                                href="home-fashion-store-v1.html"><span
+                                                    class="d-block text-heading">Fashion Store v.1</span><small
+                                                    class="d-block text-muted">Classic shop layout</small></a>
+                                            <div class="dropdown-menu h-100 animation-0 mt-0 p-3"><a class="d-block"
+                                                    href="home-fashion-store-v1.html" style="width: 250px;"><img
+                                                        src="img/home/preview/th01.jpg" alt="Fashion Store v.1" /></a>
+                                            </div>
+                                        </li>
+                                        <li class="dropdown position-static mb-0"><a
+                                                class="dropdown-item py-2 border-bottom"
+                                                href="home-fashion-store-v2.html"><span
+                                                    class="d-block text-heading">Fashion Store v.2</span><small
+                                                    class="d-block text-muted">Slider + Featured categories</small></a>
+                                            <div class="dropdown-menu h-100 animation-0 mt-0 p-3"><a class="d-block"
+                                                    href="home-fashion-store-v2.html" style="width: 250px;"><img
+                                                        src="img/home/preview/th02.jpg" alt="Fashion Store v.2" /></a>
+                                            </div>
+                                        </li>
+                                    </ul>
+                                </li>
+                                <li class="nav-item dropdown"><a class="nav-link dropdown-toggle" href="#"
+                                        data-toggle="dropdown">Beverages</a>
+                                    <div class="dropdown-menu p-0">
+                                        <div class="d-flex flex-wrap flex-md-nowrap px-2">
+                                            <div class="mega-dropdown-column py-4 px-3">
+                                                <div class="widget widget-links mb-3">
+                                                    <h6 class="font-size-base mb-3">Shop layouts</h6>
+                                                    <ul class="widget-list">
+                                                        <li class="widget-list-item pb-1"><a class="widget-list-link"
+                                                                href="shop-grid-ls.html">Shop Grid - Left Sidebar</a>
+                                                        </li>
+                                                        <li class="widget-list-item pb-1"><a class="widget-list-link"
+                                                                href="shop-grid-rs.html">Shop Grid - Right Sidebar</a>
+                                                        </li>
+                                                        <li class="widget-list-item pb-1"><a class="widget-list-link"
+                                                                href="shop-grid-ft.html">Shop Grid - Filters on Top</a>
+                                                        </li>
+                                                        <li class="widget-list-item pb-1"><a class="widget-list-link"
+                                                                href="shop-list-ls.html">Shop List - Left Sidebar</a>
+                                                        </li>
+                                                        <li class="widget-list-item pb-1"><a class="widget-list-link"
+                                                                href="shop-list-rs.html">Shop List - Right Sidebar</a>
+                                                        </li>
+                                                        <li class="widget-list-item pb-1"><a class="widget-list-link"
+                                                                href="shop-list-ft.html">Shop List - Filters on Top</a>
+                                                        </li>
+                                                    </ul>
+                                                </div>
+                                                <div class="widget widget-links">
+                                                    <h6 class="font-size-base mb-3">Marketplace</h6>
+                                                    <ul class="widget-list">
+                                                        <li class="widget-list-item pb-1"><a class="widget-list-link"
+                                                                href="marketplace-category.html">Category Page</a></li>
+                                                        <li class="widget-list-item pb-1"><a class="widget-list-link"
+                                                                href="marketplace-single.html">Single Item Page</a></li>
+                                                        <li class="widget-list-item pb-1"><a class="widget-list-link"
+                                                                href="marketplace-vendor.html">Vendor Page</a></li>
+                                                        <li class="widget-list-item pb-1"><a class="widget-list-link"
+                                                                href="marketplace-cart.html">Cart</a></li>
+                                                        <li class="widget-list-item pb-1"><a class="widget-list-link"
+                                                                href="marketplace-checkout.html">Checkout</a></li>
+                                                    </ul>
+                                                </div>
+                                            </div>
+                                            <div class="mega-dropdown-column py-4 px-3">
+                                                <div class="widget widget-links">
+                                                    <h6 class="font-size-base mb-3">Shop pages</h6>
+                                                    <ul class="widget-list">
+                                                        <li class="widget-list-item pb-1"><a class="widget-list-link"
+                                                                href="shop-categories.html">Shop Categories</a></li>
+                                                        <li class="widget-list-item pb-1"><a class="widget-list-link"
+                                                                href="shop-single-v1.html">Product Page v.1</a></li>
+                                                        <li class="widget-list-item pb-1"><a class="widget-list-link"
+                                                                href="shop-single-v2.html">Product Page v.2</a></li>
+                                                        <li class="widget-list-item pb-1"><a class="widget-list-link"
+                                                                href="shop-cart.html">Cart</a></li>
+                                                        <li class="widget-list-item pb-1"><a class="widget-list-link"
+                                                                href="checkout-details.html">Checkout - Details</a></li>
+                                                        <li class="widget-list-item pb-1"><a class="widget-list-link"
+                                                                href="checkout-shipping.html">Checkout - Shipping</a>
+                                                        </li>
+                                                        <li class="widget-list-item pb-1"><a class="widget-list-link"
+                                                                href="checkout-payment.html">Checkout - Payment</a></li>
+                                                        <li class="widget-list-item pb-1"><a class="widget-list-link"
+                                                                href="checkout-review.html">Checkout - Review</a></li>
+                                                        <li class="widget-list-item pb-1"><a class="widget-list-link"
+                                                                href="checkout-complete.html">Checkout - Complete</a>
+                                                        </li>
+                                                        <li class="widget-list-item pb-1"><a class="widget-list-link"
+                                                                href="order-tracking.html">Order Tracking</a></li>
+                                                        <li class="widget-list-item pb-1"><a class="widget-list-link"
+                                                                href="comparison.html">Product Comparison</a></li>
+                                                    </ul>
+                                                </div>
+                                            </div>
+                                            <div class="mega-dropdown-column py-4 pr-3">
+                                                <div class="widget widget-links mb-3">
+                                                    <h6 class="font-size-base mb-3">Grocery store</h6>
+                                                    <ul class="widget-list">
+                                                        <li class="widget-list-item pb-1"><a class="widget-list-link"
+                                                                href="grocery-catalog.html">Product Catalog</a></li>
+                                                        <li class="widget-list-item pb-1"><a class="widget-list-link"
+                                                                href="grocery-single.html">Single Product Page</a></li>
+                                                        <li class="widget-list-item pb-1"><a class="widget-list-link"
+                                                                href="grocery-checkout.html">Checkout</a></li>
+                                                    </ul>
+                                                </div><a class="d-block" href="#"><img src="img/shop/menu-banner.jpg"
+                                                        alt="Promo banner" /></a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </li>
+                                <li class="nav-item dropdown"><a class="nav-link dropdown-toggle" href="#"
+                                        data-toggle="dropdown">Flours</a>
+                                    <ul class="dropdown-menu">
+                                        <li class="dropdown"><a class="dropdown-item dropdown-toggle" href="#"
+                                                data-toggle="dropdown">Navbar Variants</a>
+                                            <ul class="dropdown-menu">
+                                                <li><a class="dropdown-item" href="navbar-1-level-light.html">1 Level
+                                                        Light</a></li>
+                                                <li><a class="dropdown-item" href="navbar-1-level-dark.html">1 Level
+                                                        Dark</a></li>
+                                                <li><a class="dropdown-item" href="navbar-2-level-light.html">2 Level
+                                                        Light</a></li>
+                                                <li><a class="dropdown-item" href="navbar-2-level-dark.html">2 Level
+                                                        Dark</a></li>
+                                                <li><a class="dropdown-item" href="navbar-3-level-light.html">3 Level
+                                                        Light</a></li>
+                                                <li><a class="dropdown-item" href="navbar-3-level-dark.html">3 Level
+                                                        Dark</a></li>
+                                                <li><a class="dropdown-item"
+                                                        href="home-electronics-store.html">Electronics Store</a></li>
+                                                <li><a class="dropdown-item"
+                                                        href="home-marketplace.html">Marketplace</a></li>
+                                                <li><a class="dropdown-item" href="home-grocery-store.html">Side Menu
+                                                        (Grocery)</a></li>
+                                                <li><a class="dropdown-item"
+                                                        href="home-single-store.html">Transparent</a></li>
+                                            </ul>
+                                        </li>
+                                        <li class="dropdown-divider"></li>
+                                        <li><a class="dropdown-item" href="about.html">About Us</a></li>
+                                        <li><a class="dropdown-item" href="contacts.html">Contacts</a></li>
+                                        <li class="dropdown"><a class="dropdown-item dropdown-toggle" href="#"
+                                                data-toggle="dropdown">Help Center</a>
+                                            <ul class="dropdown-menu">
+                                                <li><a class="dropdown-item" href="help-topics.html">Help Topics</a>
+                                                </li>
+                                                <li><a class="dropdown-item" href="help-single-topic.html">Single
+                                                        Topic</a></li>
+                                                <li><a class="dropdown-item" href="help-submit-request.html">Submit a
+                                                        Request</a></li>
+                                            </ul>
+                                        </li>
+                                        <li class="dropdown"><a class="dropdown-item dropdown-toggle" href="#"
+                                                data-toggle="dropdown">404 Not Found</a>
+                                            <ul class="dropdown-menu">
+                                                <li><a class="dropdown-item" href="404-simple.html">404 - Simple
+                                                        Text</a></li>
+                                                <li><a class="dropdown-item" href="404-illustration.html">404 -
+                                                        Illustration</a></li>
+                                            </ul>
+                                        </li>
+                                    </ul>
+                                </li>
+
+                                <li class="nav-item dropdown"><a class="nav-link dropdown-toggle" href="#"
+                                        data-toggle="dropdown">Dairy Products</a>
+                                    <ul class="dropdown-menu">
+                                        <li class="dropdown position-static mb-0"><a
+                                                class="dropdown-item py-2 border-bottom"
+                                                href="home-fashion-store-v1.html"><span
+                                                    class="d-block text-heading">Fashion Store v.1</span><small
+                                                    class="d-block text-muted">Classic shop layout</small></a>
+                                            <div class="dropdown-menu h-100 animation-0 mt-0 p-3"><a class="d-block"
+                                                    href="home-fashion-store-v1.html" style="width: 250px;"><img
+                                                        src="img/home/preview/th01.jpg" alt="Fashion Store v.1" /></a>
+                                            </div>
+                                        </li>
+                                        <li class="dropdown position-static mb-0"><a
+                                                class="dropdown-item py-2 border-bottom"
+                                                href="home-fashion-store-v2.html"><span
+                                                    class="d-block text-heading">Fashion Store v.2</span><small
+                                                    class="d-block text-muted">Slider + Featured categories</small></a>
+                                            <div class="dropdown-menu h-100 animation-0 mt-0 p-3"><a class="d-block"
+                                                    href="home-fashion-store-v2.html" style="width: 250px;"><img
+                                                        src="img/home/preview/th02.jpg" alt="Fashion Store v.2" /></a>
+                                            </div>
+                                        </li>
+                                        <li class="dropdown position-static mb-0"><a
+                                                class="dropdown-item py-2 border-bottom"
+                                                href="home-electronics-store.html"><span
+                                                    class="d-block text-heading">Electronics Store</span><small
+                                                    class="d-block text-muted">Slider + Promo banners</small></a>
+                                            <div class="dropdown-menu h-100 animation-0 mt-0 p-3"><a class="d-block"
+                                                    href="home-electronics-store.html" style="width: 250px;"><img
+                                                        src="img/home/preview/th03.jpg" alt="Electronics Store" /></a>
+                                            </div>
+                                        </li>
+                                        <li class="dropdown position-static mb-0"><a
+                                                class="dropdown-item py-2 border-bottom"
+                                                href="home-marketplace.html"><span
+                                                    class="d-block text-heading">Marketplace</span><small
+                                                    class="d-block text-muted">Multi-vendor, digital goods</small></a>
+                                            <div class="dropdown-menu h-100 animation-0 mt-0 p-3"><a class="d-block"
+                                                    href="home-marketplace.html" style="width: 250px;"><img
+                                                        src="img/home/preview/th04.jpg" alt="Marketplace" /></a></div>
+                                        </li>
+                                        <li class="dropdown position-static mb-0"><a
+                                                class="dropdown-item py-2 border-bottom"
+                                                href="home-single-store.html"><span class="d-block text-heading">Single
+                                                    Product Store</span><small class="d-block text-muted">Single product
+                                                    / mono brand</small></a>
+                                            <div class="dropdown-menu h-100 animation-0 mt-0 p-3"><a class="d-block"
+                                                    href="home-single-store.html" style="width: 250px;"><img
+                                                        src="img/home/preview/th05.jpg"
+                                                        alt="Single Product / Brand Store" /></a></div>
+                                        </li>
+                                        <li class="dropdown position-static mb-0"><a class="dropdown-item py-2"
+                                                href="home-grocery-store.html"><span
+                                                    class="d-block text-heading">Grocery Store</span><small
+                                                    class="d-block text-muted">Full width + Side menu</small></a>
+                                            <div class="dropdown-menu h-100 animation-0 mt-0 p-3"><a class="d-block"
+                                                    href="home-grocery-store.html" style="width: 250px;"><img
+                                                        src="img/home/preview/th06.jpg" alt="Grocery Store" /></a></div>
+                                        </li>
+                                    </ul>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </header>
+        </div>
+        {{/unless}}
+        <div class="site-overlay"></div>
+
+        {{!-- Full Cart Page --}}
+        {{#unless admin}}
+        {{#ifCond page '!=' 'checkout'}}
+        {{#ifCond page '!=' 'pay'}}
+        <div id="cart" class="col-md-12 pad-left-12 pushy pushy-right">
+            <div class="row {{checkout}} back-checkout">
+                <div class="col-sm-12">
+                    <button class="pushy-link" type="button"><i class="fas fa-chevron-left"></i> Back to
+                        Grocery</button>
+                </div>
+            </div>
+            <div class="row">
+                <div id="cart" class="col-md-12">
+                    {{> (getTheme 'cart')}}
+                    <div class="row">
+                        <div id="cart" class="col-md-12">
+                            {{> (getTheme 'cart')}}
+                            <div class="row">
+                                <div class="col-sm-12 {{showCartButtons @root.session.cart}} bottom-marg-25">
+                                    <button class="btn btn-danger float-left" id="empty-cart"
+                                        type="button">{{ @root.__ "Empty cart" }}</button>
+                                    <a href="/checkout/information"
+                                        class="btn btn-primary float-right btn-checkout">Checkout</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {{/ifCond}}
+        {{/ifCond}}
+        {{/unless}}
+        {{#if admin}}
+        <div class="container-fluid h-100" id="container">
+            <div class="row">
+                {{{body}}}
+            </div>
+        </div>
+        {{else}}
+        <div class="nav-top container-fluid h-100" id="container">
+            <div class="row">
+                {{{body}}}
+            </div>
+        </div>
+        {{/if}}
+        <input type="hidden" id="input_notify_message" value="{{message}}">
+        <input type="hidden" id="input_notify_messageType" value="{{messageType}}">
+        <input type="hidden" id="cartCheckout" value="{{checkout}}">
+        <input type="hidden" id="cartTheme" value="{{@root.config.theme}}">
+        <input type="hidden" id="currencySymbol" value="{{@root.config.currencySymbol}}">
+        {{#if @root.config.maxQuantity}} <input type="hidden" id="maxQuantity"
+            value="{{@root.config.maxQuantity}}">{{/if}}
+        <div id="notify_message"></div>
+        {{#if showFooter}}
+        <div class="footer">
+            <div class="upper-footer">
+                <div class="contactus navbar-expand-lg">
+                    <h3>Contact Us
+                        <hr>
+                    </h3>
+                    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#address"
+                        aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                        <i class="far fa-plus-square"></i>
+                    </button>
+                    <ul class="collapse navbar-collapse" id="address">
+                        <li><i class="fas fa-street-view"></i> Some Random Address, Khatoli</li>
+                        <li><i class="fas fa-envelope"></i> abcd@xyz.com</li>
+                        <li><i class="fas fa-phone"></i> 1234567890</li>
+                    </ul>
+                </div>
+                <div class="extra navbar-expand-lg">
+                    <h3>Extra
+                        <hr>
+                    </h3>
+                    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#extras"
+                        aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                        <i class="far fa-plus-square"></i>
+                    </button>
+                    <ul class="collapse navbar-collapse" id="extras">
+                        <li><a href="/customer/aboutus">About Us</a></li>
+                        <li><a href="/customer/contact">Contact Us</a></li>
+                        <li><a href="/customer/privacy">Privacy Policy</a></li>
+                        <li><a href="/customer/delivery">Delivery Information</a></li>
+                        <li><a href="/customer/terms">Terms & Conditions</a></li>
+                    </ul>
+                </div>
+                <div class="Account navbar-expand-lg">
+                    <h3>Account
+                        <hr>
+                    </h3>
+                    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#myaccount"
+                        aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                        <i class="far fa-plus-square"></i>
+                    </button>
+                    <ul class="collapse navbar-collapse" id="myaccount">
+                        <li><a href="/customer/account">My Account</a></li>
+                        <li><a href="/checkout/cart">Cart</a></li>
+                        <li><a href="/customer/account">Order History</a></li>
+                    </ul>
+                </div>
+            </div>
+          
+            <div class="lower-footer">
+                <ul>
+                    <li><a href=""><i class="fab fa-facebook-square"></i></a></li>
+                    <li><a href=""><i class="fab fa-twitter-square"></i></a></li>
+                    <li><a href=""><i class="fab fa-instagram-square"></i></a></li>
+                    <li><a href=""><i class="fab fa-linkedin"></i></a></li>
+                </ul>
+            </div>
+            <div class="most-lower">
+                <h5>Made with love by Shri Shri Om Tyagi © 2020</h5>
+                <a href="#top"><i class="fas fa-caret-up"></i></a>
+            </div>
+        </div>
+
+        </div>
+        {{/if}}
+        <script src="/javascripts/pushy.min.js"></script>
+        <script src="/javascripts/owl.carousel.min.js"></script>
+        <script src="/javascripts/pricerange.js"></script>
+        {{#if admin}}
+        {{> partials/globalSearchModal}}
+        {{> partials/validationModal}}
+        {{> partials/variantModal}}
+        {{> partials/variantEditModal}}
+        {{/if}}
+        {{> partials/confirmModal}}
+        <script>
+            feather.replace();
+        </script>
+        <script>
+            $('.carousel-category').owlCarousel({
+                loop: true,
+                margin: 10,
+                responsiveClass: true,
+                rewind: true,
+                responsive: {
+                    0: {
+                        items: 2,
+                        nav: true
+                    },
+                    600: {
+                        items: 3,
+                        nav: false
+                    },
+                    1000: {
+                        items: 6,
+                        nav: true,
+                        loop: false
+                    }
+                }
+            })
+            $('.owl-carousel').owlCarousel({
+                loop: true,
+                margin: 10,
+                responsiveClass: true,
+                rewind: true,
+                autoWidth: true,
+                responsive: {
+                    0: {
+                        items: 1,
+                        nav: false
+                    },
+                    450: {
+                        items: 2,
+                        nav: false
+                    },
+                    700: {
+                        items: 3,
+                        nav: true
+                    },
+                    1000: {
+                        items: 4,
+                        nav: true,
+                        loop: false
+                    },
+                    1300: {
+                        items: 5,
+                        nav: true,
+                        loop: false
+                    }
+                }
+            })
+        </script>
+    </body>
+
+</html>
