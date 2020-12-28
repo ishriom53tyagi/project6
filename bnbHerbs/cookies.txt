@@ -1,0 +1,18 @@
+# HTTrack Website Copier Cookie File
+# This file format is compatible with Netscape cookies
+sabujcha-demo.myshopify.com	TRUE	/5356650560/checkouts/5c4896b784ce71256bd65b0edb5dc33a	FALSE	1999999999	checkout	eyJfcmFpbHMiOnsibWVzc2FnZSI6IkJBaEpJaVZtWXpsaU1tUmtPVGM0TmpZNE5EZzNaRFF4TlRFek16WXlaVGszWTJKbU5RWTZCa1ZVIiwiZXhwIjoiMjAyMS0wMS0xOFQxMjoxNDowNS45NjVaIiwicHVyIjoiY29va2llLmNoZWNrb3V0In19--9b864a010922f806b0a8ae653a187cb1eb6569c2
+sabujcha-demo.myshopify.com	TRUE	/5356650560	FALSE	1999999999	checkout_token	eyJfcmFpbHMiOnsibWVzc2FnZSI6IkJBaEpJaVUxWXpRNE9UWmlOemcwWTJVM01USTFObUprTmpWaU1HVmtZalZrWXpNellRWTZCa1ZVIiwiZXhwIjoiMjAyMS0xMi0yOFQxMjoxNDowNS45NjVaIiwicHVyIjoiY29va2llLmNoZWNrb3V0X3Rva2VuIn19--5a8a3803c3de8e1d99d50f81b35de77c6d6629f4
+sabujcha-demo.myshopify.com	TRUE	/	FALSE	1999999999	_landing_page	%2F
+sabujcha-demo.myshopify.com	TRUE	/	FALSE	1999999999	preview_theme	1
+sabujcha-demo.myshopify.com	TRUE	/	FALSE	1999999999	_secure_session_id	ec9f1faae0a9ea6ad8bea880fdd93644
+sabujcha-demo.myshopify.com	TRUE	/	FALSE	1999999999	cart	93c741106635b12a584b70826eb101fa
+sabujcha-demo.myshopify.com	TRUE	/	FALSE	1999999999	cart_ts	1609157534
+sabujcha-demo.myshopify.com	TRUE	/	FALSE	1999999999	cart_currency	USD
+sabujcha-demo.myshopify.com	TRUE	/	FALSE	1999999999	cart_ver	gcp-us-central1%3A3
+sabujcha-demo.myshopify.com	TRUE	/	FALSE	1999999999	SameSite	Lax
+sabujcha-demo.myshopify.com	TRUE	/	FALSE	1999999999	_y	3ab3e19f-e7a1-42d9-a4f3-3d519c9e1862
+sabujcha-demo.myshopify.com	TRUE	/	FALSE	1999999999	_shopify_y	3ab3e19f-e7a1-42d9-a4f3-3d519c9e1862
+sabujcha-demo.myshopify.com	TRUE	/	FALSE	1999999999	_s	8d16a2bd-5b29-4637-b1de-384da74242a9
+sabujcha-demo.myshopify.com	TRUE	/	FALSE	1999999999	_shopify_s	8d16a2bd-5b29-4637-b1de-384da74242a9
+sabujcha-demo.myshopify.com	TRUE	/	FALSE	1999999999	_shopify_fs	2020-12-28T12%3A29%3A25Z
+

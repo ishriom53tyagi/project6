@@ -1,0 +1,138 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<feed xml:lang="en-US" xmlns="http://www.w3.org/2005/Atom" xmlns:opensearch="http://a9.com/-/spec/opensearch/1.1/" xmlns:s="http://jadedpixel.com/-/spec/shopify">
+  <id>https://sabujcha-demo.myshopify.com/blogs/news.atom</id>
+  <link rel="alternate" type="text/html" href="https://sabujcha-demo.myshopify.com/blogs/news"/>
+  <link rel="self" type="application/atom+xml" href="https://sabujcha-demo.myshopify.com/blogs/news/tagged/green.atom"/>
+  <title>Sabujcha - News</title>
+  <updated>2018-12-08T12:05:00+06:00</updated>
+  <author>
+    <name>Sabujcha</name>
+  </author>
+  <entry>
+    <id>https://sabujcha-demo.myshopify.com/blogs/news/ways-to-experience-the-matcha-heaven</id>
+    <published>2018-12-08T12:05:00+06:00</published>
+    <updated>2018-12-08T12:43:06+06:00</updated>
+    <link rel="alternate" type="text/html" href="https://sabujcha-demo.myshopify.com/blogs/news/ways-to-experience-the-matcha-heaven"/>
+    <title>Ways to Experience the Matcha Heaven</title>
+    <author>
+      <name>Sabujcha Demo Admin</name>
+    </author>
+    <content type="html">
+      <![CDATA[<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud reprhendit in voluptate velit esse exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qei officia deser mollit anim id est laborum. Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et</p>
+<p> </p>
+<blockquote>Lorem ipsum dolor sit amet, consecte adipisicing elit, sed do eiusmod tempor incididunt labo dolor magna aliqua. Ut enim ad minim veniam quis nostrud.</blockquote>
+<p> </p>
+<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehendrit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.</p>
+<p> </p>
+<img alt="" src="//cdn.shopify.com/s/files/1/0053/5665/0560/files/Screenshot_1.jpg?v=1543493401">
+<p> </p>
+<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehnderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia dser mollit anim id est laborum. Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis.</p>]]>
+    </content>
+  </entry>
+  <entry>
+    <id>https://sabujcha-demo.myshopify.com/blogs/news/world-s-most-popular-tea-drinks</id>
+    <published>2018-12-08T12:03:00+06:00</published>
+    <updated>2018-12-10T09:26:28+06:00</updated>
+    <link rel="alternate" type="text/html" href="https://sabujcha-demo.myshopify.com/blogs/news/world-s-most-popular-tea-drinks"/>
+    <title>World’s most popular tea drinks is sabujcha.</title>
+    <author>
+      <name>Sabujcha Demo Admin</name>
+    </author>
+    <content type="html">
+      <![CDATA[<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud reprhendit in voluptate velit esse exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qei officia deser mollit anim id est laborum. Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et</p>
+<p> </p>
+<blockquote>Lorem ipsum dolor sit amet, consecte adipisicing elit, sed do eiusmod tempor incididunt labo dolor magna aliqua. Ut enim ad minim veniam quis nostrud.</blockquote>
+<p> </p>
+<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehendrit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.</p>
+<p> </p>
+<img alt="" src="//cdn.shopify.com/s/files/1/0053/5665/0560/files/Screenshot_1.jpg?v=1543493401">
+<p> </p>
+<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehnderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia dser mollit anim id est laborum. Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis.</p>]]>
+    </content>
+  </entry>
+  <entry>
+    <id>https://sabujcha-demo.myshopify.com/blogs/news/what-is-the-ph-of-green-tea</id>
+    <published>2018-12-08T12:01:00+06:00</published>
+    <updated>2018-12-08T12:01:34+06:00</updated>
+    <link rel="alternate" type="text/html" href="https://sabujcha-demo.myshopify.com/blogs/news/what-is-the-ph-of-green-tea"/>
+    <title>What is the pH of Green Tea?</title>
+    <author>
+      <name>Sabujcha Demo Admin</name>
+    </author>
+    <content type="html">
+      <![CDATA[<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud reprhendit in voluptate velit esse exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qei officia deser mollit anim id est laborum. Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et</p>
+<p> </p>
+<blockquote>Lorem ipsum dolor sit amet, consecte adipisicing elit, sed do eiusmod tempor incididunt labo dolor magna aliqua. Ut enim ad minim veniam quis nostrud.</blockquote>
+<p> </p>
+<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehendrit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.</p>
+<p> </p>
+<img alt="" src="//cdn.shopify.com/s/files/1/0053/5665/0560/files/Screenshot_1.jpg?v=1543493401">
+<p> </p>
+<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehnderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia dser mollit anim id est laborum. Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis.</p>]]>
+    </content>
+  </entry>
+  <entry>
+    <id>https://sabujcha-demo.myshopify.com/blogs/news/matcha-vs-mate-all-you-need-to-know</id>
+    <published>2018-12-08T11:59:00+06:00</published>
+    <updated>2018-12-08T12:00:06+06:00</updated>
+    <link rel="alternate" type="text/html" href="https://sabujcha-demo.myshopify.com/blogs/news/matcha-vs-mate-all-you-need-to-know"/>
+    <title>Matcha vs Mate All You Need to Know</title>
+    <author>
+      <name>Sabujcha Demo Admin</name>
+    </author>
+    <content type="html">
+      <![CDATA[<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud reprhendit in voluptate velit esse exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qei officia deser mollit anim id est laborum. Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et</p>
+<p> </p>
+<blockquote>Lorem ipsum dolor sit amet, consecte adipisicing elit, sed do eiusmod tempor incididunt labo dolor magna aliqua. Ut enim ad minim veniam quis nostrud.</blockquote>
+<p> </p>
+<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehendrit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.</p>
+<p> </p>
+<img alt="" src="//cdn.shopify.com/s/files/1/0053/5665/0560/files/Screenshot_1.jpg?v=1543493401">
+<p> </p>
+<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehnderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia dser mollit anim id est laborum. Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis.</p>]]>
+    </content>
+  </entry>
+  <entry>
+    <id>https://sabujcha-demo.myshopify.com/blogs/news/consectetur-adipisicing-elit</id>
+    <published>2018-11-29T18:22:00+06:00</published>
+    <updated>2018-12-07T17:43:52+06:00</updated>
+    <link rel="alternate" type="text/html" href="https://sabujcha-demo.myshopify.com/blogs/news/consectetur-adipisicing-elit"/>
+    <title>Consectetur adipisicing elit.</title>
+    <author>
+      <name>Sabujcha Demo Admin</name>
+    </author>
+    <content type="html">
+      <![CDATA[<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprhendit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qei officia deser mollit anim id est laborum. Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et</p>
+<p> </p>
+<blockquote>Lorem ipsum dolor sit amet, consecte adipisicing elit, sed do eiusmod tempor incididunt labo dolor magna aliqua. Ut enim ad minim veniam quis nostrud.</blockquote>
+<p> </p>
+<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehendrit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.</p>
+<p> </p>
+<img alt="" src="//cdn.shopify.com/s/files/1/0053/5665/0560/files/Screenshot_1.jpg?v=1543493401">
+<p> </p>
+<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehnderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia dser mollit anim id est laborum. Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis.</p>]]>
+    </content>
+  </entry>
+  <entry>
+    <id>https://sabujcha-demo.myshopify.com/blogs/news/lorem-ipsum-sit-ame-co</id>
+    <published>2018-11-29T16:44:00+06:00</published>
+    <updated>2018-12-08T12:07:26+06:00</updated>
+    <link rel="alternate" type="text/html" href="https://sabujcha-demo.myshopify.com/blogs/news/lorem-ipsum-sit-ame-co"/>
+    <title>Lorem ipsum sit ame co.</title>
+    <author>
+      <name>Sabujcha Demo Admin</name>
+    </author>
+    <content type="html">
+      <![CDATA[<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprhendit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qei officia deser mollit anim id est laborum. Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et</p>
+<p> </p>
+<blockquote>Lorem ipsum dolor sit amet, consecte adipisicing elit, sed do eiusmod tempor incididunt labo dolor magna aliqua. Ut enim ad minim veniam quis nostrud.</blockquote>
+<p> </p>
+ 
+<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehendrit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.</p>
+<p> </p>
+<img alt="" src="//cdn.shopify.com/s/files/1/0053/5665/0560/files/Screenshot_1.jpg?v=1543493401">
+<p> </p>
+<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehnderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia dser mollit anim id est laborum. Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis.</p>]]>
+    </content>
+  </entry>
+</feed>
