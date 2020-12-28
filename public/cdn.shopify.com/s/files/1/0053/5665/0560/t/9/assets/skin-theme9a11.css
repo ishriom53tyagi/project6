@@ -1,0 +1,182 @@
+/* Newsletter PopUp */.subscribe_area > h2, .subscribe-content > h2 {
+  color: #000000;
+}
+.subscribe_area > p, .subscribe-content > p {
+  color: #666666;
+}
+.grid__item h1{
+  color: ;
+}
+.subscribe-form-input {
+  border: 1px solid #999999;
+  color: #999999;
+}
+.subscribe-form-input::-webkit-input-placeholder { /* Chrome/Opera/Safari */
+  color: #999999 !important;
+}
+.subscribe-form-input::-moz-placeholder { /* Firefox 19+ */
+  color: #999999 !important;
+}
+.subscribe-form-input:-ms-input-placeholder { /* IE 10+ */
+  color: #999999 !important;
+}
+.subscribe-form-input:placeholder { /* Firefox 18- */
+  color: #999999 !important;
+}
+.newsletter-btn {
+  background: #000000 none repeat scroll 0 0;
+  color: #fff;
+}
+.newsletter-btn:hover{
+  background: #666666 none repeat scroll 0 0;
+  color: #fff;
+}
+.popup_off{
+  color: #999999;
+}
+.newsletter_popup_inner:before {
+  background: #ffffff;
+  opacity: 0.1;
+}
+/* Breadcurmb Banner */
+.breadcrumbs {
+  background: #f6f6f6 url("../../../files/inner-bg-cut_0a90a301-c13c-4d19-ac54-65f162bd8521415a.jpg?v=1561025485") no-repeat scroll center center / cover;
+    padding-top: 145px;
+    padding-bottom: 155px;
+    }
+.overlay-bg::before {
+  background: #000000 none repeat scroll 0 0;
+  opacity: 0;
+}
+.breadcrumbs-title {
+  color: #ffffff;
+}
+.breadcrumb-list > li > a {
+  color: #ffffff;
+}
+.breadcrumb-list > li::before {
+  color: #ffffff;
+}
+.breadcrumb-list > li {
+  color: #ffffff;
+}
+@media (max-width: 767px) {
+  .breadcrumbs {
+    padding-top: 50px;
+    padding-bottom: 50px;
+  }
+}
+/* Top Bar Noticfication */
+
+.top-notification-bar {
+  background: #f4bbfa;
+  background: -moz-linear-gradient(left, #f4bbfa 0%, #f4bbfa 100%);
+  background: -webkit-gradient(left top, right top, color-stop(0%, #f4bbfa), color-stop(100%, #f4bbfa));
+  background: -webkit-linear-gradient(left, #f4bbfa 0%, #f4bbfa 100%);
+  background: -o-linear-gradient(left, #f4bbfa 0%, #f4bbfa 100%);
+  background: -ms-linear-gradient(left, #f4bbfa 0%, #f4bbfa 100%);
+  background: linear-gradient(to right, #f4bbfa 0%, #f4bbfa 100%);
+  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#f4bbfa', endColorstr='#f4bbfa', GradientType=1 );
+    }
+
+.notification-entry p a {
+  background-color: #f29afa;
+  border: 1px solid #000000;
+  color: #000000;
+}
+.notification-entry p a:hover {
+  background-color: #f29afa;
+  border: 1px solid #000000;
+  color: #000000;
+}
+.notification-close-btn {
+  background-color: ;
+  border: 1px solid rgba(0,0,0,0);
+  color: #000000;
+}
+.notification-close-btn:hover{
+  background-color: rgba(0,0,0,0);
+  border: 1px solid rgba(0,0,0,0);
+  color: #000000;
+}
+
+.notification-entry p {
+  color: #000000;
+}
+.top-notification-bar::before {
+  background: rgba(0, 0, 0, 0);
+}
+/* Typography */
+
+
+
+
+
+@font-face {
+  font-family: Lora;
+  font-weight: 400;
+  font-style: normal;
+  src: url("https://fonts.shopifycdn.com/lora/lora_n4.0a0652f356f2b7896162c4887e16208805a241f6.woff2?&amp;hmac=e4f306c6256cac177ab7f2c359f282b263755ced8f76417600e48a99dd28c5aa") format("woff2"),
+       url("https://fonts.shopifycdn.com/lora/lora_n4.e4a3d82d5d6a27aaec9d12942e1c4b9400193fc5.woff?&amp;hmac=6163077e18b2af6763daa933f0281d3e936ff944338cee2c58bf21277c73dc9d") format("woff");
+}
+
+@font-face {
+  font-family: "Playfair Display";
+  font-weight: 400;
+  font-style: normal;
+  src: url("https://fonts.shopifycdn.com/playfair_display/playfairdisplay_n4.9cf7fc4f6a5a48eb27738cad395f0eba18922755.woff2?&amp;hmac=6e194a1ae365d7c77ed598a59dbf357bf7874b5d3eacaeb92fa599d0bdedf45f") format("woff2"),
+       url("https://fonts.shopifycdn.com/playfair_display/playfairdisplay_n4.8a3fef162b1f576396eb89e46872ef50eeb08158.woff?&amp;hmac=6b0c20fe8da409f7fe05d3e435a7080e9833efd94ee4d96ca9958b7680f433f7") format("woff");
+}
+
+@font-face {
+  font-family: Lora;
+  font-weight: 400;
+  font-style: normal;
+  src: url("https://fonts.shopifycdn.com/lora/lora_n4.0a0652f356f2b7896162c4887e16208805a241f6.woff2?&amp;hmac=e4f306c6256cac177ab7f2c359f282b263755ced8f76417600e48a99dd28c5aa") format("woff2"),
+       url("https://fonts.shopifycdn.com/lora/lora_n4.e4a3d82d5d6a27aaec9d12942e1c4b9400193fc5.woff?&amp;hmac=6163077e18b2af6763daa933f0281d3e936ff944338cee2c58bf21277c73dc9d") format("woff");
+}
+
+
+html, body, input, textarea, button, select{
+  font-family: Lora, serif;
+  font-weight: 400;
+  font-style: normal;
+}
+h1, h2, h3, h4, h5, h6{
+  font-family: "Playfair Display", serif;
+  font-weight: 400;
+  font-style: normal;
+}
+p{
+  font-family: Lora, serif;
+  font-weight: 400;
+  font-style: normal;
+}
+
+/* End Typography */
+/* Custom and Customer Page */
+.theme-default-margin, .shopify-challenge__container {
+  padding-top: 100px;
+  padding-bottom: 100px;
+}
+@media (max-width: 767px) {
+  .theme-default-margin, .shopify-challenge__container{
+    padding-top: 80px;
+    padding-bottom: 80px;
+  }
+}
+
+.create-custom-page{
+  padding-top: 100px;
+  padding-bottom: 80px;
+}
+@media (max-width: 767px) {
+  .create-custom-page{
+    padding-top: 80px;
+    padding-bottom: 60px;
+  }
+}
+/* End Custom Page */
+/* QuickView */
+
+/* End Quickview */
