@@ -17,9 +17,9 @@ const csrfProtection = csrf({ cookie: true });
 var cloudinary = require('cloudinary').v2;
 
 cloudinary.config({ 
-    cloud_name: 'hoiuqedcf', 
-    api_key: '849651669432825', 
-    api_secret: 'FdsuCdcqhNFa-7vCU8GZfExKA_Y' 
+    cloud_name: 'dxnpzwdzg', 
+    api_key: '388419544629742', 
+    api_secret: '8LszomLP-TWJALUrWYjh55HvWBg' 
   });
 
 // Regex
@@ -650,30 +650,15 @@ router.post('/admin/file/upload', restrict, checkAccess, upload.single('uploadFi
             fs.unlinkSync(file.path);
 
             // Return error
-            res.status(400).json({ message: 'File upload error. Please try again.' });
+            res.status(400).json({ message: 'Product Not found. Please try again.' });
             return;
         }
-
-        const productPath = product._id.toString();
-        const uploadDir = path.join('public/uploads', productPath);
-
-        // Check directory and create (if needed)
-        common.checkDirectorySync(uploadDir);
-
-        const source = fs.createReadStream(file.path);
-        const dest = fs.createWriteStream(path.join(uploadDir, file.originalname.replace(/ /g, '_')));
-
-        // save the new file
-        source.pipe(dest);
-        source.on('end', () => { });
-
-        // delete the temp file.
-        fs.unlinkSync(file.path);
-
-        const imagePath = path.join('/uploads', productPath, file.originalname.replace(/ /g, '_'));
-        var hostingurl = "https://jammubasket.herokuapp.com"
-        var tempImagePath = hostingurl.concat(imagePath);
-        cloudinary.uploader.upload(tempImagePath, 
+        var origpath = path.resolve(file.path,file.originalname);
+        console.log(origpath);
+        console.log("original name\n \n");
+        console.log(path.resolve(__filename),"\n",path.resolve(__dirname));
+        
+        cloudinary.uploader.upload(file.path,
         async function(error, result) {
             if(result){
                 var json_String = JSON.stringify(result);
@@ -694,10 +679,12 @@ router.post('/admin/file/upload', restrict, checkAccess, upload.single('uploadFi
                 else{
                     await db.products.updateOne({ _id: common.getId(req.body.productId) }, { $push: { productImage: img_obj } });
                 }
+                fs.unlinkSync(file.path);
                 var str = "File uploaded successfully";
                 res.status(200).json({ message:  str});
             }
             else {
+                fs.unlinkSync(file.path);
                 res.status(400).json({ message: 'File upload error. Please try again.' });
                 return;
             }
@@ -706,7 +693,7 @@ router.post('/admin/file/upload', restrict, checkAccess, upload.single('uploadFi
         return;
     }
     // Return error
-    res.status(400).json({ message: 'File upload error. Please try again.' });
+    res.status(400).json({ message: 'File Not Found error. Please try again.' });
 });
 
 // delete a file via ajax request
