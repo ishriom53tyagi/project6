@@ -682,6 +682,14 @@ a {
   color: #28a745;
 } */
 
+.cart-title {
+  color: #333333;
+  font-weight: 600;
+  transition: all 0.4s;
+}
+.cart-title:hover {
+  color: #519f10;
+}
 /* Footer */
 .footer {
   background-color: #222;

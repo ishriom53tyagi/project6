@@ -2213,6 +2213,7 @@ textarea:focus {
   transform: translateY(15px);
   transition: all 0.4s ease-in-out 0s;
 }
+
 .product-content .cart-hover > h4 {
   color: #6d6d6d;
   font-size: 18px;
