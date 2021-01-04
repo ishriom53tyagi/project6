@@ -10,10 +10,11 @@ li{
 .popup_wrapper {
   background: rgba(0, 0, 0, 0.6) none repeat scroll 0 0;
   height: 100%;
-  opacity: 0;
+  opacity: 1;
   position: fixed;
   transition: all 0.5s ease 0s;
-  visibility: hidden;
+  visibility: visible;
+  top: 0;
   width: 100%;
   z-index: 9999999;
 }
@@ -120,7 +121,6 @@ li{
   top: 0;
   left: 0;
   width: 100%;
-  background: #000;
   content: "";
   opacity: .6;
   height: 100%;
