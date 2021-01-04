@@ -653,6 +653,7 @@ router.post('/product/removefromcart', async (req, res, next) => {
     const db = req.app.db;
 
     // Check for item in cart
+    
     if(!req.session.cart[req.body.cartId]){
         return res.status(400).json({ message: 'Product not found in cart' });
     }
@@ -715,75 +716,73 @@ router.post('/product/addtocart', async (req, res, next) => {
 
     // Variant checks
     let productCartId = product._id.toString();
-    // let productPrice = parseFloat(product.productPrice).toFixed(2);
-    // let productStock = product.productStock;
+    let productPrice = parseFloat(product.productPrice).toFixed(2);
+    let productStock = product.productStock;
+    var productQuantity = 1;
 
 
     // If stock management on check there is sufficient stock for this product
-    // if(config.trackStock){
-    //     // Only if not disabled
-    //     if(product.productStockDisable !== true && productStock){
-    //         // If there is more stock than total (ignoring held)
-    //         if(productQuantity > productStock){
-    //             return res.status(400).json({ message: 'There is insufficient stock of this product.' });
-    //         }
+    if(config.trackStock){
+        // Only if not disabled
+        if(product.productStockDisable !== true && productStock){
+            // If there is more stock than total (ignoring held)
+            if(productQuantity > productStock){
+                return res.status(400).json({ message: 'There is insufficient stock of this product.' });
+            }
 
-    //         // Aggregate our current stock held from all users carts
-    //         const stockHeld = await db.cart.aggregate([
-    //             { $project: { _id: 0 } },
-    //             { $project: { o: { $objectToArray: '$cart' } } },
-    //             { $unwind: '$o' },
-    //             { $group: {
-    //                 _id: {
-    //                     $ifNull: ['$o.v.variantId', '$o.v.productId']
-    //                 },
-    //                 sumHeld: { $sum: '$o.v.quantity' }
-    //             } }
-    //         ]).toArray();
+            // Aggregate our current stock held from all users carts
+            const stockHeld = await db.cart.aggregate([
+                { $project: { _id: 0 } },
+                { $project: { o: { $objectToArray: '$cart' } } },
+                { $unwind: '$o' },
+                { $group: {
+                    _id: {
+                        $ifNull: ['$o.v.variantId', '$o.v.productId']
+                    },
+                    sumHeld: { $sum: '$o.v.quantity' }
+                } }
+            ]).toArray();
 
-    //         // If there is stock
-    //         if(stockHeld.length > 0){
-    //             const heldProduct = _.find(stockHeld, ['_id', getId(productCartId)]);
-    //             if(heldProduct){
-    //                 const netStock = productStock - heldProduct.sumHeld;
+            // If there is stock
+            if(stockHeld.length > 0){
+                const heldProduct = _.find(stockHeld, ['_id', getId(productCartId)]);
+                if(heldProduct){
+                    const netStock = productStock - heldProduct.sumHeld;
 
-    //                 // Check there is sufficient stock
-    //                 if(productQuantity > netStock){
-    //                     return res.status(400).json({ message: 'There is insufficient stock of this product.' });
-    //                 }
-    //             }
-    //         }
-    //     }
-    // }
+                    // Check there is sufficient stock
+                    if(productQuantity > netStock){
+                        return res.status(400).json({ message: 'There is insufficient stock of this product.' });
+                    }
+                }
+            }
+        }
+    }
 
     // if exists we add to the existing value
     let cartQuantity = 0;
     if(req.session.cart[productCartId]){
-        return res.status(400).json({ message: 'Already In Cart' });
-        // cartQuantity = parseInt(req.session.cart[productCartId].quantity) + productQuantity;
-        // req.session.cart[productCartId].quantity = cartQuantity;
-        // req.session.cart[productCartId].totalItemPrice = productPrice * parseInt(req.session.cart[productCartId].quantity);
+        
+        cartQuantity = parseInt(req.session.cart[productCartId].quantity) + productQuantity;
+        req.session.cart[productCartId].quantity = cartQuantity;
+        req.session.cart[productCartId].totalItemPrice = productPrice * parseInt(req.session.cart[productCartId].quantity);
     }else{
         // Set the card quantity
-        // cartQuantity = productQuantity;
+        cartQuantity = productQuantity;
 
         // new product deets
         const productObj = {};
         productObj.productId = product._id;
         productObj.title = product.productTitle;
-        // productObj.totalItemPrice = productPrice * productQuantity;
+        productObj.totalItemPrice = productPrice * productQuantity;
         productObj.productDescription = product.productDescription;
+        productObj.quantity = productQuantity;
         productObj.productImage = product.productImage;
-        // productObj.productComment = productComment;
-        // productObj.productSubscription = product.productSubscription;
-        // productObj.variantId = productVariantId;
-        // productObj.variantTitle = productVariantTitle;
-        productObj.estimateTime = product.estimateTime;
-        // if(product.productPermalink){
-        //     productObj.link = product.productPermalink;
-        // }else{
-        //     productObj.link = product._id;
-        // }
+        
+        if(product.productPermalink){
+            productObj.link = product.productPermalink;
+        }else{
+            productObj.link = product._id;
+        }
 
         // merge into the current cart
         req.session.cart[productCartId] = productObj;
@@ -963,9 +962,10 @@ router.get('/:page?', async (req, res, next) => {
     const db = req.app.db;
     const config = req.app.config;
     const numberProducts = config.productsPerPage ? config.productsPerPage : 6;
+    
 
     var k = moment().utcOffset('+05:30').format();
-    console.log(k);
+   
     // if no page is specified, just render page 1 of the cart
     if(!req.params.page){
         Promise.all([
@@ -978,7 +978,7 @@ router.get('/:page?', async (req, res, next) => {
                     res.status(200).json(results.data);
                     return;
                 }
-            console.log(results);
+            
                 res.render(`${config.themeViews}index`, {
                     title: `${config.cartTitle} - Shop`,
                     theme: config.theme,

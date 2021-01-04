@@ -52,6 +52,7 @@
     {{/if}}
 
 
+<link href="/cdn.shopify.com/s/files/1/0053/5665/0560/t/2/assets/themify-icons40bc.css?v=1782837867860931872" rel="stylesheet" type="text/css" media="all" />
 
 <link href="/cdn.shopify.com/s/files/1/0053/5665/0560/t/2/assets/font-awesome.mina741.css?v=14053330696143262969" rel="stylesheet" type="text/css" media="all" />
 <link href="/cdn.shopify.com/s/files/1/0053/5665/0560/t/2/assets/ionicons.minb771.css?v=18436430612067519620" rel="stylesheet" type="text/css" media="all" />
@@ -597,7 +598,7 @@
 
 
 <a href="cart.html">
-  <div class="cart-icon"><span class="count bigcounter">0</span>
+  <div class="cart-icon"><span class="count bigcounter">{{@root.session.totalCartItems}}</span>
     <i class="ti-shopping-cart"></i>
   </div>
 </a>
@@ -605,24 +606,42 @@
 
 
 <div class="header-minicart shopping-cart-content minicart">
+  {{#unless @root.session.cart}}
   <div class="cart-empty-title"  style="display:block;">
     <h3>Your cart is currently empty.</h3>
   </div>
+  {{/unless}}
 
 
-  <div class="single-product-cart"  style="display:none;">
+  <div class="single-product-cart"  style="">
 
     <ul class="minicart-header single-cart-item-loop do-nicescrol">
-      
+      {{#if @root.session.cart}}
+      {{#each @root.session.cart}}
+      <li class="single-shopping-cart">
+                                                <div class="shopping-cart-img">
+                                                    <a href="#"><img alt="" src="{{this.productImage.[0].path}}"></a>
+                                                </div>
+                                                <div class="shopping-cart-title">
+                                                    <h4><a href="#">{{this.title}} </a></h4>
+                                                    <h6>Qty: {{this.quantity}}</h6>
+                                                    <span>₹{{this.totalItemPrice}}</span>
+                                                </div>
+                                                <div class="shopping-cart-delete">
+                                                    <a href="#" class=""><i class="ion ion-close btn-delete-from-cart" data-cartid={{this.productId}}></i></a>
+                                                </div>
+                                            </li>
+                                            {{/each}}
+                                            {{/if}}
     </ul>
 
     <div class="shopping-cart-total">
-      <h4>Total  <span class="shop-total shopping-cart__total"><span class=money>$0.00</span></span></h4>
+      <h4>Total  <span class="shop-total shopping-cart__total"><span class=money>₹{{@root.session.totalCartAmount}}</span></span></h4>
     </div>
 
     <div class="shopping-cart-btn">
-      <a href="cart.html">View Cart</a>
-      <a href="cart.html">Checkout</a>
+      <a href="/checkout/cart">View Cart</a>
+      <a href="/checkout/information">Checkout</a>
     </div>
     
     

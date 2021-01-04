@@ -196,13 +196,13 @@
     <div class="product-hover-style">
       <div class="product-title">
         <h4>
-          <a href="products/product-title-here-3.html">    Product title here   </a>
+          <a href="products/product-title-here-3.html">    {{this.productTitle}}   </a>
         </h4>
       </div>
       <div class="cart-hover"><div class="product-cart-action">
           
           
-          <a href="javascript:void(0);" onclick="Shopify.addItem(15429115576384, 1); return false;" class="ajax-spin-cart"  data-id="{{this._id}}" data-link="{{this.productPermalink}}" data-has-variants="{{checkProductVariants this.variants}}">
+          <a class="add-to-cart ajax-spin-cart" data-id="{{this._id}}">
             <span>
               <span class="cart-title"> <i class="fa fa-plus" aria-hidden="true"></i> Add to cart</span>
               
@@ -447,7 +447,7 @@
     <div class="product-hover-style">
       <div class="product-title">
         <h4>
-          <a href="products/2-new-badge-product.html">    2. New badge product   </a>
+          <a href="products/2-new-badge-product.html">    {{this.productTitle}}   </a>
         </h4>
       </div>
       <div class="cart-hover"><div class="product-cart-action">
