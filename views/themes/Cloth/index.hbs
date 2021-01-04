@@ -119,11 +119,7 @@
 </div><div id="shopify-section" class="shopify-section"><!-- Product Area Start -->
 <div class="product-area bg-image-1 pt-100 pb-95" id="section-1543414211428">
   <div class="container">
-       
-    
 
-    
-    
     <!-- product-item start -->
     
     
@@ -206,7 +202,7 @@
       <div class="cart-hover"><div class="product-cart-action">
           
           
-          <a href="javascript:void(0);" onclick="Shopify.addItem(15429115576384, 1); return false;" class="ajax-spin-cart">
+          <a href="javascript:void(0);" onclick="Shopify.addItem(15429115576384, 1); return false;" class="ajax-spin-cart"  data-id="{{this._id}}" data-link="{{this.productPermalink}}" data-has-variants="{{checkProductVariants this.variants}}">
             <span>
               <span class="cart-title"> <i class="fa fa-plus" aria-hidden="true"></i> Add to cart</span>
               
@@ -384,7 +380,7 @@
 
 
 </div><div id="shopify-section-1543469428608" class="shopify-section"><!-- New Products Start -->
-<div class="product-area multiple_row_product gray-bg pt-90 pb-65" id="section-1543469428608">
+<div class="product-area multiple_row_product gray-bg pt-90 pb-65">
      
   
   <div class="container">
@@ -404,98 +400,30 @@
         
 
         <div class="featured-product-active owl-carousel product-nav">
-<div class="product-wrapper-single"><div class="product-wrapper">
-  <div class="product-img">
-    
-    <a href="products/3-variable-product.html" class="grid__image">
-      <img src="../cdn.shopify.com/s/files/1/0053/5665/0560/products/5_270X287_crop_center898c.jpg?v=1544417945" alt="">
-    </a>
-    
+<div class="product-wrapper-single">
+  
+   {{#ifCond results.length '==' 0}}
+            <div class="col-sm-12">
+                <p class="text-danger">{{ @root.__ "No products found" }}</p>
+            </div>
+     {{/ifCond}}
 
-
-
-
-<span class="sale-title">Sale</span>
-
-
-<span class="percent-count">-28%</span>
-
-
-
-
-
-<div class="product-action">
-      
-<a class="wishlist action-wishlist" href="account/login.html" title="Wishlist">
-  <i class="ion-android-favorite-outline"></i>
-</a>
-
- 
-      
-<a class="action-plus action-compare" title="Quick View" data-toggle="modal" data-target="#quickViewModal" href="javascript:void(0);" 
-         onclick="quiqview('3-variable-product')"><i class="ion-ios-search-strong"></i>
-      </a>
-      
-      
-    </div>
-    <div class="nrb_p_countdown">
-      
-    </div>
-  </div>
-  <div class="product-content text-left">
-    <div class="product-hover-style">
-      <div class="product-title">
-        <h4>
-          <a href="products/3-variable-product.html">    3. Variable product   </a>
-        </h4>
-      </div>
-      <div class="cart-hover"><div class="product-cart-action">
-          
-          
-          <a href="javascript:void(0);" onclick="Shopify.addItem(17134237188160, 1); return false;" class="ajax-spin-cart">
-            <span>
-              <span class="cart-title"> <i class="fa fa-plus" aria-hidden="true"></i> Add to cart</span>
-              
-            </span>
-          </a>
-          
-          
-        </div></div>
-    </div>
-    <div class="product-price-wrapper">
-      <span><span class=money>$61.00</span></span> 
-      
-      <span class="product-price-old">  <i class="ti-minus"></i>  <span class=money>$85.00</span> </span>
-      
-    </div>
-  </div>
-</div>
+ {{#each results}}
 
 <div class="product-wrapper">
   <div class="product-img">
     
-    <a href="products/2-new-badge-product.html" class="grid__image">
-      <img src="../cdn.shopify.com/s/files/1/0053/5665/0560/products/product-detalis-bl5_4095ce22-b72e-4246-8434-35de94291ed7_270X287_crop_center8e7e.jpg?v=1543551348" alt="">
+ {{#if productImage}}
+    <a href="/product/{{this.productPermalink}}" class="grid__image">
+      <img src="{{this.productImage.[0].path}}" alt="">
     </a>
-    
-
-
-
-
-      
-
- 
-
-
-
-
-
-
-
-
- 
-
-
+   <!-- Hover Thumb -->
+   {{#if this.productImage.[1]}}<img class="hover-img" src="{{this.productImage.[1].path}}" alt="Second Image">{{/if}}
+  {{else}}
+    <img src="/images/p5.jpeg" alt="First Image">
+        <!-- Hover Thumb -->
+    <img class="hover-img" src="/images/p1.jpeg" alt="Second Image">
+   {{/if}}
 
 <div class="product-action">
       
@@ -541,367 +469,9 @@
     </div>
   </div>
 </div>
-</div>
-<div class="product-wrapper-single"><div class="product-wrapper">
-  <div class="product-img">
-    
-    <a href="products/5-simple-product.html" class="grid__image">
-      <img src="../cdn.shopify.com/s/files/1/0053/5665/0560/products/1_270X287_crop_center717d.jpg?v=1545190306" alt="">
-    </a>
-    
-
-
-
-
-
-
-<div class="product-action">
-      
-<a class="wishlist action-wishlist" href="account/login.html" title="Wishlist">
-  <i class="ion-android-favorite-outline"></i>
-</a>
-
- 
-      
-<a class="action-plus action-compare" title="Quick View" data-toggle="modal" data-target="#quickViewModal" href="javascript:void(0);" 
-         onclick="quiqview('5-simple-product')"><i class="ion-ios-search-strong"></i>
-      </a>
-      
-      
-    </div>
-    <div class="nrb_p_countdown">
-      
-    </div>
-  </div>
-  <div class="product-content text-left">
-    <div class="product-hover-style">
-      <div class="product-title">
-        <h4>
-          <a href="products/5-simple-product.html">    5. Simple product   </a>
-        </h4>
-      </div>
-      <div class="cart-hover"><div class="product-cart-action">
-          
-          
-          <a href="javascript:void(0);" onclick="Shopify.addItem(15429271322688, 1); return false;" class="ajax-spin-cart">
-            <span>
-              <span class="cart-title"> <i class="fa fa-plus" aria-hidden="true"></i> Add to cart</span>
-              
-            </span>
-          </a>
-          
-          
-        </div></div>
-    </div>
-    <div class="product-price-wrapper">
-      <span><span class=money>$50.00</span></span> 
-      
-    </div>
-  </div>
+{{/each}}
 </div>
 
-<div class="product-wrapper">
-  <div class="product-img">
-    
-    <a href="products/product-title-here.html" class="grid__image">
-      <img src="../cdn.shopify.com/s/files/1/0053/5665/0560/products/product-detalis-bl1_73a06bd5-0e65-4a21-bcf8-a40ae313ffe5_270X287_crop_center618d.jpg?v=1543646006" alt="">
-    </a>
-    
-
-
-
-
-<span class="sale-title">Sale</span>
-
-
-<span class="percent-count">-10%</span>
-
-
-
-
-
-<div class="product-action">
-      
-<a class="wishlist action-wishlist" href="account/login.html" title="Wishlist">
-  <i class="ion-android-favorite-outline"></i>
-</a>
-
- 
-      
-<a class="action-plus action-compare" title="Quick View" data-toggle="modal" data-target="#quickViewModal" href="javascript:void(0);" 
-         onclick="quiqview('product-title-here')"><i class="ion-ios-search-strong"></i>
-      </a>
-      
-      
-    </div>
-    <div class="nrb_p_countdown">
-      
-    </div>
-  </div>
-  <div class="product-content text-left">
-    <div class="product-hover-style">
-      <div class="product-title">
-        <h4>
-          <a href="products/product-title-here.html">    Product title here   </a>
-        </h4>
-      </div>
-      <div class="cart-hover"><div class="product-cart-action">
-          
-          
-          <a href="javascript:void(0);" onclick="Shopify.addItem(15429233213504, 1); return false;" class="ajax-spin-cart">
-            <span>
-              <span class="cart-title"> <i class="fa fa-plus" aria-hidden="true"></i> Add to cart</span>
-              
-            </span>
-          </a>
-          
-          
-        </div></div>
-    </div>
-    <div class="product-price-wrapper">
-      <span><span class=money>$19.00</span></span> 
-      
-      <span class="product-price-old">  <i class="ti-minus"></i>  <span class=money>$21.00</span> </span>
-      
-    </div>
-  </div>
-</div>
-</div>
-<div class="product-wrapper-single"><div class="product-wrapper">
-  <div class="product-img">
-    
-    <a href="products/7-sample-affiliate-product.html" class="grid__image">
-      <img src="../cdn.shopify.com/s/files/1/0053/5665/0560/products/product-detalis-bl4_f1882198-b737-46d2-915e-09657d067f36_270X287_crop_centere9f7.jpg?v=1543552859" alt="">
-    </a>
-    
-
-
-
-
-
-
-<div class="product-action">
-      
-<a class="wishlist action-wishlist" href="account/login.html" title="Wishlist">
-  <i class="ion-android-favorite-outline"></i>
-</a>
-
- 
-      
-    </div>
-    <div class="nrb_p_countdown">
-      
-    </div>
-  </div>
-  <div class="product-content text-left">
-    <div class="product-hover-style">
-      <div class="product-title">
-        <h4>
-          <a href="products/7-sample-affiliate-product.html">    7. Sample affiliate product   </a>
-        </h4>
-      </div>
-      <div class="cart-hover"><div class="affiliat_btn">
-
-
-
-<a href="https://affiliate-program.amazon.com/" class="">
-  <i class="ti-shopping-cart-full" aria-hidden="true"></i> Buy from amazon
-</a>
-</div></div>
-    </div>
-    <div class="product-price-wrapper">
-      <span><span class=money>$29.00</span></span> 
-      
-    </div>
-  </div>
-</div>
-
-<div class="product-wrapper">
-  <div class="product-img">
-    
-    <a href="products/product-title-here-3.html" class="grid__image">
-      <img src="../cdn.shopify.com/s/files/1/0053/5665/0560/products/4_459564e8-6efd-41f2-9413-33a7c6a1f5bb_270X287_crop_centerc83d.jpg?v=1543645742" alt="">
-    </a>
-    
-
-
-
-
-<span class="sale-title">Sale</span>
-
-
-<span class="percent-count">-35%</span>
-
-
-
-
-
-<div class="product-action">
-      
-<a class="wishlist action-wishlist" href="account/login.html" title="Wishlist">
-  <i class="ion-android-favorite-outline"></i>
-</a>
-
- 
-      
-<a class="action-plus action-compare" title="Quick View" data-toggle="modal" data-target="#quickViewModal" href="javascript:void(0);" 
-         onclick="quiqview('product-title-here-3')"><i class="ion-ios-search-strong"></i>
-      </a>
-      
-      
-    </div>
-    <div class="nrb_p_countdown">
-      
-      
-      
-      <div data-countdown="2021/05/24"></div> 
-      
-    </div>
-  </div>
-  <div class="product-content text-left">
-    <div class="product-hover-style">
-      <div class="product-title">
-        <h4>
-          <a href="products/product-title-here-3.html">    Product title here   </a>
-        </h4>
-      </div>
-      <div class="cart-hover"><div class="product-cart-action">
-          
-          
-          <a href="javascript:void(0);" onclick="Shopify.addItem(15429115576384, 1); return false;" class="ajax-spin-cart">
-            <span>
-              <span class="cart-title"> <i class="fa fa-plus" aria-hidden="true"></i> Add to cart</span>
-              
-            </span>
-          </a>
-          
-          
-        </div></div>
-    </div>
-    <div class="product-price-wrapper">
-      <span><span class=money>$39.00</span></span> 
-      
-      <span class="product-price-old">  <i class="ti-minus"></i>  <span class=money>$60.00</span> </span>
-      
-    </div>
-  </div>
-</div>
-</div>
-<div class="product-wrapper-single"><div class="product-wrapper">
-  <div class="product-img">
-    
-    <a href="products/demo-product-title-3.html" class="grid__image">
-      <img src="../cdn.shopify.com/s/files/1/0053/5665/0560/products/product-detalis-bl3_-_Copy_ef6a226f-baba-4688-a30a-ee0184c0860d_270X287_crop_centerdd53.jpg?v=1543553027" alt="">
-    </a>
-    
-
-
-
-
-
-
-<div class="product-action">
-      
-<a class="wishlist action-wishlist" href="account/login.html" title="Wishlist">
-  <i class="ion-android-favorite-outline"></i>
-</a>
-
- 
-      
-    </div>
-    <div class="nrb_p_countdown">
-      
-    </div>
-  </div>
-  <div class="product-content text-left">
-    <div class="product-hover-style">
-      <div class="product-title">
-        <h4>
-          <a href="products/demo-product-title-3.html">    Demo product title   </a>
-        </h4>
-      </div>
-      <div class="cart-hover"><div class="affiliat_btn">
-
-
-
-<a href="https://affiliate-program.amazon.com/" class="">
-  <i class="ti-shopping-cart-full" aria-hidden="true"></i> Buy from amazon
-</a>
-</div></div>
-    </div>
-    <div class="product-price-wrapper">
-      <span><span class=money>$29.00</span></span> 
-      
-    </div>
-  </div>
-</div>
-
-<div class="product-wrapper">
-  <div class="product-img">
-    
-    <a href="products/dummy-text-for-title-3.html" class="grid__image">
-      <img src="../cdn.shopify.com/s/files/1/0053/5665/0560/products/3_f6e9d535-1d25-4a07-a234-fd02980df679_270X287_crop_center905c.jpg?v=1543645095" alt="">
-    </a>
-    
-
-
-
-
-<span class="sale-title">Sale</span>
-
-
-<span class="percent-count">-35%</span>
-
-
-
-
-
-<div class="product-action">
-      
-<a class="wishlist action-wishlist" href="account/login.html" title="Wishlist">
-  <i class="ion-android-favorite-outline"></i>
-</a>
-
- 
-      
-<a class="action-plus action-compare" title="Quick View" data-toggle="modal" data-target="#quickViewModal" href="javascript:void(0);" 
-         onclick="quiqview('dummy-text-for-title-3')"><i class="ion-ios-search-strong"></i>
-      </a>
-      
-      
-    </div>
-    <div class="nrb_p_countdown">
-      
-    </div>
-  </div>
-  <div class="product-content text-left">
-    <div class="product-hover-style">
-      <div class="product-title">
-        <h4>
-          <a href="products/dummy-text-for-title-3.html">    Dummy text for title   </a>
-        </h4>
-      </div>
-      <div class="cart-hover"><div class="product-cart-action">
-          
-          
-          <a href="javascript:void(0);" onclick="Shopify.addItem(15429112954944, 1); return false;" class="ajax-spin-cart">
-            <span>
-              <span class="cart-title"> <i class="fa fa-plus" aria-hidden="true"></i> Add to cart</span>
-              
-            </span>
-          </a>
-          
-          
-        </div></div>
-    </div>
-    <div class="product-price-wrapper">
-      <span><span class=money>$39.00</span></span> 
-      
-      <span class="product-price-old">  <i class="ti-minus"></i>  <span class=money>$60.00</span> </span>
-      
-    </div>
-  </div>
-</div>
 </div>
 </div>
         </div>
