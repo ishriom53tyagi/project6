@@ -52,6 +52,7 @@
     {{/if}}
 
 
+<link href="/cdn.shopify.com/s/files/1/0053/5665/0560/t/2/assets/themify-icons40bc.css?v=1782837867860931872" rel="stylesheet" type="text/css" media="all" />
 
 <link href="/cdn.shopify.com/s/files/1/0053/5665/0560/t/2/assets/font-awesome.mina741.css?v=14053330696143262969" rel="stylesheet" type="text/css" media="all" />
 <link href="/cdn.shopify.com/s/files/1/0053/5665/0560/t/2/assets/ionicons.minb771.css?v=18436430612067519620" rel="stylesheet" type="text/css" media="all" />
@@ -597,7 +598,7 @@
 
 
 <a href="cart.html">
-  <div class="cart-icon"><span class="count bigcounter">0</span>
+  <div class="cart-icon"><span class="count bigcounter">{{@root.session.totalCartItems}}</span>
     <i class="ti-shopping-cart"></i>
   </div>
 </a>
@@ -623,11 +624,11 @@
                                                 </div>
                                                 <div class="shopping-cart-title">
                                                     <h4><a href="#">{{this.title}} </a></h4>
-                                                    <h6>Qty: 02</h6>
-                                                    <span>$260.00</span>
+                                                    <h6>Qty: {{this.quantity}}</h6>
+                                                    <span>₹{{this.totalItemPrice}}</span>
                                                 </div>
                                                 <div class="shopping-cart-delete">
-                                                    <a href="#"><i class="ion ion-close"></i></a>
+                                                    <a href="#" class=""><i class="ion ion-close btn-delete-from-cart" data-cartid={{this.productId}}></i></a>
                                                 </div>
                                             </li>
                                             {{/each}}
@@ -635,7 +636,7 @@
     </ul>
 
     <div class="shopping-cart-total">
-      <h4>Total  <span class="shop-total shopping-cart__total"><span class=money>$0.00</span></span></h4>
+      <h4>Total  <span class="shop-total shopping-cart__total"><span class=money>₹{{@root.session.totalCartAmount}}</span></span></h4>
     </div>
 
     <div class="shopping-cart-btn">
