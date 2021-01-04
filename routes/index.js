@@ -1033,6 +1033,39 @@ router.get('/:page?', async (req, res, next) => {
         }
     }
 });
+router.post('/newsletter_subscribe', async (req, res) => {
+    const db = req.app.db;
+    const email = req.body.email;
+
+    if(!email){
+        req.session.message = "Empty Email Field";
+        req.session.messageType = 'danger';
+        res.redirect('back');
+        return;
+    }
+   // const ifalready = await db.newsletter.findOne({email: email});
+    /*if(ifalready){
+        req.session.message = "Already Subscribed";
+        req.session.messageType = 'danger';
+        res.redirect('back');
+        return;
+    }*/
+    try{
+        await db.newsletter.insertOne({email: req.body.email});
+        req.session.message = "Subscribed";
+        req.session.messageType = 'success';
+        res.redirect('back');
+        return;
+    }
+    catch(ex){
+        console.log(ex);
+        req.session.message = "Some Error Occured";
+        req.session.messageType = 'danger';
+        res.redirect('back');
+        return;
+    }
+});
+
 
 
 module.exports = router;
