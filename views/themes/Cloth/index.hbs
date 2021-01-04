@@ -116,7 +116,7 @@
 
 
 
-</div><div id="shopify-section-1543414211428" class="shopify-section"><!-- Product Area Start -->
+</div><div id="shopify-section" class="shopify-section"><!-- Product Area Start -->
 <div class="product-area bg-image-1 pt-100 pb-95" id="section-1543414211428">
   <div class="container">
        
@@ -136,15 +136,44 @@
      {{/ifCond}}
    {{#each results}}
       
-      	<div class="product-wrapper">
+<div class="product-wrapper">
   <div class="product-img">
-    
-    <a href="products/4-soldout-product.html" class="grid__image">
-      <img src="../cdn.shopify.com/s/files/1/0053/5665/0560/products/product-detalis-bl1_f70dcd3c-be2f-4224-a72a-3b6fd32a1449_270X287_crop_center186f.jpg?v=1543552003" alt="">
+  {{#if productImage}}
+    <a href="/product/{{this.productPermalink}}" class="grid__image">
+      <img src="{{this.productImage.[0].path}}" alt="">
     </a>
-    
+   <!-- Hover Thumb -->
+   {{#if this.productImage.[1]}}<img class="hover-img" src="{{this.productImage.[1].path}}" alt="Second Image">{{/if}}
+  {{else}}
+    <img src="/images/p5.jpeg" alt="First Image">
+        <!-- Hover Thumb -->
+    <img class="hover-img" src="/images/p1.jpeg" alt="Second Image">
+   {{/if}}
 
-<span class="soldout-title">Soldout Shriom</span>
+
+     <div class="tags">
+       {{#if productDiscountPrice}}
+           <div class="discount">
+                  {{#discount productPrice productDiscountPrice}}
+                        {{this}}
+                   {{/discount}}% Off
+                        </div> 
+                   {{/if}}
+                      {{#if this.productOffer}}
+                       <div class="offer">
+                        {{this.productOffer}}
+                         </div>
+                   {{/if}}
+          </div>
+<span class="sale-title">Sale</span>
+
+
+<span class="percent-count">-35%</span>
+
+
+
+
+
 <div class="product-action">
       
 <a class="wishlist action-wishlist" href="account/login.html" title="Wishlist">
@@ -154,12 +183,16 @@
  
       
 <a class="action-plus action-compare" title="Quick View" data-toggle="modal" data-target="#quickViewModal" href="javascript:void(0);" 
-         onclick="quiqview('4-soldout-product')"><i class="ion-ios-search-strong"></i>
+         onclick="quiqview('product-title-here-3')"><i class="ion-ios-search-strong"></i>
       </a>
       
       
     </div>
     <div class="nrb_p_countdown">
+      
+      
+      
+      <div data-countdown="2021/05/24"></div> 
       
     </div>
   </div>
@@ -167,21 +200,26 @@
     <div class="product-hover-style">
       <div class="product-title">
         <h4>
-          <a href="products/4-soldout-product.html">    4. Soldout product   </a>
+          <a href="products/product-title-here-3.html">    Product title here   </a>
         </h4>
       </div>
       <div class="cart-hover"><div class="product-cart-action">
           
-          <button class="cart-disable">
-            <span class="cart-text"><i class="fa fa-ban" aria-hidden="true"></i> Soldout</span>
-          </button>
+          
+          <a href="javascript:void(0);" onclick="Shopify.addItem(15429115576384, 1); return false;" class="ajax-spin-cart">
+            <span>
+              <span class="cart-title"> <i class="fa fa-plus" aria-hidden="true"></i> Add to cart</span>
+              
+            </span>
+          </a>
+          
           
         </div></div>
     </div>
     <div class="product-price-wrapper">
-      <span><span class=money>$09.00</span></span> 
+      <span><span class=money>$39.00</span></span> 
       
-      <span class="product-price-old">  <i class="ti-minus"></i>  <span class=money>$29.00</span> </span>
+      <span class="product-price-old">  <i class="ti-minus"></i>  <span class=money>$60.00</span> </span>
       
     </div>
   </div>
@@ -225,7 +263,7 @@
 
      /* featured active */
     $('#section-1543414211428 .featured-product-active').owlCarousel({
-      loop: true,
+      loop: false,
       nav: false,
       autoplay: false,
       
