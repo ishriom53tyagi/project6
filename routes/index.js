@@ -1001,8 +1001,27 @@ router.get('/:page?', async (req, res, next) => {
     const db = req.app.db;
     const config = req.app.config;
     const numberProducts = config.productsPerPage ? config.productsPerPage : 6;
-    
+    var productsIndex = req.app.productsIndex;
 
+    var medicine1 = [];
+    productsIndex.search("medicine").forEach((id)=>{
+        medicine1.push(getId(id.ref));
+    });
+    var medicineProduct = await db.products.aggregate([
+        {$match: {_id: {$in: medicine1},productStock: {$gt: 0}}},
+        {$limit: 4}
+    ]).toArray();
+
+    var medicine2 = [];
+    productsIndex.search("bnbSpecial").forEach((id)=>{
+        medicine2.push(getId(id.ref));
+    });
+    var medicineProduct2 = await db.products.aggregate([
+        {$match: {_id: {$in: medicine2},productStock: {$gt: 0}}},
+        {$limit: 4}
+    ]).toArray();
+    
+    console.log(medicineProduct);
     var k = moment().utcOffset('+05:30').format();
    
     // if no page is specified, just render page 1 of the cart
@@ -1022,6 +1041,8 @@ router.get('/:page?', async (req, res, next) => {
                     title: `${config.cartTitle} - Shop`,
                     theme: config.theme,
                     results: results.data,
+                    medicineProduct:medicineProduct,
+                    medicineProduct2:medicineProduct2,
                     session: req.session,
                     message: clearSessionValue(req.session, 'message'),
                     messageType: clearSessionValue(req.session, 'messageType'),
