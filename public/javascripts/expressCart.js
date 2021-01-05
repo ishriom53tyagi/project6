@@ -77,6 +77,18 @@ $(document).ready(function () {
     $(document).on('click', '.btn-delete-from-cart', function (e) {
         deleteFromCart($(e.target));
     });
+    
+$('.meanmenu-reveal').on('click',function(e){
+    $(this).toggleClass('meanclose');
+    if($(this).hasClass('meanclose')) {
+        $(this).find('span').remove()
+        $('.menu-overflow-mobile').css('display','block');
+    }
+    else{
+        $(this).append('<span></span> <span></span> <span></span>');
+        $('.menu-overflow-mobile').css('display','none');
+    }
+});
 
     if ($('#pager').length) {
         var pageNum = $('#pageNum').val();
