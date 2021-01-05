@@ -31,43 +31,69 @@ const countryList = getCountryList();
 router.post('/checkout_action', (req, res, next) => {
     const db = req.app.db;
     const config = req.app.config;
-    if(!req.session.customerpickname) {
-        req.session.message = "Choose a Pick Up Address";
-        req.session.messageType = 'danger';
-        res.redirect('/checkout/information');
-        return;
-    }
-    if(!req.session.customerdropname) {
-        req.session.message = "Choose a Drop Address";
-        req.session.messageType = 'danger';
-        res.redirect('/checkout/information');
-        return;
-    }
-    var orderPickup = { "name": req.session.customerpickname,
-                        "address": req.session.customerpickaddress,
-                        "city": req.session.customerpickcity,
-                        "postcode": req.session.customerpickpostcode,
-                        "phone": req.session.customerpickphone,
-                        "alternatePhone": req.session.pickupAlternate};
-    var orderDrop = { "name": req.session.customerdropname,
-    "address": req.session.customerdropaddress,
-    "city": req.session.customerdropcity,
-    "postcode": req.session.customerdroppostcode,
-    "phone": req.session.customerdropphone,
-"alternatePhone": req.session.dropupAlternate};
+ //   const stripeConfig = common.getPaymentConfig();
+
+    // Create the Stripe payload
+   /* const chargePayload = {
+        amount: numeral(req.session.totalCartAmount).format('0.00').replace('.', ''),
+        currency: stripeConfig.stripeCurrency.toLowerCase(),
+        source: req.body.stripeToken,
+        description: stripeConfig.stripeDescription,
+        shipping: {
+            name: `${req.session.customerFirstname} ${req.session.customerFirstname}`,
+            address: {
+                line1: req.session.customerAddress1,
+                line2: req.session.customerAddress2,
+                postal_code: req.session.customerPostcode,
+                state: req.session.customerState,
+                country: req.session.customerCountry
+            }
+        }
+    };  */
+
+    // charge via stripe
+   /* stripe.charges.create(chargePayload, (err, charge) => {
+        if(err){
+            console.info(err.stack);
+            req.session.messageType = 'danger';
+            req.session.message = 'Your payment has declined. Please try again';
+            req.session.paymentApproved = false;
+            req.session.paymentDetails = '';
+            res.redirect('/checkout/payment');
+            return;
+        }
+   */
+        // order status
+        let paymentStatus = 'Paid';
+       /* if(charge.paid !== true){
+            paymentStatus = 'Declined';
+        } */
+
+        // new order doc
         const orderDoc = {
+           // orderPaymentId: charge.id,
+          //  orderPaymentGateway: 'Stripe',
+           // orderPaymentMessage: charge.outcome.seller_message,
+            orderTotal: req.session.totalCartAmount,
+            orderShipping: req.session.totalCartShipping,
             orderItemCount: req.session.totalCartItems,
+            orderProductCount: req.session.totalCartProducts,
             orderCustomer: common.getId(req.session.customerId),
             orderEmail: req.session.customerEmail,
-            orderPickup: orderPickup,
-            orderVehicleNumber: req.session.vehicleNumber,
-            orderDrop: orderDrop,
-            orderSlotdate: req.session.slotdate,
-            orderSlottime: req.session.slottime,
+           // orderCompany: req.session.customerCompany,
+            orderFirstname: req.session.customerFirstname,
+            orderLastname: req.session.customerLastname,
+            orderAddr1: req.session.customerAddress1,
+           // orderAddr2: req.session.customerAddress2,
+          //  orderCountry: req.session.customerCountry,
+            orderState: req.session.customerState,
+            orderPostcode: req.session.customerPostcode,
             orderPhoneNumber: req.session.customerPhone,
-            orderDate: moment().utcOffset('+05:30').format(),
+            //orderComment: req.session.orderComment,
+            orderStatus: paymentStatus,
+            orderDate: new Date(),
             orderProducts: req.session.cart,
-            orderStatus: 'Booked'
+            orderType: 'Single'
         };
 
         // insert order into DB
@@ -90,12 +116,25 @@ router.post('/checkout_action', (req, res, next) => {
                     req.session.paymentApproved = true;
                     req.session.paymentDetails = '<p><strong>Order ID: </strong>' + newId ;
 
+                    // set payment results for email
+                    const paymentResults = {
+                        message: req.session.message,
+                        messageType: req.session.messageType,
+                        paymentEmailAddr: req.session.paymentEmailAddr,
+                        paymentApproved: true,
+                        paymentDetails: req.session.paymentDetails
+                    };
 
                     // clear the cart
                     if(req.session.cart){
                         common.emptyCart(req, res, 'function');
                     }
 
+                    // send the email with the response
+                    // TODO: Should fix this to properly handle result
+                    common.sendEmail(req.session.paymentEmailAddr, 'Your payment with ' + config.cartTitle, common.getEmailTemplate(paymentResults));
+
+                    // redirect to outcome
                     res.redirect('/payment/' + newId);
                 
             });
