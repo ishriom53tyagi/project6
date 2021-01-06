@@ -330,12 +330,36 @@ router.get('/checkout/shipping', async (req, res, next) => {
     });
 });
 
-router.get('/checkout/cart', (req, res) => {
+router.get('/checkout/cart', async(req, res) => {
     const config = req.app.config;
+    const db = req.app.db;
+    var newuserdiscount = [];
+    var discounts = await db.discounts.find({isHide: false,new: "No",minimum: {$gt : 0}}).toArray();
+    var discounts2 = [];
+    var ordes = await db.orders.findOne({orderCustomer: getId(req.session.customerId)});
+    if(!ordes && req.session.customerPresent) {
+        newuserdiscount = await db.discounts.find({isHide: false,new: "Yes"}).toArray();
+    }
+    for(var i=0;i<discounts.length;i++){
+        if(discounts[i].onceUser) {
+            if(req.session.customerPresent) {
+            var temptest = await db.orders.findOne({orderCustomer: getId(req.session.customerId), orderPromoCode: discounts[i].code});
+            if(!temptest) {
+                discounts2.push(discounts[i]);
+            }
+        }
+        }
+        else {
+            discounts2.push(discounts[i]);
+        }
+    }
     res.render(`${config.themeViews}checkout-cart`, {
         title: 'Checkout - Cart',
         page: req.query.path,
         config,
+        categories: req.app.categories,
+        discounts: discounts2,
+        newuserdiscount: newuserdiscount,
         session: req.session,
         message: clearSessionValue(req.session, 'message'),
         messageType: clearSessionValue(req.session, 'messageType'),
@@ -500,8 +524,42 @@ router.get('/product/:id', async (req, res) => {
     const db = req.app.db;
     const config = req.app.config;
     const productsIndex = req.app.productsIndex;
-
+    var editreviewPermission = false;
+    var reviewPermission = false;
+    var rdata = {};
     const product = await db.products.findOne({ $or: [{ _id: getId(req.params.id) }, { productPermalink: req.params.id }] });
+    const existvalue = "orderProducts.".concat(product._id);
+    const ordersUser = await db.orders.findOne({$and: [{ orderCustomer: getId(req.session.customerId) }, { [existvalue] : { $exists : true } }] });
+    const reviewUser = await db.reviews.findOne({ $and: [{ productId: getId(product._id) }, { userId: getId(req.session.customerId) }] });
+    const reviewslist = await db.reviews.find({ productId: getId(product._id) }).toArray();
+    var date = moment(new Date(), 'DD/MM/YYYY HH:mm').toDate().toString().split('GMT')[0].concat("GMT+0530 (GMT+05:30)");
+    const offers = await db.discounts.find({}).toArray();
+    var firstoffer = null;
+    var secondoffer = null;
+    for(let a in offers){
+        if(moment(new Date(date)).isBetween(new Date(offers[a].start), new Date(offers[a].end))) {
+            if(secondoffer){
+                break;
+            }
+            else if(firstoffer){
+                secondoffer = offers[a];
+            }
+            else {
+                firstoffer = offers[a];
+            }
+        }
+    }
+    if(!reviewslist){
+        reviewslist = false;
+    }
+    if(reviewUser && req.session.customerPresent) {
+        editreviewPermission = true;
+        rdata.title = reviewUser.title;
+        rdata.description = reviewUser.description;
+    }
+    else if(ordersUser && req.session.customerPresent ) {
+        reviewPermission = true;
+    }
     if(!product){
         res.render('error', { title: 'Not found', message: 'Product not found', helpers: req.handlebars.helpers, config });
         return;
@@ -527,16 +585,16 @@ router.get('/product/:id', async (req, res) => {
     let relatedProducts = {};
     if(config.showRelatedProducts){
         const lunrIdArray = [];
-        const productTags = product.productTags.split(',');
+        // const productTags = product.productTags.split(',');
         const productTitleWords = product.productTitle.split(' ');
-        const searchWords = productTags.concat(productTitleWords);
-        searchWords.forEach((word) => {
-            productsIndex.search(word).forEach((id) => {
+        // const searchWords = productTags.concat(productTitleWords);
+        const searchWords = productTitleWords;
+            productsIndex.search(product.productTitle).forEach((id) => {
                 lunrIdArray.push(getId(id.ref));
             });
-        });
         relatedProducts = await db.products.find({
-            _id: { $in: lunrIdArray, $ne: product._id }
+            _id: { $in: lunrIdArray, $ne: product._id },
+            productPublished: true
         }).limit(4).toArray();
     }
 
@@ -545,10 +603,17 @@ router.get('/product/:id', async (req, res) => {
         result: product,
         variants,
         images: images,
+        firstoffer: firstoffer,
+        secondoffer: secondoffer,
         relatedProducts,
         productDescription: stripHtml(product.productDescription),
         metaDescription: config.cartTitle + ' - ' + product.productTitle,
         config: config,
+        categories: req.app.categories,
+        reviewPermission: reviewPermission,
+        editreviewPermission: editreviewPermission,
+        reviews: reviewslist,
+        rdata, rdata,
         session: req.session,
         pageUrl: config.baseUrl + req.originalUrl,
         message: clearSessionValue(req.session, 'message'),
