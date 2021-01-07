@@ -2287,7 +2287,13 @@ textarea:focus {
 .product-nav .owl-nav div.owl-next {
     margin-left: 3px;
 }
-
+@media screen and (max-width: 600px) {
+    .product-content .cart-hover {
+        opacity: 1;
+        position: relative;
+        transform: translateY(0px);
+      }
+}
 /* testimonial style */
 .single-testimonial {
     margin-left: 15px;

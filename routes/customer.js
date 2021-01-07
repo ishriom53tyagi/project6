@@ -301,7 +301,7 @@ router.post('/customer/save', async (req, res) => {
 });
 
 // Get customer orders
-router.get('/customer/account', async (req, res) => {
+router.get('/customer/account/:page?', async (req, res) => {
     const db = req.app.db;
     const config = req.app.config;
 
@@ -315,10 +315,15 @@ router.get('/customer/account', async (req, res) => {
     })
     .sort({ orderDate: -1 })
     .toArray();
+    var ordershow = false;
+    if(req.params.page == 'orders') {
+        ordershow = true;
+    }
     res.render(`${config.themeViews}customer-account`, {
         title: 'Orders',
         session: req.session,
         orders,
+        ordershow: ordershow,
         customer: customer,
         message: clearSessionValue(req.session, 'message'),
         messageType: clearSessionValue(req.session, 'messageType'),

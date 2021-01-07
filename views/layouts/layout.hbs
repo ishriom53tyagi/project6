@@ -537,6 +537,12 @@
                                             <li><a href="contact.html">contact</a></li>
                                         </ul>
                                     <a class="mean-expand" href="#" style="font-size: 18px">+</a></li>
+                                    {{#if @root.session.customerPresent}}
+                                    <li><a href="/customer/account">My Account</a></li>
+                                    {{else}}
+                                    <li><a href="/customer/register">Register</a></li>
+                                    <li><a href="/customer/login">Login</a></li>
+                                    {{/if}}
                                     <li><a href="shop.html"> Shop </a>
                                         <ul style="display: none;">
                                             <li><a href="#">Categories 01</a>
