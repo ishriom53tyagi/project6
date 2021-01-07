@@ -4135,9 +4135,9 @@ h5.panel-title span {
     border-radius: 3px;
 }
 .billing-btn > button {
-    background-color: #f2f2f2;
+    background-color: #519f10;
+    color: #fff;
     border: medium none;
-    color: #242424;
     display: inline-block;
     font-size: 12px;
     font-weight: 500;

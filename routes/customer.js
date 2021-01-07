@@ -309,7 +309,7 @@ router.get('/customer/account', async (req, res) => {
         res.redirect('/customer/login');
         return;
     }
-
+    var customer = await db.customers.findOne({_id: getId(req.session.customerId)});
     const orders = await db.orders.find({
         orderCustomer: getId(req.session.customerId)
     })
@@ -319,6 +319,7 @@ router.get('/customer/account', async (req, res) => {
         title: 'Orders',
         session: req.session,
         orders,
+        customer: customer,
         message: clearSessionValue(req.session, 'message'),
         messageType: clearSessionValue(req.session, 'messageType'),
         countryList: getCountryList(),
@@ -336,18 +337,31 @@ router.post('/customer/update', async (req, res) => {
         return;
     }
 
-    const customerObj = {
-        company: req.body.company,
-        email: req.body.email,
-        firstName: req.body.firstName,
-        lastName: req.body.lastName,
-        address1: req.body.address1,
-        address2: req.body.address2,
-        country: req.body.country,
-        state: req.body.state,
-        postcode: req.body.postcode,
-        phone: req.body.phone
-    };
+    var customerObj = {};
+    if(req.body.firstName) {
+        customerObj["firstName"] = req.body.firstName;
+    }
+    if(req.body.lastName) {
+        customerObj["lastName"] = req.body.firstName;
+    }
+    if(req.body.address1) {
+        customerObj["addressline"] = req.body.address1;
+    }
+    if(req.body.state) {
+        customerObj["state"] = req.body.state;
+    }
+    if(req.body.postcode) {
+        customerObj["postcode"] = req.body.postcode;
+    }
+    if(req.body.password) {
+        if(req.body.password == req.body.confirmpassword) {
+            customerObj["password"] = bcrypt.hashSync(req.body.password, 10);
+        }
+        else {
+            req.status(400).json({message: "Password Not Matched"});
+            return;
+        }
+    }
 
     const schemaResult = validateJson('editCustomer', customerObj);
     if(!schemaResult.result){

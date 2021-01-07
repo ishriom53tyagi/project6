@@ -17,7 +17,7 @@
     "customCss": "",
     "currencySymbol": "₹",
     "paymentGateway": "stripe",
-    "databaseConnectionString": "mongodb+srv://bnbherbs:bnbherbs@cluster0.e3if4.mongodb.net/bnbherbs?retryWrites=true&w=majority",
+    "databaseConnectionString": "mongodb://localhost:27017/medicine",
     "theme": "Cloth",
     "trackStock": false,
     "orderHook": "",
