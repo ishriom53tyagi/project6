@@ -270,16 +270,9 @@
               <nav>
                 
 <ul>
-    {{#each categories}}
-                            <li class="submenu">
-                                <a href="javascript:;">{{this.title}}</a>
-                                <ul>
-                                    {{#each this.submenu}}
-                                    <li><a href="/category/{{this}}" class="menu-item">{{this}}</a></li>
-                                    {{/each}}
-                                </ul>
-                            </li>
-           {{/each}}
+    
+                         
+           
   
   
   <li  class="dropdown-holder top-hover"  data-columns=""><a href="/"><span>Home</span></a>
@@ -299,77 +292,18 @@
       
       
 
-      
-      <li class="mega-menu-title"><a href="#" class="mega-menu-title"><h3>Grace Matcha</h3></a>
+      {{#each categories}}
+      <li class="mega-menu-title"><a href="#" class="mega-menu-title"><h3>{{this.title}}</h3></a>
         <ul>
-            
-          <li><a href="products/1-new-and-sale-badge-product.html">Daily Matcha</a></li>
-            
-          <li><a href="products/11-product-with-video.html">Organic Matcha</a></li>
-            
-          <li><a href="products/demo-product-title-3.html">Nagomi Ceremonial</a></li>
-            
-          <li><a href="products/9-without-shortcode-product.html">Culinary Organic </a></li>
+            {{#each this.submenu}}
+          <li><a href="/category/{{this}}">{{this}}</a></li>
+            {{/each}}
+          
            
         </ul>
       </li>
+      {{/each}}
 
-      
-      
-      
-
-      
-      <li class="mega-menu-title"><a href="#" class="mega-menu-title"><h3>Encha Matcha</h3></a>
-        <ul>
-            
-          <li><a href="products/8-countdown-product.html">Kokoro Ceremonial</a></li>
-            
-          <li><a href="products/aliexpress-dropshipping-by-oberlo-cpy.html">Mizuba Matcha Set</a></li>
-            
-          <li><a href="products/demo-product-title-2.html">Chawan Matcha Tea</a></li>
-            
-          <li><a href="products/demo-product-title-1.html">Matcha  Chawan Tea</a></li>
-           
-        </ul>
-      </li>
-
-      
-      
-      
-
-      
-      <li class="mega-menu-title"><a href="#" class="mega-menu-title"><h3>Tea Tools</h3></a>
-        <ul>
-            
-          <li><a href="products/dummy-text-for-title-1.html">Whisk Chasen Bamboo</a></li>
-            
-          <li><a href="products/dummy-text-for-title-2.html">Chashaku Matcha Scop</a></li>
-            
-          <li><a href="products/dummy-text-for-title-3.html">Matcha Tea Bowl</a></li>
-            
-          <li><a href="products/dummy-text-for-title.html">Nice  Insulated Mug</a></li>
-           
-        </ul>
-      </li>
-
-      
-      
-      
-
-      
-      <li class="mega-menu-title"><a href="#" class="mega-menu-title"><h3>Mizuba Tea</h3></a>
-        <ul>
-            
-          <li><a href="products/product-dummy-title-4.html">full Patterned Chawan</a></li>
-            
-          <li><a href="products/product-title-here.html">Ocean Horizon Chawan</a></li>
-            
-          <li><a href="products/product-title-here-2.html">Black Stripe Chawan</a></li>
-            
-          <li><a href="products/demo-product-title-1.html">Lava Flow Chawan</a></li>
-           
-        </ul>
-      </li>
 
       
       
