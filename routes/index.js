@@ -28,47 +28,33 @@ const countryList = getCountryList();
 
 //This is how we take checkout action
 
-router.post('/checkout_action', (req, res, next) => {
+router.post('/checkout_action',async (req, res, next) => {
     const db = req.app.db;
     const config = req.app.config;
- //   const stripeConfig = common.getPaymentConfig();
 
-    // Create the Stripe payload
-   /* const chargePayload = {
-        amount: numeral(req.session.totalCartAmount).format('0.00').replace('.', ''),
-        currency: stripeConfig.stripeCurrency.toLowerCase(),
-        source: req.body.stripeToken,
-        description: stripeConfig.stripeDescription,
-        shipping: {
-            name: `${req.session.customerFirstname} ${req.session.customerFirstname}`,
-            address: {
-                line1: req.session.customerAddress1,
-                line2: req.session.customerAddress2,
-                postal_code: req.session.customerPostcode,
-                state: req.session.customerState,
-                country: req.session.customerCountry
-            }
-        }
-    };  */
-
-    // charge via stripe
-   /* stripe.charges.create(chargePayload, (err, charge) => {
-        if(err){
-            console.info(err.stack);
-            req.session.messageType = 'danger';
-            req.session.message = 'Your payment has declined. Please try again';
-            req.session.paymentApproved = false;
-            req.session.paymentDetails = '';
-            res.redirect('/checkout/payment');
-            return;
-        }
-   */
+    
+    var customerObj = {};
+    if(req.body.shipFirstName) {
+        customerObj["firstName"] = req.body.shipFirstName;
+    }
+ 
+    if(req.body.shipLastName) {
+        customerObj["lastName"] = req.body.shipLastName;
+    }
+    if(req.body.shipAddr1) {
+        customerObj["addressline"] = req.body.shipAddr1;
+    }
+    if(req.body.shipState) {
+        customerObj["state"] = req.body.shipState;
+    }
+    if(req.body.shipPostcode) {
+        customerObj["postcode"] = req.body.shipPostcode;
+    }
+    await db.customers.findOneAndUpdate({_id: common.getId(req.session.customerId)},{$set: customerObj});
+    var customer = await db.customers.findOne({_id: common.getId(req.session.customerId)});
         // order status
         let paymentStatus = 'Paid';
-       /* if(charge.paid !== true){
-            paymentStatus = 'Declined';
-        } */
-
+     
         // new order doc
         const orderDoc = {
            // orderPaymentId: charge.id,
@@ -81,13 +67,13 @@ router.post('/checkout_action', (req, res, next) => {
             orderCustomer: common.getId(req.session.customerId),
             orderEmail: req.session.customerEmail,
            // orderCompany: req.session.customerCompany,
-            orderFirstname: req.session.customerFirstname,
-            orderLastname: req.session.customerLastname,
-            orderAddr1: req.session.customerAddress1,
+            orderFirstname: customer.firstName,
+            orderLastname: customer.lastName,
+            orderAddr1: customer.addressline,
            // orderAddr2: req.session.customerAddress2,
           //  orderCountry: req.session.customerCountry,
-            orderState: req.session.customerState,
-            orderPostcode: req.session.customerPostcode,
+            orderState: customer.state,
+            orderPostcode: customer.postcode,
             orderPhoneNumber: req.session.customerPhone,
             //orderComment: req.session.orderComment,
             orderStatus: paymentStatus,
@@ -95,7 +81,7 @@ router.post('/checkout_action', (req, res, next) => {
             orderProducts: req.session.cart,
             orderType: 'Single'
         };
-
+        
         // insert order into DB
         db.orders.insertOne(orderDoc, (err, newDoc) => {
             if(err){
@@ -234,7 +220,7 @@ router.get('/checkout/information', async (req, res, next) => {
     const db = req.app.db;
 
     const customerArray = await db.customers.findOne({
-        email: req.session.customerEmail})
+        _id: common.getId(req.session.customerId)});
 
     // if there is no items in the cart then render a failure
     if(!req.session.cart){
@@ -254,22 +240,7 @@ router.get('/checkout/information', async (req, res, next) => {
     if(req.session.cartSubscription){
         paymentType = '_subscription';
     }
-    if(!req.session.customerpickaddress && customerArray.pickupaddress){
-        req.session.customerpickaddress = customerArray.pickupaddress[0].addressline;
-        req.session.customerpickcity = customerArray.pickupaddress[0].city;
-        req.session.customerpickpostcode = customerArray.pickupaddress[0].pincode;
-        req.session.customerpickname = customerArray.pickupaddress[0].name;
-        req.session.customerpickphone = customerArray.pickupaddress[0].phone;
-        req.session.pickupAlternate = customerArray.pickupaddress[0].pickupAlternate;
-    }
-    if(!req.session.customerdropaddress && customerArray.dropupaddress){
-        req.session.customerdropaddress = customerArray.dropupaddress[0].addressline;
-        req.session.customerdropcity = customerArray.dropupaddress[0].city;
-        req.session.customerdroppostcode = customerArray.dropupaddress[0].pincode;
-        req.session.customerdropname = customerArray.dropupaddress[0].name;
-        req.session.customerdropphone = customerArray.dropupaddress[0].phone;
-        req.session.dropupAlternate = customerArray.dropupaddress[0].alternatePhone;
-    }
+
     // render the payment page
     res.render(`${config.themeViews}checkout-information`, {
         title: 'Checkout - Information',

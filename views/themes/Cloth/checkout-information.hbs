@@ -54,9 +54,9 @@
               <div class="col-sm-6">
                 <div class="form-group">
                   <label for="co-fn">First name <span class='text-danger'>*</span></label>
-                   {{#if @root.session.customerFirstname}}
+                   {{#if customerArray.firstName}}
                   <input class="form-control" id="shipFirstname" name="shipFirstname" placeholder="First name"
-                    value="{{@root.session.customerFirstname}}" disabled>
+                    value="{{customerArray.firstName}}" disabled>
                     {{else}}
                     <input class="form-control" id="shipFirstname" name="shipFirstname" placeholder="First name"
                     required>
@@ -67,9 +67,9 @@
                 <div class="form-group">
                 
                   <label for="co-ln">Last name <span class='text-danger'>*</span></label>
-                  {{#if @root.session.customerLastname}}
+                  {{#if customerArray.lastName}}
                   <input class="form-control" id="shipLastname" name="shipLastname" placeholder="Last name"
-                    value="{{@root.session.customerLastname}}" disabled>
+                    value="{{customerArray.lastName}}" disabled>
                     {{else}}
                     <input class="form-control" id="shipLastname" name="shipLastname" placeholder="Last name"
                   required>
@@ -104,21 +104,21 @@
               <div class="col-sm-12">
                 <div class="form-group">
                   <label for="co-address">Address <span class='text-danger'>*</span></label>
-                     {{#if @root.session.customerAddress1}}
+                     {{#if customerArray.addressline}}
                   <input class="form-control" id="shipAddr1" name="shipAddr1" placeholder="Address 1"
-                    value="{{@root.session.customerAddress1}}" disabled>
+                    value="{{customerArray.addressline}}" disabled>
                     {{else}}
                     <input class="form-control" id="shipAddr1" name="shipAddr1" placeholder="Address 1"
-                    value="{{@root.session.customerAddress1}}" required>
+                    value="" required>
                     {{/if}}
                 </div>
               </div>
               <div class="col-sm-6">
                 <div class="form-group">
                   <label for="co-ln">State <span class='text-danger'>*</span></label>
-                     {{#if @root.session.customerState}}
+                     {{#if customerArray.state}}
                   <input class="form-control" id="shipState" name="shipState" placeholder="State"
-                    value="{{@root.session.customerState}}" disabled>
+                    value="{{customerArray.state}}" disabled>
                     {{else}}
                      <input class="form-control" id="shipState" name="shipState" placeholder="State"
                      required>
@@ -129,9 +129,9 @@
               <div class="col-sm-6">
                 <div class="form-group">
                   <label for="co-fn">Pin Code <span class='text-danger'>*</span></label>
-                     {{#if @root.session.customerPostcode}}
+                     {{#if customerArray.postcode}}
                   <input class="form-control" id="shipPostcode" name="shipPostcode" placeholder="Pin code"
-                    value="{{@root.session.customerPostcode}}" disabled>
+                    value="{{customerArray.postcode}}" disabled>
                     {{else}}
                       <input class="form-control" id="shipPostcode" name="shipPostcode" placeholder="Pin code"
                      required>
