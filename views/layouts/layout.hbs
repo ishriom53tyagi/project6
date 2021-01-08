@@ -270,7 +270,16 @@
               <nav>
                 
 <ul>
-  
+    {{#each categories}}
+                            <li class="submenu">
+                                <a href="javascript:;">{{this.title}}</a>
+                                <ul>
+                                    {{#each this.submenu}}
+                                    <li><a href="/category/{{this}}" class="menu-item">{{this}}</a></li>
+                                    {{/each}}
+                                </ul>
+                            </li>
+           {{/each}}
   
   
   <li  class="dropdown-holder top-hover"  data-columns=""><a href="/"><span>Home</span></a>
