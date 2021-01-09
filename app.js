@@ -263,6 +263,21 @@ handlebars = handlebars.create({
             }
             return '';
         },
+        forTimes: (n,block) =>{
+            var accum = '';
+            for(var i = 0; i < n; ++i)
+                accum += block.fn(i);
+            return accum;
+        },
+        forTimesminus: (n,block) =>{
+            if(!n){
+                n = 0;
+            }
+            var accum = '';
+            for(var i = 0; i < 5-n; ++i)
+                accum += block.fn(i);
+            return accum;
+        },
         upperFirst: (value) => {
             if(value){
                 return value.replace(/^\w/, (chr) => {

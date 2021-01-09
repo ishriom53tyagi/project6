@@ -119,12 +119,187 @@
     
     <hr>
     <div class="row pl-0">
-        <div class="description col">
-            <h1 class="heading">Description</h1>
-            <div class="body_text">
-                {{{fixTags result.productDescription}}}
-            </div>
-        </div>
+         <div class="descproduct">
+		<div class="descheading" id="descheading">
+			<h3>Description</h3>
+			<h3>Reviews</h3>
+			<h3>Policy</h3>
+		</div>
+		<div class="descriptionmain desccont">
+			<p>{{{fixTags result.productDescription}}}</p>
+		</div>
+		<div class="reviewmain desccont">
+			<div class="reviewinner">
+				<h4>Customer Reviews 
+                    {{#if reviewPermission}}
+                    <a>WRITE A REVIEW</a>
+                    {{/if}}
+                    {{#if editreviewPermission}}
+                    <a>EDIT REVIEW</a>
+                    {{/if}}
+                </h4>
+				<div class="star">
+						{{#forTimes result.productRating}}
+                            <i class="fas fa-star i"></i>
+                            {{/forTimes}}
+                            {{#forTimesminus result.productRating}}
+                            <i class="far fa-star i"></i>
+                            {{/forTimesminus}}
+						<b>Based on {{reviews.length}} Review</b>
+				</div>
+			</div>
+            {{#if reviewPermission}}
+			<div class="reviewinput displaynone checkout_details_area">
+                <form action="/product/addreview" method="post">
+				<h4>Write A Review</h4>
+				<div class="input1">
+					<label for="title">Review Title</label><br>
+					<input type="text" class="form-control" id="reviewTitle" name="reviewTitle" value="" placeholder="Enter Review Title" required>
+				</div>
+				<label for="">Rating</label>
+				<div class="star">
+                                        <div class="rating-star-form">
+                                            <label>
+                                                <input class="radiostar" type="radio" name="stars" value="1" />
+                                                <span class="icon">★</span>
+                                            </label>
+                                            <label>
+                                                <input class="radiostar" type="radio" name="stars" value="2" />
+                                                <span class="icon">★</span>
+                                                <span class="icon">★</span>
+                                            </label>
+                                            <label>
+                                                <input class="radiostar" type="radio" name="stars" value="3" />
+                                                <span class="icon">★</span>
+                                                <span class="icon">★</span>
+                                                <span class="icon">★</span>   
+                                            </label>
+                                            <label>
+                                                <input class="radiostar" type="radio" name="stars" value="4" />
+                                                <span class="icon">★</span>
+                                                <span class="icon">★</span>
+                                                <span class="icon">★</span>
+                                                <span class="icon">★</span>
+                                            </label>
+                                            <label>
+                                                <input class="radiostar" type="radio" name="stars" value="5" />
+                                                <span class="icon">★</span>
+                                                <span class="icon">★</span>
+                                                <span class="icon">★</span>
+                                                <span class="icon">★</span>
+                                                <span class="icon">★</span>
+                                            </label>
+                                            </div>
+                                    
+				</div>
+                <input type="hidden" name="productreviewId" id="productreviewId" value="{{result._id}}">
+                {{#if result.productPermalink}}
+                <input type="hidden" name="link" id="link" value="/product/{{result.productPermalink}}">
+                {{else}}
+                <input type="hidden" name="link" id="link" value="/product/{{result._id}}">
+                {{/if}}
+				<div class="inputtextarea">
+					<label for="textarea">Review Must Not Exceed 150 Words</label><br>
+					<textarea name="reviewtextarea" class="form-control" id="reviewtextarea" value="" placeholder="Enter the Review" required></textarea>
+				</div>
+				<div class="submit">
+					<button class="btn amado-btn" type="submit">Submit</button>
+				</div>
+            </form>
+			</div>
+            {{/if}}
+            {{#if editreviewPermission}}
+            <div class="reviewinput displaynone checkout_details_area">
+                <form action="/product/editreview" method="post">
+				<h4>Write A Review</h4>
+				<div class="input1">
+					<label for="title">Review Title</label><br>
+					<input type="text" class="form-control" id="reviewTitle" name="reviewTitle" value="{{rdata.title}}" required>
+				</div>
+				<label for="">Rating</label>
+				<div class="star">
+                                        <div class="rating-star-form">
+                                            <label>
+                                                <input class="radiostar" type="radio" name="stars" value="1" />
+                                                <span class="icon">★</span>
+                                            </label>
+                                            <label>
+                                                <input class="radiostar" type="radio" name="stars" value="2" />
+                                                <span class="icon">★</span>
+                                                <span class="icon">★</span>
+                                            </label>
+                                            <label>
+                                                <input class="radiostar" type="radio" name="stars" value="3" />
+                                                <span class="icon">★</span>
+                                                <span class="icon">★</span>
+                                                <span class="icon">★</span>   
+                                            </label>
+                                            <label>
+                                                <input class="radiostar" type="radio" name="stars" value="4" />
+                                                <span class="icon">★</span>
+                                                <span class="icon">★</span>
+                                                <span class="icon">★</span>
+                                                <span class="icon">★</span>
+                                            </label>
+                                            <label>
+                                                <input class="radiostar" type="radio" name="stars" value="5" />
+                                                <span class="icon">★</span>
+                                                <span class="icon">★</span>
+                                                <span class="icon">★</span>
+                                                <span class="icon">★</span>
+                                                <span class="icon">★</span>
+                                            </label>
+                                            </div>
+                                    
+				</div>
+                <input type="hidden" name="productreviewId" id="productreviewId" value="{{result._id}}">
+                {{#if result.productPermalink}}
+                <input type="hidden" name="link" id="link" value="/product/{{result.productPermalink}}">
+                {{else}}
+                <input type="hidden" name="link" id="link" value="/product/{{result._id}}">
+                {{/if}}
+				<div class="inputtextarea">
+					<label for="textarea">Review Must Not Exceed 150 Words</label><br>
+					<textarea name="reviewtextarea" class="form-control" id="reviewtextarea" required>{{rdata.description}}</textarea>
+				</div>
+				<div class="submit">
+					<button class="btn amado-btn" type="submit">Submit</button>
+				</div>
+            </form>
+			</div>
+            {{/if}}
+            {{#if reviews}}
+            {{#each reviews}}
+			<div class="reviewabc">
+					<div class="star">
+							{{#forTimes this.rating}}
+                            <i class="fas fa-star i"></i>
+                            {{/forTimes}}
+                            {{#forTimesminus this.rating}}
+                            <i class="far fa-star i"></i>
+                            {{/forTimesminus}}
+					</div>
+					<h2>{{this.title}}</h2>
+					<h5>{{this.username}} on <span>{{#formatDate this.date 'LLLL'}}
+                        {{this}}
+                        {{/formatDate}}</span></h5>
+					<p>{{this.description}} </p>
+			</div>
+            {{/each}}
+            {{/if}}
+		</div>
+		<div class="shippingpolicymain desccont">
+			<h2>Shipping Policy Of Company</h2>
+	
+			<ul>
+				<li>For all the serviceable areas, the delivery time would be 5 to 7 business days. </li>
+				<li>COD is available for orders between Rs. 300 and Rs.5000</li>
+				<li>Plant4u does not accept returns on plants as the poor plants will not survive due to both way transit stress</li>
+                <li>Shipping Charges may apply to your order</li>
+                <li>24/7 Live Support</li>
+            </ul>
+		</div>
+</div>
     </div>
     <hr>
 
