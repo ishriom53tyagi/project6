@@ -26,7 +26,7 @@
             {{/each}}
 
             <!-- ##### Single Widget ##### -->
-            <div class="widget price bottom-marg-50">
+            <div class="widget price bottom-marg-50 price_filter">
                 <!-- Widget Title -->
                 <h6 class="widget-title mb-30">Price</h6>
 
@@ -87,9 +87,9 @@
         </div>
         </div>
             {{#ifCond @root.paginateUrl '==' 'category'}}
-            <h1>{{ @root.__ "Category" }} - <strong>{{@root.searchTerm}}</strong> <hr></h1>
+            <h1>{{ @root.__ "Category" }} - <strong>{{@root.searchTerm}}</strong> </h1>
             {{else}}
-            <h1>{{ @root.__ "Search results" }} - <strong>{{@root.searchTerm}}</strong> <hr></h1>
+            <h1>{{ @root.__ "Search results" }} - <strong>{{@root.searchTerm}}</strong> </h1>
             {{/ifCond}}
         </div>
     {{/if}}
@@ -101,113 +101,94 @@
         {{/ifCond}}
         {{#each results}}
            <div class="col-6 col-sm-6 col-md-4">
-                        <div class="single-product-wrapper second-product-wrapper">
-                            <!-- Product Image -->
-                                {{#if productPermalink}}
-                             <a href="/product/{{this.productPermalink}}">
-                            <div class="product-img">
-                                {{#if productImage}}
-                                
-                                    <img src="{{this.productImage.[0].path}}" alt="First Uploaded Image">
-                                    <!-- Hover Thumb -->
-                                    {{#if this.productImage.[1]}}
-                                    <img class="hover-img" src="{{this.productImage.[1].path}}" alt="Second Image">
-                                    {{/if}}
-                                {{else}}
-                                    <img src="/images/p5.jpeg" alt="First Image">
-                                    <!-- Hover Thumb -->
-                                    <img class="hover-img" src="/images/p1.jpeg" alt="Second Image">
-                                {{/if}}
-                                <div class="tags">
-                                        {{#if productDiscountPrice}}
-                                    <div class="discount">
-                                        {{#discount productPrice productDiscountPrice}}
-                                            {{this}}
-                                        {{/discount}}% Off
-                                    </div>
-                                    {{/if}}
-                                    {{#if this.productOffer}}
-                                    <div class="offer">
-                                        {{this.productOffer}}
-                                    </div>
-                                    {{/if}}
-                                </div>
-                            </div>
-                            </a>
-                            {{else}}
-                            <a href="/product/{{this._id}}">
-                            <div class="product-img">
-                                {{#if productImage}}
-                                
-                                    <img src="{{this.productImage.[0].path}}{{this}}" alt="First Uploaded Image">
-                                    <!-- Hover Thumb -->
-                                    {{#if this.productImage.[1]}}
-                                    <img class="hover-img" src="{{this.productImage.[1].path}}{{this}}" alt="Second Image">
-                                    {{/if}}
-                                {{else}}
-                                    <img src="/images/p5.jpeg" alt="First Image">
-                                    <!-- Hover Thumb -->
-                                    <img class="hover-img" src="/images/p1.jpeg" alt="Second Image">
-                                {{/if}}
-                                <div class="tags">
-                                        {{#if productDiscountPrice}}
-                                    <div class="discount">
-                                        {{#discount productPrice productDiscountPrice}}
-                                            {{this}}
-                                        {{/discount}}% Off
-                                    </div>
-                                    {{/if}}
-                                    {{#if this.productOffer}}
-                                    <div class="offer">
-                                        {{this.productOffer}}
-                                    </div>
-                                    {{/if}}
-                                </div>
-                            </div>
-                            </a>
-                            {{/if}}
-                            <div class="titlename">
-                                 {{#if productPermalink}}
-                                    <a href="/product/{{this.productPermalink}}">
-                                        <h6><strong>{{this.productTitle}}</strong></h6>
-                                    </a>
-                                    {{else}}
-                                    <a href="/product/{{this._id}}">
-                                        <h6><strong>{{this.productTitle}}</strong></h6>
-                                    </a>
-                                    {{/if}}
-                            </div>
-                            <!-- Product Description -->
-                            <div class="product-description2">
-                                <!-- Product Meta Data -->
-                                <div class="product-meta-data">
-                                   {{#if this.productDiscountPrice}}
-                                   <p class="product-price"> <span>{{currencySymbol @root.config.currencySymbol}}{{formatAmount productDiscountPrice}}</span> {{currencySymbol @root.config.currencySymbol}}{{formatAmount productPrice}}</p>
-                                   {{else}}
-                                   <p class="product-price">{{currencySymbol @root.config.currencySymbol}}{{formatAmount productPrice}}</p>
-                                   {{/if}}
-                                
-                                </div>
-                                <!-- Ratings & Cart -->
-                                <div class="ratings-cart text-right">
-                                    {{#if productPermalink}}
-                                    <a class="btnview bg-green" href="/product/{{this.productPermalink}}">
-                                        VIEW
-                                    </a>
-                                    {{else}}
-                                    <a class="btnview bg-green" href="/product/{{this._id}}">
-                                        VIEW
-                                    </a>
-                                    {{/if}}
-                                    
-                                        {{#if this.productStock}}
-                                        <a class="btn-round btncart" data-toggle="tooltip" data-placement="left" title="Add to Cart" data-id="{{this._id}}" data-link="{{this.productPermalink}}" data-has-variants="{{checkProductVariants this.variants}}">ADD TO CART</a>
-                                        {{else}}
-                                        <a class="btncart">ADD TO CART</a>
-                                        {{/if}}
-                                </div>
-                            </div>
-                        </div>
+                  <div class="product-wrapper">
+  <div class="product-img">
+  {{#if productImage}}
+    <a href="/product/{{this.productPermalink}}" class="grid__image">
+      <img src="{{this.productImage.[0].path}}" alt="">
+    </a>
+   <!-- Hover Thumb -->
+   {{#if this.productImage.[1]}}<img class="hover-img" src="{{this.productImage.[1].path}}" alt="Second Image">{{/if}}
+  {{else}}
+    <img src="/images/p5.jpeg" alt="First Image">
+        <!-- Hover Thumb -->
+    <img class="hover-img" src="/images/p1.jpeg" alt="Second Image">
+   {{/if}}
+
+
+     <div class="tags">
+       {{#if productDiscountPrice}}
+           <div class="discount">
+                  {{#discount productPrice productDiscountPrice}}
+                        {{this}}
+                   {{/discount}}% Off
+                        </div> 
+                   {{/if}}
+                      {{#if this.productOffer}}
+                       <div class="offer">
+                        {{this.productOffer}}
+                         </div>
+                   {{/if}}
+          </div>
+<span class="sale-title">Sale</span>
+
+
+<span class="percent-count">-35%</span>
+
+
+
+
+
+<div class="product-action">
+      
+<a class="wishlist action-wishlist" href="account/login.html" title="Wishlist">
+  <i class="ion-android-favorite-outline"></i>
+</a>
+
+ 
+      
+<a class="action-plus action-compare" title="Quick View" data-toggle="modal" data-target="#quickViewModal" href="javascript:void(0);" 
+         onclick="quiqview('product-title-here-3')"><i class="ion-ios-search-strong"></i>
+      </a>
+      
+      
+    </div>
+    <div class="nrb_p_countdown">
+      
+      
+      
+      <div data-countdown="2021/05/24"></div> 
+      
+    </div>
+  </div>
+  <div class="product-content text-left">
+    <div class="product-hover-style">
+      <div class="product-title">
+        <h4>
+          <a href="products/product-title-here-3.html">    {{this.productTitle}}   </a>
+        </h4>
+      </div>
+      <div class="cart-hover"><div class="product-cart-action">
+          
+          
+          <a class="add-to-cart ajax-spin-cart" data-id="{{this._id}}">
+            <span>
+              <span class="cart-title"> <i class="fa fa-plus" aria-hidden="true"></i> Add to cart</span>
+              
+            </span>
+          </a>
+          
+          
+        </div></div>
+    </div>
+    <div class="product-price-wrapper">
+      <span><span class=money>&#8377;{{this.productPrice}}</span></span> 
+      
+      <span class="product-price-old">  <i class="ti-minus"></i>  <span class=money>&#8377;{{this.productDiscountPrice}}</span> </span>
+      
+    </div>
+  </div>
+</div>
                     </div>
         {{/each}}
     </div>

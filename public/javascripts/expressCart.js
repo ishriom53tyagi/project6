@@ -374,7 +374,9 @@ $('.meanmenu-reveal').on('click',function(e){
                 });
         }
     });
-
+    $('.expand-filter').on('click',function(){
+        $('.filter').toggleClass('displaynone1');
+    });
     // Customer saving Password
     $('#passwordSave').validator().on('click', function (e) {
         e.preventDefault();
