@@ -64,7 +64,7 @@ a.mega-menu-title h3 {
 }
 .header-cart > a .cart-icon {
 	display: inline-block;
-	line-height: 100px;
+	line-height: 50px;
 	position: relative;
 	top: 5px;
 }
@@ -3235,8 +3235,8 @@ html {
 }
 
 .video-wrapper iframe {
-    width: auto;
-    height: auto;
+	width: auto;
+	height: auto;
 }
 
 

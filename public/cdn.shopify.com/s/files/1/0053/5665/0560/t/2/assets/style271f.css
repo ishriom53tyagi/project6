@@ -1744,6 +1744,13 @@ textarea:focus {
     color: #000;
 	border: 1px solid #000;
 }
+@media screen and (max-width: 768px) {
+    .header-cart {
+        position: fixed;
+        top: 20px;
+        right: 80px;
+    }
+}
 
 /* start main menu */
 .main-menu ul li {
@@ -1761,7 +1768,7 @@ textarea:focus {
   font-family: "Montserrat",sans-serif;
   font-size: 12px;
   font-weight: 600;
-  line-height: 100px;
+  line-height: 50px;
   text-transform: uppercase;
 }
 .main-menu ul li:hover > a {
@@ -1806,7 +1813,7 @@ textarea:focus {
   font-family: "Montserrat",sans-serif;
   font-size: 12px;
   font-weight: 400;
-  line-height: 30px;
+  line-height: 40px;
   text-align: left;
   text-transform: capitalize;
 }
