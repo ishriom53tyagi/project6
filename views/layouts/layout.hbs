@@ -254,7 +254,25 @@
     <body>
         {{/if}}
         {{#unless admin}}
-   
+    {{!-- Search Wrapper --}}
+
+        <div class="search-wrapper padding-100">
+        <div class="search-close">
+            <i class="fa fa-close" aria-hidden="true"></i>
+        </div>
+        <div class="container">
+            <div class="row">
+                <div class="col-12">
+                    <div class="search-content">
+                        <form >
+                            <input type="search" name="frm_search" id="frm_search" placeholder="Type your keyword..." autofocus="true">
+                            <button id="btn_search" type="submit"><i class="fas fa-search"></i></button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 
       <header class="header-area gray-bg clearfix">
   <div class="header-bottom">
