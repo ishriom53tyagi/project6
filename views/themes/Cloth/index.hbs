@@ -140,15 +140,14 @@
       <img src="{{this.productImage.[0].path}}" alt="">
     </a>
    <!-- Hover Thumb -->
-   {{#if this.productImage.[1]}}<img class="hover-img" src="{{this.productImage.[1].path}}" alt="Second Image">{{/if}}
+ 
   {{else}}
     <img src="/images/p5.jpeg" alt="First Image">
-        <!-- Hover Thumb -->
-    <img class="hover-img" src="/images/p1.jpeg" alt="Second Image">
+
    {{/if}}
 
 
-     <div class="tags">
+     {{!-- <div class="tags">
        {{#if productDiscountPrice}}
            <div class="discount">
                   {{#discount productPrice productDiscountPrice}}
@@ -161,11 +160,13 @@
                         {{this.productOffer}}
                          </div>
                    {{/if}}
-          </div>
+          </div> --}}
 <span class="sale-title">Sale</span>
 
 
-<span class="percent-count">-35%</span>
+<span class="percent-count">{{#discount productPrice productDiscountPrice}}
+                        {{this}}
+                   {{/discount}}%</span>
 
 
 
@@ -216,7 +217,7 @@
     <div class="product-price-wrapper">
       <span><span class=money>&#8377;{{this.productPrice}}</span></span> 
       
-      <span class="product-price-old">  <i class="ti-minus"></i>  <span class=money>&#8377;{{this.productPrice}}</span> </span>
+      <span class="product-price-old">  <i class="ti-minus"></i>  <span class=money>&#8377;{{this.productDiscountPrice}}</span> </span>
       
     </div>
   </div>
@@ -406,15 +407,15 @@
       <img src="{{this.productImage.[0].path}}" alt="">
     </a>
    <!-- Hover Thumb -->
-   {{#if this.productImage.[1]}}<img class="hover-img" src="{{this.productImage.[1].path}}" alt="Second Image">{{/if}}
+  
   {{else}}
     <img src="/images/p5.jpeg" alt="First Image">
         <!-- Hover Thumb -->
-    <img class="hover-img" src="/images/p1.jpeg" alt="Second Image">
+   
    {{/if}}
 
 
-     <div class="tags">
+     {{!-- <div class="tags">
        {{#if productDiscountPrice}}
            <div class="discount">
                   {{#discount productPrice productDiscountPrice}}
@@ -427,11 +428,13 @@
                         {{this.productOffer}}
                          </div>
                    {{/if}}
-          </div>
+          </div> --}}
 <span class="sale-title">Sale</span>
 
 
-<span class="percent-count">-35%</span>
+<span class="percent-count">{{#discount productPrice productDiscountPrice}}
+                        {{this}}
+                   {{/discount}}%</span>
 
 
 

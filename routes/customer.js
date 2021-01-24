@@ -19,7 +19,7 @@ const { restrict } = require('../lib/auth');
 
 //*********************************//
 
-const authy = require('authy')('Xq2Yr2K2EPubuImr5ArTSaUJxC6grUv1');
+const authy = require('authy')('V0qA6IGiXySlZIK5X328BUBQM0XTy9u7');
 
 const apiLimiter = rateLimit({
     windowMs: 300000, // 5 minutes

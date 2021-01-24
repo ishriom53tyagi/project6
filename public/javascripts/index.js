@@ -130,5 +130,13 @@ $(document).ready(function () {
       $($('.descproduct .desccont')[index]).css('display','block');
   });
 
-
+  $('.mean-expand').on('click',function(e){
+   
+    if (jQuery(this).hasClass("mean-clicked")) {
+    jQuery(this).prev('ul').slideUp(300, function(){});
+} else {
+    jQuery(this).prev('ul').slideDown(300, function(){});
+}
+jQuery(this).toggleClass("mean-clicked");
+  });
 });

@@ -286,6 +286,12 @@ handlebars = handlebars.create({
             }
             return value;
         },
+        discount: (value1, value2, options) => {
+            val1 = parseFloat(value1);
+            val2 = parseFloat(value2);
+
+            return parseInt(((val2 - val1) * 100)/ val2);
+        },
         math: (lvalue, operator, rvalue, options) => {
             lvalue = parseFloat(lvalue);
             rvalue = parseFloat(rvalue);

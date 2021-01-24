@@ -138,7 +138,12 @@ input[type=number]::-webkit-outer-spin-button {
   width: auto;
   height: 100%;
 } */
-
+.header-area {
+  position: fixed;
+  top: 0;
+  z-index: 200;
+  width: 100%;
+}
 .thumbnail {
   min-height: 415px;
 }
@@ -255,6 +260,12 @@ input[type=number]::-webkit-outer-spin-button {
 }
 .top-marg-50 {
   margin-top: 50px;
+}
+.top-marg-75 {
+  margin-top: 75px;
+}
+.top-marg-90 {
+  margin-top: 90px;
 }
 .top-marg-150 {
   margin-top: 150px;
