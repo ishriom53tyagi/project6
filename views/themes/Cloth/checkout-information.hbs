@@ -37,7 +37,7 @@
       <!-- Page title + breadcrumb-->
       <nav class="mb-4" aria-label="breadcrumb">
         <ol class="breadcrumb flex-lg-nowrap">
-          <li class="breadcrumb-item"><a class="text-nowrap" href="home-grocery-store.html"><i
+          <li class="breadcrumb-item"><a class="text-nowrap" href="/"><i
                 class="czi-home"></i>Home</a></li>
           <li class="breadcrumb-item text-nowrap active" aria-current="page">Checkout</li>
         </ol>
@@ -54,88 +54,68 @@
               <div class="col-sm-6">
                 <div class="form-group">
                   <label for="co-fn">First name <span class='text-danger'>*</span></label>
-                   {{#if customerArray.firstName}}
+             
                   <input class="form-control" id="shipFirstname" name="shipFirstname" placeholder="First name"
-                    value="{{customerArray.firstName}}" disabled>
-                    {{else}}
-                    <input class="form-control" id="shipFirstname" name="shipFirstname" placeholder="First name"
-                    required>
-                    {{/if}}
+                    value="{{customerArray.firstName}}" >
+              
                 </div>
               </div>
               <div class="col-sm-6">
                 <div class="form-group">
                 
                   <label for="co-ln">Last name <span class='text-danger'>*</span></label>
-                  {{#if customerArray.lastName}}
+                  
                   <input class="form-control" id="shipLastname" name="shipLastname" placeholder="Last name"
-                    value="{{customerArray.lastName}}" disabled>
-                    {{else}}
-                    <input class="form-control" id="shipLastname" name="shipLastname" placeholder="Last name"
-                  required>
-                    {{/if}}
+                    value="{{customerArray.lastName}}" >
+                   
+                   
 
                 </div>
               </div>
               <div class="col-sm-6">
                 <div class="form-group">
                   <label for="co-ln">Phone number <span class='text-danger'>*</span></label>
-                     {{#if @root.session.customerPhone}}
+     
                   <input class="form-control" id="shipPhoneNumber" name="shipPhoneNumber" placeholder="Phone number"
-                    value="{{@root.session.customerPhone}}" disabled>
-                    {{else}}
-                     <input class="form-control" id="shipPhoneNumber" name="shipPhoneNumber" placeholder="Phone number"
-                     required>
-                    {{/if}}
+                    value="{{customerArray.phone}}" disabled>
+              
                 </div>
               </div>
               <div class="col-sm-6">
                 <div class="form-group">
                   <label for="co-fn">Email address</label>
-                     {{#if @root.session.customerEmail}}
+              
                   <input class="form-control" id="shipEmail" name="shipEmail" placeholder="Email address"
-                    value="{{@root.session.customerEmail}}" disabled>
-                    {{else}}
-                      <input class="form-control" id="shipEmail" name="shipEmail" placeholder="Email address"
-                   required>
-                    {{/if}}
+                    value="{{customerArray.email}}" disabled>
+                 
                 </div>
               </div>
               <div class="col-sm-12">
                 <div class="form-group">
                   <label for="co-address">Address <span class='text-danger'>*</span></label>
-                     {{#if customerArray.addressline}}
+          
                   <input class="form-control" id="shipAddr1" name="shipAddr1" placeholder="Address 1"
-                    value="{{customerArray.addressline}}" disabled>
-                    {{else}}
-                    <input class="form-control" id="shipAddr1" name="shipAddr1" placeholder="Address 1"
-                    value="" required>
-                    {{/if}}
+                    value="{{customerArray.addressline}}" required>
+                   
                 </div>
               </div>
               <div class="col-sm-6">
                 <div class="form-group">
                   <label for="co-ln">State <span class='text-danger'>*</span></label>
-                     {{#if customerArray.state}}
+       
                   <input class="form-control" id="shipState" name="shipState" placeholder="State"
-                    value="{{customerArray.state}}" disabled>
-                    {{else}}
-                     <input class="form-control" id="shipState" name="shipState" placeholder="State"
-                     required>
-                    {{/if}}
+                    value="{{customerArray.state}}" required>
+                    
 
                 </div>
               </div>
               <div class="col-sm-6">
                 <div class="form-group">
                   <label for="co-fn">Pin Code <span class='text-danger'>*</span></label>
-                     {{#if customerArray.postcode}}
+             
                   <input class="form-control" id="shipPostcode" name="shipPostcode" placeholder="Pin code"
-                    value="{{customerArray.postcode}}" disabled>
-                    {{else}}
-                      <input class="form-control" id="shipPostcode" name="shipPostcode" placeholder="Pin code"
-                     required>
-                    {{/if}}
+                    value="{{customerArray.postcode}}" required>
+                  
 
                 </div>
               </div>
@@ -236,11 +216,13 @@
             <div class="accordion box-shadow-sm mb-4" id="payment-methods">
               <div class="card">
                 <div class="card-header py-3 px-3">
-                  <div class="custom-control custom-radio">
-                    <input class="custom-control-input" type="radio" name="license" id="payment-cash" checked>
-                    <label class="custom-control-label font-weight-medium text-dark" for="payment-cash"
-                      data-toggle="collapse" data-target="#cash">Cash on delivery<i
-                        class="czi-wallet text-muted font-size-lg align-middle mt-n1 ml-2"></i></label>
+                  <div class="radio12">
+                    <input type="radio" class="radiotypepay" name="typepayment" id="cod" {{#unless @root.session.orderidgenerated}}checked{{/unless}}>
+                  <label for="payment-cash" style="margin-left: 12px;">Cash</label>
+                  </div>
+                  <div class="radio12">
+                    <input type="radio" class="radiotypepay" name="typepayment" id="razorpay" {{#if @root.session.orderidgenerated}}checked{{/if}}>
+                  <label for="payment-cash" style="margin-left: 12px;">Razor Pay</label>
                   </div>
                 </div>
                 <div class="" id="" data-parent="#payment-methods">
@@ -251,8 +233,50 @@
               </div>
             </div>
             <div class="pt-2">
-              {{!-- id="add-to-reg" type="submit"  --}}
-              <button class="btn btn-primary btn-block">Place Order</button>
+              {{#if @root.razorpayid}}
+<button id="rzp-button1" class="btn btn-primary">Pay and Place Order</button>
+<script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+<script>
+    var options = {    "key": "{{@root.keyId}}", // Enter the Key ID generated from the Dashboard
+        "amount": "{{@root.razoramount}}", // Amount is in currency subunits. Default currency is INR. Hence, 50000 refers to 50000 paise    
+        "currency": "INR",
+        "name": "Plant4u",
+        "description": "Payment Gateway",
+        "image": "https://res.cloudinary.com/plant4u/image/upload/v1597585136/4_zwivhs.png",
+        "order_id": "{{@root.razorpayid}}", //Pass the `id` obtained in the previous step       
+        "handler": function (response){ 
+                    console.log(response);       
+                    $.ajax({
+                        method: 'POST',
+                        url: '/checkout/confirm/razorpay',
+                        data: {
+                            razorpay_payment_id: response.razorpay_payment_id,
+                            razorpay_order_id: response.razorpay_order_id,
+                            razorpay_signature: response.razorpay_signature
+                        }
+                    })
+                    .done(function (msg) {
+                        console.log(msg);
+                        window.location = "/payment/"+msg.id;
+                    })
+                    .fail(function (msg){
+                        console.log(msg);
+                        showNotification(msg.responseJSON.message, 'danger');
+                    });   
+                    }};
+        var rzp1 = new Razorpay(options);
+        document.getElementById('rzp-button1').onclick = function(e){
+                rzp1.open();
+                e.preventDefault();
+                }
+        </script>
+                       {{else}}    
+                     
+                            <div class="cart-btn">
+                                <button class="btn btn-primary" type="submit">Place Order</button>
+                            </div>
+                    
+                            {{/if}}
             </div>
           </div>
 

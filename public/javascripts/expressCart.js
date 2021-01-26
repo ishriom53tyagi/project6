@@ -323,6 +323,51 @@ $('.meanmenu-reveal').on('click',function(e){
         e.preventDefault();
     });
 
+    $('#razorpay').on('click', function(e){
+        if(!e.isDefaultPrevented()) {
+            e.preventDefault();
+        }
+        $.ajax({
+            method: 'POST',
+            url: '/checkout/order/new',
+            data: {
+                firstName: $('#shipFirstname').val(),
+                lastName: $('#shipLastname').val(),
+                address: $('#shipAddr1').val(),
+                state: $('#shipState').val(),
+                postcode: $('#shipPostcode').val()
+            }
+        })
+        .done(function (msg){
+            console.log(msg);
+            $.ajax({
+                method: 'POST',
+                url: '/checkout/order/set',
+                data: {
+                    order_id: msg.message
+                }
+            });
+            window.location = '/checkout/information';
+        })
+        .fail(function (msg){
+            showNotification(msg.responseJSON.message, 'danger');
+        });
+    });
+    $('#cod').on('click',function(e){
+        e.preventDefault();
+        $.ajax({
+            method: 'POST',
+            url: '/checkout/order/reset',
+            data: {}
+        })
+        .done(function (msg){
+            window.location = '/checkout/information';
+        })
+        .fail(function (msg){
+            showNotification(msg.responseJSON.message, 'danger');
+        });
+        
+    });
     // Customer saving own details
     $('#customerSave').validator().on('click', function (e) {
         e.preventDefault();

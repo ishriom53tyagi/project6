@@ -305,11 +305,13 @@ router.post('/customer/save', async (req, res) => {
 router.get('/customer/account/:page?', async (req, res) => {
     const db = req.app.db;
     const config = req.app.config;
-
+    var allcustomer = await db.customers.find({}).toArray();
+    console.log(allcustomer);
     if(!req.session.customerPresent){
         res.redirect('/customer/login');
         return;
     }
+   
     var customer = await db.customers.findOne({_id: getId(req.session.customerId)});
     const orders = await db.orders.find({
         orderCustomer: getId(req.session.customerId)
@@ -349,7 +351,7 @@ router.post('/customer/update', async (req, res) => {
         customerObj["firstName"] = req.body.firstName;
     }
     if(req.body.lastName) {
-        customerObj["lastName"] = req.body.firstName;
+        customerObj["lastName"] = req.body.lastName;
     }
     if(req.body.address1) {
         customerObj["addressline"] = req.body.address1;

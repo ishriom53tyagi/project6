@@ -3782,3 +3782,11 @@ a.btn1-goback:hover {
     padding-right: 10rem;
   }
 }
+.radiotypepay {
+  display: block !important;
+  height: auto !important;
+  width: auto !important;
+}
+.radio12 {
+  display: flex;
+}

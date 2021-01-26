@@ -7,6 +7,7 @@ const _ = require('lodash');
 const common = require('../lib/common');
 const { indexOrders } = require('../lib/indexing');
 const numeral = require('numeral');
+const Razorpay = require('razorpay');
 const crypto = require('crypto');
 const {
     getId,
@@ -25,6 +26,12 @@ const {
     getCountryList
 } = require('../lib/common');
 const countryList = getCountryList();
+var keyid = "rzp_test_Q4SdVCKHGsa45S";
+var keysecret = "doUGurZrLU4jd4ZIj65Gbfpn";
+var instance = new Razorpay({
+    key_id: keyid,
+    key_secret: keysecret
+  })
 
 //This is how we take checkout action
 
@@ -34,12 +41,12 @@ router.post('/checkout_action',async (req, res, next) => {
 
     
     var customerObj = {};
-    if(req.body.shipFirstName) {
-        customerObj["firstName"] = req.body.shipFirstName;
+    if(req.body.shipFirstname) {
+        customerObj["firstName"] = req.body.shipFirstname;
     }
  
-    if(req.body.shipLastName) {
-        customerObj["lastName"] = req.body.shipLastName;
+    if(req.body.shipLastname) {
+        customerObj["lastName"] = req.body.shipLastname;
     }
     if(req.body.shipAddr1) {
         customerObj["addressline"] = req.body.shipAddr1;
@@ -156,6 +163,51 @@ router.get('/payment/:orderId', async (req, res, next) => {
 router.get('/emptycart', async (req, res, next) => {
     emptyCart(req, res, '');
 });
+router.post('/checkout/order/reset', async (req,res)=>{
+    req.session.orderidgenerated = false;
+    req.session.razorOrderId = null;
+    res.status(200).json({message: "Reset Successfull"});
+    return;
+});
+router.post('/checkout/order/new',async (req,res)=>{
+    
+    
+    if(!req.body.firstName || !req.body.lastName || !req.body.address || !req.body.state || !req.body.postcode ) {
+        res.status(400).json({message: "Name, Address and Postcode is Required"});
+        return;
+    }
+    req.session.firstName = req.body.firstName;
+    req.session.lastName = req.body.lastName;
+    req.session.address = req.body.address;
+    req.session.state = req.body.state;
+    req.session.postcode = req.body.postcode;
+    var amount = parseInt(Number(req.session.totalCartAmount) * 100);
+    var options = {
+        amount: amount,  // amount in the smallest currency unit
+        currency: "INR",
+        receipt: "rcptid_11"
+      };
+      req.session.razorpayamount = amount;
+      console.log(options);
+      var orderid = '';
+      instance.orders.create(options, function(err, order) {
+          if(err){
+              console.log(err);
+          }
+        console.log(order);
+        req.session.orderidgenerated = true;
+        orderid = order.id;
+        req.session.razorOrderId = order.id;
+        res.status(200).send({message: order.id});
+        return;
+      });     
+});
+router.post('/checkout/order/set', async (req,res)=>{
+    console.log("checkout set session",req.body.order_id);
+    req.session.razororderId = req.body.order_id;
+    req.session.razoridgenerated = true;
+    return;
+});
 router.get('/checkout/pay',async (req,res)=>{
     var db = req.app.db;
     const order = await db.orders.findOne({_id: common.getId(req.session.orderdbpay)});
@@ -184,16 +236,96 @@ router.post('/checkout/confirm/razorpay',async (req,res)=>{
     const db = req.app.db;
     var bodymessage = req.body.razorpay_order_id + `|` + req.body.razorpay_payment_id;
     console.log(req.body);
-    var secret = "OoIdqomItn95AxYNTZW5fWts"; // from the dashboard
+    var secret = "doUGurZrLU4jd4ZIj65Gbfpn"; // from the dashboard
     var generated_signature = crypto.createHmac("sha256",secret).update(bodymessage.toString()).digest('hex');
     console.log(generated_signature);
     console.log(req.body.razorpay_signature);
   if (req.body.razorpay_signature && generated_signature == req.body.razorpay_signature) {    
-    paymentStatus = "Paid";
-orderStatus = 'Pending'; 
-    await db.orders.findOneAndUpdate({_id: common.getId(req.session.orderdbpay)},{$set: {orderStatus: "Completed",paymentId: req.body.razorpay_payment_id, orderId: req.body.razorpay_order_id,paymentSignature: req.body.razorpay_signature}});
-    res.status(200).json({message: "Confirmed payment"});
-    return;
+  
+ 
+var customerObj = {
+    "firstName": req.session.firstName,
+    "lastName": req.session.lastName,
+    "state": req.session.state,
+    "postcode": req.session.postcode,
+    "address": req.session.address
+};
+await db.customers.findOneAndUpdate({_id: common.getId(req.session.customerId)},{$set: customerObj});
+var customer = await db.customers.findOne({_id: common.getId(req.session.customerId)});
+    // order status
+    let paymentStatus = 'Paid';
+ 
+    // new order doc
+    const orderDoc = {
+       // orderPaymentId: charge.id,
+      //  orderPaymentGateway: 'Stripe',
+       // orderPaymentMessage: charge.outcome.seller_message,
+        orderTotal: req.session.totalCartAmount,
+        orderShipping: req.session.totalCartShipping,
+        orderItemCount: req.session.totalCartItems,
+        orderProductCount: req.session.totalCartProducts,
+        orderCustomer: common.getId(req.session.customerId),
+        orderEmail: req.session.customerEmail,
+       // orderCompany: req.session.customerCompany,
+        orderFirstname: customer.firstName,
+        orderLastname: customer.lastName,
+        orderAddr1: customer.addressline,
+       // orderAddr2: req.session.customerAddress2,
+      //  orderCountry: req.session.customerCountry,
+        orderState: customer.state,
+        orderPostcode: customer.postcode,
+        orderPhoneNumber: req.session.customerPhone,
+        //orderComment: req.session.orderComment,
+        orderStatus: paymentStatus,
+        orderDate: new Date(),
+        orderProducts: req.session.cart,
+        orderType: 'Single'
+    };
+    
+    // insert order into DB
+    db.orders.insertOne(orderDoc, (err, newDoc) => {
+        if(err){
+            console.info(err.stack);
+        }
+
+        // get the new ID
+        const newId = newDoc.insertedId;
+
+        // add to lunr index
+        indexOrders(req.app)
+        .then(() => {
+            // if approved, send email etc
+                // set the results
+                req.session.messageType = 'success';
+                req.session.message = 'Your payment was successfully completed';
+                req.session.paymentEmailAddr = newDoc.ops[0].orderEmail;
+                req.session.paymentApproved = true;
+                req.session.paymentDetails = '<p><strong>Order ID: </strong>' + newId ;
+
+                // set payment results for email
+                const paymentResults = {
+                    message: req.session.message,
+                    messageType: req.session.messageType,
+                    paymentEmailAddr: req.session.paymentEmailAddr,
+                    paymentApproved: true,
+                    paymentDetails: req.session.paymentDetails
+                };
+
+                // clear the cart
+                if(req.session.cart){
+                    common.emptyCart(req, res, 'function');
+                }
+
+                // send the email with the response
+                // TODO: Should fix this to properly handle result
+                // common.sendEmail(req.session.paymentEmailAddr, 'Your payment with ' + config.cartTitle, common.getEmailTemplate(paymentResults));
+
+                // redirect to outcome
+                res.status(200).json({id: newId});
+                return;
+            
+        });
+    });
 }
 else  {
     res.status(400).json({message: "Payment Failed"});
@@ -251,6 +383,9 @@ router.get('/checkout/information', async (req, res, next) => {
         session: req.session,
         categories: req.app.categories,
         customerArray: customerArray,
+        razorpayid: req.session["razorOrderId"],
+        razoramount: req.session["razorpayamount"],
+        keyId: "rzp_test_Q4SdVCKHGsa45S",
         paymentType,
         cartClose: false,
         page: 'checkout-information',
@@ -1127,6 +1262,7 @@ router.get('/sitemap.xml', (req, res, next) => {
 });
 
 router.get('/:page?', async (req, res, next) => {
+    
     const db = req.app.db;
     const config = req.app.config;
     const numberProducts = config.productsPerPage ? config.productsPerPage : 6;
