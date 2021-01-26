@@ -5,6 +5,7 @@ const stripHtml = require('string-strip-html');
 var moment = require('moment-timezone');
 const _ = require('lodash');
 const common = require('../lib/common');
+const mailer = require('../misc/mailer');
 const { indexOrders } = require('../lib/indexing');
 const numeral = require('numeral');
 const crypto = require('crypto');
@@ -118,8 +119,10 @@ router.post('/checkout_action',async (req, res, next) => {
 
                     // send the email with the response
                     // TODO: Should fix this to properly handle result
-                    common.sendEmail(req.session.paymentEmailAddr, 'Your payment with ' + config.cartTitle, common.getEmailTemplate(paymentResults));
-
+                    //common.sendEmail(req.session.paymentEmailAddr, 'Your payment with ' + config.cartTitle, common.getEmailTemplate(paymentResults));
+                
+           // console.log("Session email Id is here"+req.session.customerEmail);
+           //await mailer.sendEmail('admin@bnbherbs.in',req.session.customerEmail,'Order Complete',html)
                     // redirect to outcome
                     res.redirect('/payment/' + newId);
                 
@@ -574,6 +577,8 @@ router.get('/product/:id', async (req, res) => {
             productPublished: true
         }).limit(4).toArray();
     }
+
+    console.log(product);
 
     res.render(`${config.themeViews}product`, {
         title: product.productTitle,

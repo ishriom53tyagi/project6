@@ -364,7 +364,7 @@
   
   
   {{#if @root.session.customerPresent}}
-    <li  class="dropdown-holder top-hover"  data-columns=""><a href="#"><span>My Account</span></a>
+    <li  class="dropdown-holder top-hover"  data-columns=""><a href="/customer/account"><span>My Account</span></a>
     <ul class="submenu ">
       
       
@@ -384,7 +384,7 @@
     </ul>
   </li>
   {{else}}
-  <li  class="dropdown-holder top-hover"  data-columns=""><a href="#"><span>Login/Register</span></a>
+  <li  class="dropdown-holder top-hover"  data-columns=""><a href="/customer/login"><span>Login/Register</span></a>
     <ul class="submenu ">
       
       
@@ -481,8 +481,8 @@
        <a class="meanmenu-reveal" style="text-align: center; text-indent: 0px; font-size: 18px;position: fixed;top: 35px;margin-right: 20px"><span></span><span></span><span></span></a>
        <nav class="mean-nav">
                                 <ul class="menu-overflow-mobile" style="display: none;">
-                                    <li><a href="#">HOME</a></li>
-                                    <li><a href="#">About</a></li>
+                                    <li><a href="/">HOME</a></li>
+                                    <li><a href="/customer/aboutus">About</a></li>
                                     {{#if @root.session.customerPresent}}
                                     <li><a href="/customer/account">My Account</a></li>
                                     <li><a href="/customer/logout">Logout</a></li>
@@ -517,7 +517,7 @@
                             </nav></div>
                             <div class="mean-push"></div><nav id="mobile-menu-active" style="display: none;">
                                 <ul class="menu-overflow">
-                                    <li><a href="#">HOME</a>
+                                    <li><a href="/">HOME</a>
                                         <ul>
                                             <li><a href="index.html">home version 1</a></li>
                                             <li><a href="index-2.html">home version 2</a></li>
@@ -706,14 +706,14 @@
         <div class="footer-widget mb-40">
           <div class="footer-title mb-25"><h4 class="footer-widget-title">My Account</h4></div>
           <div class="footer-content">
-            <ul><li><a href="customer/account">My Account</a></li><li><a href="customer/account">Order History</a></li><li><a href="#">Newsletter</a></li></ul>
+            <ul><li><a href="/customer/account">My Account</a></li><li><a href="/customer/account">Order History</a></li><li><a href="#">Newsletter</a></li></ul>
           </div>
         </div>
       </div><div class="col-lg-3 col-md-6 col-sm-6">
         <div class="footer-widget mb-40">
           <div class="footer-title mb-25"><h4 class="footer-widget-title">Information</h4></div>
           <div class="footer-content">
-            <ul><li><a href="/customer/aboutus">About Us</a></li><li><a href="/customer/delivery">Delivery Information</a></li><li><a href="/customer/privacy">Privacy Policy</a></li><li><a href="/customer/terms">Terms & Conditions</a></li><li><a href="/customer/delivery">Return Policy</a></li></ul>
+            <ul><li><a href="/customer/delivery">Shipping and Return Policy</a></li><li><a href="/customer/privacy">Privacy Policy</a></li><li><a href="/customer/terms">Terms & Conditions</a></li></ul>
           </div>
         </div>
       </div><div class="col-lg-3 col-md-6 col-sm-6">
@@ -721,13 +721,13 @@
           <div class="footer-title mb-25"><h4 class="footer-widget-title">Contact Us</h4></div>
           <div class="footer-about">
             
-            <p>Your current address goes to here,120 example, country.</p>
+            <p>UGF,RZ-D-1/94 PLOT NO 22,Mahavir enclave,Street NO 5,Palam Village,New Delhi,South West Delhi ,110045</p>
             
 
             <div class="footer-contact mt-20">
               <ul>
                 
-                <li>+91 8745038010</li>
+                <li>+91 9319284485</li>
                 
               
                 
@@ -736,10 +736,6 @@
 
             <div class="footer-contact mt-20">
               <ul>
-                
-                <li>support@bnbHerbs.com</li>
-                
-
                 <li>info@bnbHerbs.com</li>
                 
               </ul>
@@ -751,7 +747,7 @@
           <div class="footer-title mb-25"><h4 class="footer-widget-title">Find us</h4></div>
           <div class="footer_social_desc mb-25">
             
-            <p>Your Description goes to here you can find us here</p>
+            <p>B & B AGRO INDIA ENTERPRISES</p>
             
           </div>
           
