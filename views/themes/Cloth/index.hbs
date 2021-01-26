@@ -1,649 +1,1434 @@
-
-{{> themes/Cloth/front-menu}}
-
-{{!-- <div class="productsWrapper col-sm-12 col-md-8 offset-md-2">
-
-    {{#if filtered}}
-        <div class="product-layout product-results col-sm-12">
-            {{#ifCond @root.paginateUrl '==' 'category'}}
-            <h1>{{ @root.__ "Category" }}: <strong>{{@root.searchTerm}}</strong></h1>
-            {{else}}
-            <h1>{{ @root.__ "Search results" }}: <strong>{{@root.searchTerm}}</strong></h1>
-            {{/ifCond}}
+<main>
+      <!-- BEGIN content_for_index --><div id="shopify-section-1543381875809" class="shopify-section"><!-- Slider Start -->
+<div class="slider-area" id="section-1543381875809">
+  <div class="slider-active owl-dot-style owl-carousel">
+    
+    
+    <div class="single-slider ptb-240 bg-img" style="background-image: url(../cdn.shopify.com/s/files/1/0053/5665/0560/files/slider-1cf35.jpg?v=1545103666);">
+      <div class="container">
+        <div class="slider-content slider-animated-1">
+          
+          <h1 class="animated"> Want to stay <span class="theme-color">healthy</span> </h1>
+          
+          
+          <h1 class="animated">Try Herbs.</h1>
+          
+          
+          <p>Herbal medicine has its origins in ancient cultures. It involves the medicinal use of plants to treat disease and enhance general health and wellbeing</p>
+          
+          
+          <div class="herobanner-box">
+            <a href="/" class="lezada-button lezada-button--medium">
+              <i class="lnr lnr-cart"></i>
+              <span>Shop Now</span>
+            </a>
+          </div>
+          
         </div>
-    {{/if}}
-    <div class="row product-layout">
-        {{#ifCond results.length '==' 0}}
+      </div>
+    </div>
+    
+    
+    
+    <div class="single-slider ptb-240 bg-img" style="background-image: url(../cdn.shopify.com/s/files/1/0053/5665/0560/files/slider-1-199de.jpg?v=1545103680);">
+      <div class="container">
+        <div class="slider-content slider-animated-1">
+          
+          <h1 class="animated"> Want to stay <span class="theme-color">healthy</span> </h1>
+          
+          
+          <h1 class="animated">drink matcha.</h1>
+          
+          
+          <p>Lorem ipsum dolor sit amet, consectetu adipisicing elit sedeiu tempor inci ut labore et dolore magna aliqua.</p>
+          
+          
+          <div class="herobanner-box">
+            <a href="collections/new-products.html" class="lezada-button lezada-button--medium">
+              <i class="lnr lnr-cart"></i>
+              <span>Shop Now</span>
+            </a>
+          </div>
+          
+        </div>
+      </div>
+    </div>
+    
+    
+    
+    
+  </div>
+</div>
+<!-- Slider End --><style data-shopify>#section-1543381875809{}@media (min-width: 768px) and (max-width: 991px) {
+    #section-1543381875809{}
+  }
+  @media (max-width: 767px) {
+    #section-1543381875809{}
+  }</style><style>#section-1543381875809  .slider-content h1 {
+      color: #000!important;
+    }
+    #section-1543381875809  .slider-content h1 span.theme-color {
+      color: #519f10!important;
+    }
+    #section-1543381875809 .slider-content > p  {
+      color: #6d6a6a!important;
+    }
+    #section-1543381875809 .lezada-button.lezada-button--medium {
+      background-color: #000000;
+      border-color: #000000;
+      color: #fff !important;
+    }
+    #section-1543381875809 .lezada-button.lezada-button--medium:hover {
+      background-color: #519f10;
+      border-color: #519f10;
+      color: #ffffff !important;
+    }</style>
+
+
+
+<script>
+    /* Slider active */
+ $('#section-1543381875809 .slider-active').owlCarousel({
+      loop: true,
+      nav: false,
+      autoplay: false,
+      
+      autoplayTimeout: 5000,
+      animateOut: 'fadeOut',
+      animateIn: 'fadeIn',
+      navText: ['<i class="fa fa-angle-left"></i>', '<i class="fa fa-angle-right"></i>'],
+      item: 1,
+      responsive: {
+        0: {
+          items: 1
+        },
+        768: {
+          items: 1
+        },
+        1000: {
+          items: 1
+        }
+      }
+ })
+</script>
+
+
+
+
+
+</div>
+<div id="shopify-section" class="shopify-section"><!-- Product Area Start -->
+<div class="product-area bg-image-1 pt-100 pb-95" id="section-1543414211428">
+  <div class="container">
+
+    <!-- product-item start -->
+    
+    
+<div class="featured-product-active hot-flower owl-carousel product-nav">
+
+   {{#ifCond results.length '==' 0}}
             <div class="col-sm-12">
                 <p class="text-danger">{{ @root.__ "No products found" }}</p>
             </div>
-        {{/ifCond}}
-        {{#each results}}
-            <div class="{{perRowClass ../config.productsPerRow}}">
-                <div class="thumbnail">
-                    {{#if productPermalink}}
-                        <div class="product-wrapper">
-                            <a href="/product/{{this.productPermalink}}">
-                                <div class="vertical-center img-thumbnail">
-                                    {{#if productImage}}
-                                        <img class="img-fluid" src="{{this.productImage}}" alt="...">
-                                    {{else}}
-                                        <img class="img-fluid" src="/uploads/placeholder.png" alt="...">
-                                    {{/if}}
-                                </div>
-                                <h3 class="product-title product-title-home top-pad-10">
-                                    {{this.productTitle}}
-                                </h3>
-                            </a>
-                        </div>
-                    {{else}}
-                        <a href="/product/{{this._id}}">
-                            <div class="vertical-center img-thumbnail">
-                                {{#if productImage}}
-                                    <img class="img-fluid" src="{{this.productImage}}" alt="...">
-                                {{else}}
-                                    <img class="img-fluid" src="/uploads/placeholder.png" alt="...">
-                                {{/if}}
-                            </div>
-                            <h3 class="product-title product-title-home top-pad-10">
-                                {{this.productTitle}}
-                            </h3>
-                        </a>
-                    {{/if}}
-                    {{#if variants}}
-                        <div class="col-md-12">
-                            {{#if @root.config.showHomepageVariants}}
-                            <select id="productVariant-{{this._id}}" class="productVariant form-control mb-2">
-                            {{#each variants}}
-                                <option value="{{this._id}}" data-price="{{this.price}}">{{this.title}} - {{currencySymbol @root.config.currencySymbol}}{{this.price}}</option>
-                            {{/each}}
-                            </select>
-                            {{else}}
-                            <h4 class="product-price mp-0 text-center">
-                                {{currencySymbol @root.config.currencySymbol}}{{formatAmount variants.0.price}}
-                            </h4>
-                            {{/if}}
-                        </div>
-                    {{else}}
-                        <h4 class="product-price mp-0 text-center">
-                            {{currencySymbol @root.config.currencySymbol}}{{formatAmount productPrice}}
-                        </h4>
-                    {{/if}}
-                    <p class="text-center">
-                        {{#if @root.config.showHomepageVariants}}
-                        <a class="btn btn-primary add-variant-to-cart" data-id="{{this._id}}" role="button">{{ @root.__ "Add to cart" }}</a>
-                        {{else}}
-                        <a class="btn btn-primary add-to-cart" data-id="{{this._id}}" data-link="{{this.productPermalink}}" data-has-variants="{{checkProductVariants this.variants}}" role="button">{{ @root.__ "Add to cart" }}</a>
-                        {{/if}}
-                    </p>
-                </div>
-            </div>
-        {{/each}}
-    </div>
-</div>  --}}
+     {{/ifCond}}
+   {{#each results}}
+      
+<div class="product-wrapper">
+  <div class="product-img">
+  {{#if productImage}}
+    <a href="/product/{{this.productPermalink}}" class="grid__image">
+      <img src="{{this.productImage.[0].path}}" alt="">
+    </a>
+   <!-- Hover Thumb -->
+ 
+  {{else}}
+    <img src="/images/p5.jpeg" alt="First Image">
+
+   {{/if}}
 
 
-<div class="Categories">
-  <h3>Categories
-    <hr>
-  </h3>
-  <div class="carousel-category owl-carousel">
-    <div>
-      <a href="/category/flour"><img src="/images/flour.jpg" alt=""></a>
+     {{!-- <div class="tags">
+       {{#if productDiscountPrice}}
+           <div class="discount">
+                  {{#discount productPrice productDiscountPrice}}
+                        {{this}}
+                   {{/discount}}% Off
+                        </div> 
+                   {{/if}}
+                      {{#if this.productOffer}}
+                       <div class="offer">
+                        {{this.productOffer}}
+                         </div>
+                   {{/if}}
+          </div> --}}
+<span class="sale-title">Sale</span>
+
+
+<span class="percent-count">{{#discount productPrice productDiscountPrice}}
+                        {{this}}
+                   {{/discount}}%</span>
+
+
+
+
+
+<div class="product-action">
+      
+<a class="wishlist action-wishlist" href="account/login.html" title="Wishlist">
+  <i class="ion-android-favorite-outline"></i>
+</a>
+
+ 
+      
+<a class="action-plus action-compare" title="Quick View" data-toggle="modal" data-target="#quickViewModal" href="javascript:void(0);" 
+         onclick="quiqview('product-title-here-3')"><i class="ion-ios-search-strong"></i>
+      </a>
+      
+      
     </div>
-    <div>
-      <a href="/category/fruit"><img src="/images/fruit.jpg" alt=""></a>
+    <div class="nrb_p_countdown">
+      
+      
+      
+      <div data-countdown="2021/05/24"></div> 
+      
     </div>
-    <div>
-      <a href="/category/eggs"><img src="/images/eggs.jpg" alt=""></a>
+  </div>
+  <div class="product-content text-left">
+    <div class="product-hover-style">
+      <div class="product-title">
+        <h4>
+          <a href="products/product-title-here-3.html">    {{this.productTitle}}   </a>
+        </h4>
+      </div>
+      <div class="cart-hover"><div class="product-cart-action">
+          
+          
+          <a class="add-to-cart ajax-spin-cart" data-id="{{this._id}}">
+            <span>
+              <span class="cart-title"> <i class="fa fa-plus" aria-hidden="true"></i> Add to cart</span>
+              
+            </span>
+          </a>
+          
+          
+        </div></div>
     </div>
-    <div>
-      <a href="/category/milk"><img src="/images/milk.jpg" alt=""></a>
-    </div>
-    <div>
-      <a href="/category/veget"><img src="/images/veget.jpg" alt=""></a>
-    </div>
-    <div>
-      <a href="/category/vegetables"><img src="/images/vegetables.jpg" alt=""></a>
-    </div>
-    <div>
-      <a href="/category/flour"><img src="/images/flour.jpg" alt=""></a>
+    <div class="product-price-wrapper">
+      <span><span class=money>&#8377;{{this.productPrice}}</span></span> 
+      
+      <span class="product-price-old">  <i class="ti-minus"></i>  <span class=money>&#8377;{{this.productDiscountPrice}}</span> </span>
+      
     </div>
   </div>
 </div>
-
-
-
-
-
-<div class="productslider1">
-            <h3 class="title">Most Discount
-                <hr>
-            </h3>
-
-
-
-    {{#if filtered}}
-        <div class="product-layout product-results col-sm-12">
-            {{#ifCond @root.paginateUrl '==' 'category'}}
-            <h1>{{ @root.__ "Category" }}: <strong>{{@root.searchTerm}}</strong></h1>
-            {{else}}
-            <h1>{{ @root.__ "Search results" }}: <strong>{{@root.searchTerm}}</strong></h1>
-            {{/ifCond}}
-        </div>
-    {{/if}}
+{{/each}}
       
-            
-    <div class="parent-box owl-carousel">
-               
-  
-        {{#ifCond results.length '==' 0}}
-            <div class="col-sm-12">
-                <p class="text-danger">{{ @root.__ "No products found" }}</p>
-            </div>
-        {{/ifCond}}
-        
-        
-        {{#each results}}
-        <div class="box">
-         <div class="single-product"> 
-           
-             
-                    {{#if productPermalink}}
-                        
-                            <a href="/product/{{this.productPermalink}}">
-                                <div class="product-thumb">
-                                    {{#if productImage}}
-                                        <img src="{{this.productImage.[0].path}}" alt="...">
-                                    {{else}}
-                                        <img src="/uploads/placeholder.png" alt="...">
-                                    {{/if}}
-                                     <a class="btn-round" data-id="{{this._id}}" data-link="{{this.productPermalink}}" data-has-variants="{{checkProductVariants this.variants}}" role="button"><i class="fa fa-shopping-cart"></i></a>
-                                  </div>
-                                
-                                <div class="product-title">
-                                  <h3>
-                                    {{this.productTitle}}
-                                  </h3>
-                                     {{#if variants}}
-                       
-                            {{#if @root.config.showHomepageVariants}}
-                            <select id="productVariant-{{this._id}}">
-                            {{#each variants}}
-                              <option value="{{this._id}}" data-price="{{this.price}}">{{this.title}} - {{currencySymbol @root.config.currencySymbol}}{{this.price}}</option>
-                            {{/each}}
-                            </select>
-                            {{else}}
-                            <p>
-                                {{currencySymbol @root.config.currencySymbol}}{{formatAmount variants.0.price}}
-                            </p>
-                            {{/if}}
-                
-                    {{else}}
-                        <p>
-                            {{currencySymbol @root.config.currencySymbol}}{{formatAmount productPrice}}
-                            <span>₹950</span>
-                        </p>
-                    {{/if}}
-                    <span class="save">Save ₹32</span>
-                                </div>
-                            </a>
-                        
-                    {{else}}
-                        <a href="/product/{{this._id}}">
-                            <div class="product-thumb">
-                                {{#if productImage}}
-                                    <img src="{{this.productImage.[0].path}}" alt="...">
-                                {{else}}
-                                    <img src="/uploads/placeholder.png" alt="...">
-                                {{/if}}
-                                 <a class="btn-round" data-id="{{this._id}}" data-link="{{this.productPermalink}}" data-has-variants="{{checkProductVariants this.variants}}" role="button"><i class="fa fa-shopping-cart"></i></a>
-                           </div>
+    </div>
+       
+    
+    
+  </div>
+</div>
+<!-- Product Area End -->
 
-                           <div class="product-title">
-                           <h3>         {{this.productTitle}}
-                           </h3>
-                              {{#if variants}}
-                       
-                            {{#if @root.config.showHomepageVariants}}
-                            <select id="productVariant-{{this._id}}">
-                            {{#each variants}}
-                              <option value="{{this._id}}" data-price="{{this.price}}">{{this.title}} - {{currencySymbol @root.config.currencySymbol}}{{this.price}}</option>
-                            {{/each}}
-                            </select>
-                            {{else}}
-                            <p>
-                                {{currencySymbol @root.config.currencySymbol}}{{formatAmount variants.0.price}}
-                            </p>
-                            {{/if}}
-                
-                    {{else}}
-                        <p>
-                            {{currencySymbol @root.config.currencySymbol}}{{formatAmount productPrice}}
-                            <span>₹950</span>
-                        </p>
-                    {{/if}}
-                          <span class="save">Save ₹32</span>
-                           </div>
-                        
-                        </a>
-                    
-                    {{/if}}
-                 
+
+<style>
+  #section-1543414211428{
+    
+    
+        
+        
+    background: #ffffff 
+      url("../cdn.shopify.com/s/files/1/0053/5665/0560/files/bg-16327.jpg?v=1545103781") no-repeat scroll center center / cover;
+        
+        
+        }
+  @media (max-width: 767px) {
+    #section-1543414211428{
+      
+      
+      
+      
+      
+    }
+  }
+
+
+</style> 
+
+<script>
+
+     /* featured active */
+    $('#section-1543414211428 .featured-product-active').owlCarousel({
+      loop: false,
+      nav: false,
+      autoplay: false,
+      
+      autoplayTimeout: 5000,
+      navText: ['<i class="ion-ios-arrow-back"></i>', '<i class="ion-ios-arrow-forward"></i>'],
+      item: 4,
+      margin: 30,
+      responsive: {
+        0: {
+          items: 1
+        },
+        576: {
+          items: 1
+        },
+        768: {
+          items: 2
+        },
+        992: {
+          items: 3
+        },
+        1100: {
+          items: 3
+        },
+        1200: {
+          items: 4
+        }
+      }
+    })
+
+</script>
+
+
+
+
+
+
+
+
+
+</div><div id="shopify-section-1543464933760" class="shopify-section">
+<!-- Banner Start -->
+<div class="banner-area pt-100 pb-70" id="section-1543464933760">
+  <div class="container">
+    <div class="banner-wrap">
+      <div class="row">
+           
+        
+        <div class="col-lg-6 col-md-6 col-sm-6 order-  order-sm-   order-md-  ">
+          <div class="single-banner img-zoom mb-30">
+          <a href="products/1-new-and-sale-badge-product.html">
+            <img src="../cdn.shopify.com/s/files/1/0053/5665/0560/files/banner-1_1024x1024%402xe217.png?v=1545103819" alt="">
+          </a>
+            <div class="banner-content">
+              
+              <h4>-50% Sale</h4>
+              
+              
+              <h5>Winter Vacation</h5>
+              
+            </div>
           </div>
         </div>
-        {{/each}}
+        
+           
+        
+        <div class="col-lg-6 col-md-6 col-sm-6 order-  order-sm-   order-md-  ">
+          <div class="single-banner img-zoom mb-30">
+          <a href="products/2-new-badge-product.html">
+            <img src="../cdn.shopify.com/s/files/1/0053/5665/0560/files/banner-2_1024x1024%402xa78f.png?v=1545103836" alt="">
+          </a>
+            <div class="banner-content">
+              
+              <h4>-25% Sale</h4>
+              
+              
+              <h5>Summer Vacation</h5>
+              
+            </div>
+          </div>
+        </div>
+        
+        
+      </div>
+    </div>
+  </div>
+</div>
+<!-- Banner End -->
+
+
+
+
+
+
+<style>
+  #section-1543464933760{
     
-    </div>
-</div> 
+    
+        
+    
+        
+        }
+  @media (max-width: 767px) {
+    #section-1543464933760{
+      
+      
+      
+      
+      
+    }
+  }
+  
+</style> 
 
 
-<div class="offers1">
-  <a href="/category/vegetable"><img src="/images/offer2.jpg" alt=""></a>
-  <a href="/category/fruit"><img src="/images/offer1.jpg" alt=""></a>
+
+
+
+
+
 </div>
 
+<!-- New Products Start -->
+<div id="shopify-section" class="shopify-section"><!-- Product Area Start -->
+<div class="product-area bg-image-1 pt-100 pb-95" id="section-1543414211428">
+  <div class="container">
+
+    <!-- product-item start -->
+    
+    
+<div class="featured-product-active hot-flower owl-carousel product-nav">
+
+   {{#ifCond results.length '==' 0}}
+            <div class="col-sm-12">
+                <p class="text-danger">{{ @root.__ "No products found" }}</p>
+            </div>
+     {{/ifCond}}
+   {{#each results}}
+      
+<div class="product-wrapper">
+  <div class="product-img">
+  {{#if productImage}}
+    <a href="/product/{{this.productPermalink}}" class="grid__image">
+      <img src="{{this.productImage.[0].path}}" alt="">
+    </a>
+   <!-- Hover Thumb -->
+  
+  {{else}}
+    <img src="/images/p5.jpeg" alt="First Image">
+        <!-- Hover Thumb -->
+   
+   {{/if}}
 
 
-{{!-- Purva's Code --}}
+     {{!-- <div class="tags">
+       {{#if productDiscountPrice}}
+           <div class="discount">
+                  {{#discount productPrice productDiscountPrice}}
+                        {{this}}
+                   {{/discount}}% Off
+                        </div> 
+                   {{/if}}
+                      {{#if this.productOffer}}
+                       <div class="offer">
+                        {{this.productOffer}}
+                         </div>
+                   {{/if}}
+          </div> --}}
+<span class="sale-title">Sale</span>
 
-<div class="productslider1">
-  <h3 class="title">Trending Products
-    <hr>
-  </h3>
-  <div class="parent-box owl-carousel">
 
-    <div class="box">
-      <div class="single-product">
-        <div class="product-thumb">
-          <img src="/images/product3.jpeg">
-          <a href="#" class="btn-round"><i class="fa fa-shopping-cart"></i></a>
-        </div>
+<span class="percent-count">{{#discount productPrice productDiscountPrice}}
+                        {{this}}
+                   {{/discount}}%</span>
 
-        <div class="product-title">
-          <h3>Mobile Phone</h3>
 
-          <p>₹900<span>₹950</span></p>
-          <span class="save">Save ₹32</span>
-        </div>
 
+
+
+<div class="product-action">
+      
+<a class="wishlist action-wishlist" href="account/login.html" title="Wishlist">
+  <i class="ion-android-favorite-outline"></i>
+</a>
+
+ 
+      
+<a class="action-plus action-compare" title="Quick View" data-toggle="modal" data-target="#quickViewModal" href="javascript:void(0);" 
+         onclick="quiqview('product-title-here-3')"><i class="ion-ios-search-strong"></i>
+      </a>
+      
+      
+    </div>
+    <div class="nrb_p_countdown">
+      
+      
+      
+      <div data-countdown="2021/05/24"></div> 
+      
+    </div>
+  </div>
+  <div class="product-content text-left">
+    <div class="product-hover-style">
+      <div class="product-title">
+        <h4>
+          <a href="products/product-title-here-3.html">    {{this.productTitle}}   </a>
+        </h4>
+      </div>
+      <div class="cart-hover"><div class="product-cart-action">
+          
+          
+          <a class="add-to-cart ajax-spin-cart" data-id="{{this._id}}">
+            <span>
+              <span class="cart-title"> <i class="fa fa-plus" aria-hidden="true"></i> Add to cart</span>
+              
+            </span>
+          </a>
+          
+          
+        </div></div>
+    </div>
+    <div class="product-price-wrapper">
+      <span><span class=money>&#8377;{{this.productPrice}}</span></span> 
+      
+      <span class="product-price-old">  <i class="ti-minus"></i>  <span class=money>&#8377;{{this.productDiscountPrice}}</span> </span>
+      
+    </div>
+  </div>
+</div>
+{{/each}}
+      
+    </div>
+       
+    
+    
+  </div>
+</div>
+<!-- Product Area End -->
+
+
+<style>
+  #section-1543414211428{
+    
+    
+        
+        
+    background: #ffffff 
+      url("../cdn.shopify.com/s/files/1/0053/5665/0560/files/bg-16327.jpg?v=1545103781") no-repeat scroll center center / cover;
+        
+        
+        }
+  @media (max-width: 767px) {
+    #section-1543414211428{
+      
+      
+      
+      
+      
+    }
+  }
+
+
+</style> 
+
+<script>
+
+     /* featured active */
+    $('#section-1543414211428 .featured-product-active').owlCarousel({
+      loop: false,
+      nav: false,
+      autoplay: false,
+      
+      autoplayTimeout: 5000,
+      navText: ['<i class="ion-ios-arrow-back"></i>', '<i class="ion-ios-arrow-forward"></i>'],
+      item: 4,
+      margin: 30,
+      responsive: {
+        0: {
+          items: 1
+        },
+        576: {
+          items: 1
+        },
+        768: {
+          items: 2
+        },
+        992: {
+          items: 3
+        },
+        1100: {
+          items: 3
+        },
+        1200: {
+          items: 4
+        }
+      }
+    })
+
+</script>
+
+
+
+
+
+
+
+
+
+</div><div id="shopify-section-1543464933760" class="shopify-section">
+
+<!-- New Products End -->
+
+
+<style>
+  #section-1543469428608{
+    
+    
+        
+        }
+  @media (max-width: 767px) {
+    #section-1543469428608{
+      
+      
+      
+    }
+  }
+
+
+</style> 
+
+
+
+<script>
+
+     /* featured active */
+    $('#section-1543469428608 .featured-product-active').owlCarousel({
+      loop: true,
+      nav: false,
+      autoplay: false,
+      
+      autoplayTimeout: 5000,
+      navText: ['<i class="ion-ios-arrow-back"></i>', '<i class="ion-ios-arrow-forward"></i>'],
+      item: 4,
+      margin: 30,
+      responsive: {
+        0: {
+          items: 1
+        },
+        576: {
+          items: 1
+        },
+        768: {
+          items: 2
+        },
+        992: {
+          items: 3
+        },
+        1100: {
+          items: 3
+        },
+        1200: {
+          items: 4
+        }
+      }
+    })
+
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</div><div id="shopify-section-1543483016867" class="shopify-section">
+<!-- Testimonial Area Start -->
+<div class="testimonials-area bg-img pt-100 pb-100"  id="section-1543483016867">
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-12 col-md-12 col-12">
+        <div class="testimonial-active owl-carousel">
+          <div class="single-testimonial text-center">
+            
+            <div class="testimonial-img">
+              <img class="avatar wp-post-image" src="../cdn.shopify.com/s/files/1/0053/5665/0560/files/testi_compactc343.png?v=1543483562" alt="">
+            </div>
+            
+<p>There are no incurable diseases — only the lack of will. There are no worthless herbs — only the lack of knowledge.</p><h4>Avicenna </h4>
+            
+<h5>Customer</h5>
+            
+          </div>
+          
+
+          <div class="single-testimonial text-center">
+            
+            <div class="testimonial-img">
+              <img class="avatar wp-post-image" src="../cdn.shopify.com/s/files/1/0053/5665/0560/files/testi_compactc343.png?v=1543483562" alt="">
+            </div>
+            
+<p>Lorem ipsum dolor sit amet, consectetur adipisici elit, sed do eiusmod tempor incididunt ut labore.</p><h4>John Sullivan</h4>
+            
+<h5>Customer</h5>
+            
+          </div>
+          
+
+          <div class="single-testimonial text-center">
+            
+            <div class="testimonial-img">
+              <img class="avatar wp-post-image" src="../cdn.shopify.com/s/files/1/0053/5665/0560/files/testi_compactc343.png?v=1543483562" alt="">
+            </div>
+            
+<p>Ipsum lorem  dolor sit amet, consectetur adipisici elit, sed do eiusmod tempor incididunt ut labore</p><h4>Gregory Perkins</h4>
+            
+<h5>Customer</h5>
+            
+          </div>
+          
+</div>
       </div>
     </div>
+  </div>
+</div>
+<!-- Testimonial Area End -->
 
 
-    <div class="box">
-      <div class="single-product">
-        <div class="product-thumb">
-          <img src="/images/product4.jpg">
-          <a href="#" class="btn-round"><i class="fa fa-shopping-cart"></i></a>
-        </div>
 
-        <div class="product-title">
-          <h3>Face Wash</h3>
 
-          <p>₹900<span>₹950</span></p>
-          <span class="save">Save ₹32</span>
+
+<style>
+  #section-1543483016867{
+    
+    
+        
+    
+        
+    
+        
+        }
+  @media (max-width: 767px) {
+    #section-1543483016867{
+      
+      
+      
+      
+      
+      
+      
+    }
+  }
+
+
+</style> 
+
+
+<script>
+ 
+    /* Testimonial active */
+    $('.testimonial-active').owlCarousel({
+      loop: true,
+      nav: false,
+      
+      dots: false,
+      autoplay: false,
+      autoplayTimeout: 5000,
+      animateOut: 'fadeOut',
+      animateIn: 'fadeIn',
+      item: 1,
+      responsive: {
+        0: {
+          items: 1
+        },
+        768: {
+          items: 1
+        },
+        1000: {
+          items: 1
+        }
+      }
+    })
+
+  
+  
+</script>
+
+
+
+
+
+
+
+
+
+
+</div><div id="shopify-section-1566450968456" class="shopify-section"><section class="special-product-area special-product-bg" id="section-1566450968456" data-section-id="1566450968456">
+  <div class=" container ">
+    <div class="row align-items-center">
+      <div class="col-md-5 text-right">
+        
+        <figure><img src="/images/herbal1.jpeg" alt=""></figure>
+        
+      </div>
+      <div class="col-md-7">
+        <div class="special-product pl--65 pl-sm--15 pt-sm--30">
+          
+          <h3 class="special-product__title">100 items - Health Beneficial Herbal Medicine</h3>
+          
+          
+          
+          <h2 class="special-product__discount mb--35 mb-md--25 mb-sm--20">Sale 50%</h2>
+          
+          
+          
+          <div class="special-product__countdown mb--30 mb-sm--20">
+            <div class="product-countdown zuka_countdown44" data-countdown="2019/12/30"></div>
+          </div>
+          
+          
+          
+          <a href="/" class="lezada-button lezada-button--medium"> Shop Now</a>
+          
+          
+          
+          <p class="mt--40 mt-md--30 mt-sm--20 heading-color">Freeship order over &#8277;999</p>
+          
         </div>
       </div>
     </div>
+  </div>
+</section>
+
+<style data-shopify>#section-1566450968456{background: #ffffff url("../cdn.shopify.com/s/files/1/0053/5665/0560/files/bg_blue275b.jpg?v=1566451673")no-repeat scroll center center / cover;margin-top: 0px !important;
+    margin-bottom: 100px !important;}#section-1566450968456.section_overlay::before  {
+    background: ;
+    opacity: ;
+    }@media (min-width: 768px) and (max-width: 991px) {
+    #section-1566450968456{margin-top: 0px !important;
+      margin-bottom: 60px !important;}
+  }
+  @media (max-width: 767px) {
+    #section-1566450968456{margin-top: 0px !important;
+      margin-bottom: 60px !important;}
+  }</style>
+<style data-shopify>
+  
+  #section-1566450968456 .special-product__title {
+  	color: #333;
+  }
+  #section-1566450968456 .special-product__discount {
+    color: #519f10;
+  }
+  #section-1566450968456 .special-product-area .single-countdown {
+  	color: ;
+  }
+  #section-1566450968456 .lezada-button.lezada-button--medium {
+    background-color: #333;
+    border-color: #333;
+    color: #fff !important;
+  }
+  #section-1566450968456 .lezada-button.lezada-button--medium:hover {
+    background-color: #f9f9f9;
+    border-color: #333;
+    color: #333 !important;
+  }
+
+  #section-1566450968456 .product-countdown .single-countdown__time {
+    color: #333;
+  }
+
+  #section-1566450968456 .product-countdown .single-countdown__text {
+    color: #333;
+  }
+  #section-1566450968456 .special-product .heading-color {
+  	color: #333;
+  }
+  #section-1566450968456 .product-countdown .single-countdown{
+	background-color: #fff;
+  }
 
 
 
-    <div class="box">
+  
+  
+</style>
 
-      <div class="single-product">
-        <div class="product-thumb">
-          <img src="/images/1.png">
-          <a href="#" class="btn-round"><i class="fa fa-shopping-cart"></i></a>
+<script>
+     
+</script>
+
+
+
+
+
+
+
+
+</div><div id="shopify-section-1566463874770" class="shopify-section"><div class="product-widget-area" id="section-1566463874770">
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-12">
+        <!--=======  product-widget wrapper  =======-->
+
+        <div class="product-widget-wrapper">
+          <div class="row">
+            
+             
+
+            <div class="col-lg-4 col-md-6">
+              <!--=======  single product widget wrapper  =======-->
+
+              <div class="single-product-widget-wrapper">
+                 
+                <h3 class="single-product-widget-title">Featured  Sale</h3>
+				
+
+                
+                
+
+                <div class="single-widget-product">
+                  <div class="single-widget-product__image">
+    <a href="products/3-variable-product.html">
+      <img src="../cdn.shopify.com/s/files/1/0053/5665/0560/products/5_large898c.jpg?v=1544417945" class="img-fluid" alt="">
+    </a>
+  </div>
+  <div class="single-widget-product__content">
+    <h3 class="title"><a href="products/3-variable-product.html">3. Variable product</a></h3>
+    <div class="price">
+      
+      <span class="main-price discounted"><span class=money>$85.00</span></span>
+      
+      <span class="discounted-price"><span class=money>$61.00</span></span>
+    </div>
+    <div class="rating">
+      <span class="shopify-product-reviews-badge" data-id="1757272801344"></span>
+    </div>
+  </div>
+
+
+
+                </div>
+                
+                <div class="single-widget-product">
+                  <div class="single-widget-product__image">
+    <a href="products/1-new-and-sale-badge-product.html">
+      <img src="../cdn.shopify.com/s/files/1/0053/5665/0560/products/product-detalis-bl1_large0966.jpg?v=1543551194" class="img-fluid" alt="">
+    </a>
+  </div>
+  <div class="single-widget-product__content">
+    <h3 class="title"><a href="products/1-new-and-sale-badge-product.html">1. New and sale badge product</a></h3>
+    <div class="price">
+      
+      <span class="main-price discounted"><span class=money>$130.00</span></span>
+      
+      <span class="discounted-price"><span class=money>$110.00</span></span>
+    </div>
+    <div class="rating">
+      <span class="shopify-product-reviews-badge" data-id="1565077700672"></span>
+    </div>
+  </div>
+
+
+
+                </div>
+                
+                <div class="single-widget-product">
+                  <div class="single-widget-product__image">
+    <a href="products/aliexpress-dropshipping-by-oberlo-cpy.html">
+      <img src="../cdn.shopify.com/s/files/1/0053/5665/0560/products/4_e210f897-f390-4a55-b8dc-78e99a5f2644_large73c6.jpg?v=1544524249" class="img-fluid" alt="">
+    </a>
+  </div>
+  <div class="single-widget-product__content">
+    <h3 class="title"><a href="products/aliexpress-dropshipping-by-oberlo-cpy.html">Aliexpress dropshipping by oberlo</a></h3>
+    <div class="price">
+      
+      <span class="main-price discounted"><span class=money>$85.00</span></span>
+      
+      <span class="discounted-price"><span class=money>$61.00</span></span>
+    </div>
+    <div class="rating">
+      <span class="shopify-product-reviews-badge" data-id="1780035682368"></span>
+    </div>
+  </div>
+
+
+
+                </div>
+                
+                <div class="single-widget-product">
+                  <div class="single-widget-product__image">
+    <a href="products/2-new-badge-product.html">
+      <img src="../cdn.shopify.com/s/files/1/0053/5665/0560/products/product-detalis-bl5_4095ce22-b72e-4246-8434-35de94291ed7_large8e7e.jpg?v=1543551348" class="img-fluid" alt="">
+    </a>
+  </div>
+  <div class="single-widget-product__content">
+    <h3 class="title"><a href="products/2-new-badge-product.html">2. New badge product</a></h3>
+    <div class="price">
+      
+      <span class="discounted-price"><span class=money>$80.00</span></span>
+    </div>
+    <div class="rating">
+      <span class="shopify-product-reviews-badge" data-id="1565076914240"></span>
+    </div>
+  </div>
+
+
+
+                </div>
+                
+</div>
+
+              <!--=======  End of single product widget wrapper  =======-->
+            </div>
+            
+            
+             
+
+            <div class="col-lg-4 col-md-6">
+              <!--=======  single product widget wrapper  =======-->
+
+              <div class="single-product-widget-wrapper">
+                 
+                <h3 class="single-product-widget-title">Sale Collection</h3>
+				
+
+                
+                
+
+                <div class="single-widget-product">
+                  <div class="single-widget-product__image">
+    <a href="products/3-variable-product.html">
+      <img src="../cdn.shopify.com/s/files/1/0053/5665/0560/products/5_large898c.jpg?v=1544417945" class="img-fluid" alt="">
+    </a>
+  </div>
+  <div class="single-widget-product__content">
+    <h3 class="title"><a href="products/3-variable-product.html">3. Variable product</a></h3>
+    <div class="price">
+      
+      <span class="main-price discounted"><span class=money>$85.00</span></span>
+      
+      <span class="discounted-price"><span class=money>$61.00</span></span>
+    </div>
+    <div class="rating">
+      <span class="shopify-product-reviews-badge" data-id="1757272801344"></span>
+    </div>
+  </div>
+
+
+
+                </div>
+                
+                <div class="single-widget-product">
+                  <div class="single-widget-product__image">
+    <a href="products/2-new-badge-product.html">
+      <img src="../cdn.shopify.com/s/files/1/0053/5665/0560/products/product-detalis-bl5_4095ce22-b72e-4246-8434-35de94291ed7_large8e7e.jpg?v=1543551348" class="img-fluid" alt="">
+    </a>
+  </div>
+  <div class="single-widget-product__content">
+    <h3 class="title"><a href="products/2-new-badge-product.html">2. New badge product</a></h3>
+    <div class="price">
+      
+      <span class="discounted-price"><span class=money>$80.00</span></span>
+    </div>
+    <div class="rating">
+      <span class="shopify-product-reviews-badge" data-id="1565076914240"></span>
+    </div>
+  </div>
+
+
+
+                </div>
+                
+                <div class="single-widget-product">
+                  <div class="single-widget-product__image">
+    <a href="products/5-simple-product.html">
+      <img src="../cdn.shopify.com/s/files/1/0053/5665/0560/products/1_large717d.jpg?v=1545190306" class="img-fluid" alt="">
+    </a>
+  </div>
+  <div class="single-widget-product__content">
+    <h3 class="title"><a href="products/5-simple-product.html">5. Simple product</a></h3>
+    <div class="price">
+      
+      <span class="discounted-price"><span class=money>$50.00</span></span>
+    </div>
+    <div class="rating">
+      <span class="shopify-product-reviews-badge" data-id="1565073440832"></span>
+    </div>
+  </div>
+
+
+
+                </div>
+                
+                <div class="single-widget-product">
+                  <div class="single-widget-product__image">
+    <a href="products/product-title-here.html">
+      <img src="../cdn.shopify.com/s/files/1/0053/5665/0560/products/product-detalis-bl1_73a06bd5-0e65-4a21-bcf8-a40ae313ffe5_large618d.jpg?v=1543646006" class="img-fluid" alt="">
+    </a>
+  </div>
+  <div class="single-widget-product__content">
+    <h3 class="title"><a href="products/product-title-here.html">Product title here</a></h3>
+    <div class="price">
+      
+      <span class="main-price discounted"><span class=money>$21.00</span></span>
+      
+      <span class="discounted-price"><span class=money>$19.00</span></span>
+    </div>
+    <div class="rating">
+      <span class="shopify-product-reviews-badge" data-id="1565069606976"></span>
+    </div>
+  </div>
+
+
+
+                </div>
+                
+</div>
+
+              <!--=======  End of single product widget wrapper  =======-->
+            </div>
+            
+            
+            
+            <div class="col-lg-4 col-md-6">
+              <div class="single-banner">
+                <div class="single-banner__image">
+                  <a href="#">
+                    <img src="../cdn.shopify.com/s/files/1/0053/5665/0560/files/Screenshot_3_2a9b2df3-3497-465f-8183-041df3cc25a6bbe2.jpg?v=1566464329"  class="img-fluid" alt="">
+                  </a>
+                </div>
+              </div>
+            </div>
+            
+            
+            
+            
+            
+            
+          </div>
         </div>
 
-        <div class="product-title">
-          <h3>Mango Three</h3>
-
-          <p>₹900<span>₹950</span></p>
-          <span class="save">Save ₹32</span>
-        </div>
-
+        <!--=======  End of product-widget wrapper  =======-->
       </div>
     </div>
+  </div>
+</div><style data-shopify>#section-1566463874770{padding-top: 0px !important;
+    padding-bottom: 100px !important;}@media (min-width: 768px) and (max-width: 991px) {
+    #section-1566463874770{padding-top: 0px !important;
+      padding-bottom: 80px !important;}
+  }
+  @media (max-width: 767px) {
+    #section-1566463874770{padding-top: 0px !important;
+      padding-bottom: 60px !important;}
+  }</style><style data-shopify>#section-1566463874770  .single-product-widget-title  {
+      color: #333!important;
+      }
+      #section-1566463874770 .single-product-widget-title::after  {
+      background-color: #ccc!important;
+      }
+      #section-1566463874770 .single-widget-product__content .title a  {
+      color: #333!important;
+      }
+      #section-1566463874770 .single-widget-product__content .title a:hover  {
+      color: #333!important;
+      }
+      #section-1566463874770 .single-widget-product .price  {
+      color: #519f10!important;
+      }
+      #section-1566463874770 .single-widget-product__content .main-price.discounted  {
+      color: #aaa!important;
+      }
+      #section-1566463874770 .single-widget-product__content .rating i  {
+      color: #f5cc26!important;
+      }
+      #section-1566463874770 .single-widget-product {
+      border-bottom-color: #eee!important;
+      }@media (max-width: 991px) {
+  .single-product-widget-wrapper {
+  	margin-bottom: 50px;
+  }
+}</style>
 
-    <div class="box">
-      <div class="single-product">
-        <div class="product-thumb">
-          <img src="/images/2.jpg">
-          <a href="#" class="btn-round"><i class="fa fa-shopping-cart"></i></a>
-        </div>
 
-        <div class="product-title">
-          <h3>Some pack</h3>
 
-          <p>₹900<span>₹950</span></p>
-          <span class="save">Save ₹32</span>
-        </div>
 
+</div><div id="shopify-section-1543487950029" class="shopify-section">
+
+<!-- News Area Start -->
+<div class="blog-area bg-image-1 pt-90 pb-70" id="section-1543487950029">
+  <div class="container">
+    
+    <div class="product-top-bar section-border mb-55">
+      <div class="section-title-wrap text-center">
+        <h3 class="section-title">Latest News</h3>
       </div>
     </div>
+    
+  </div>
+  <div class="container">
+    <div class="row">
 
-    <div class="box">
-      <div class="single-product">
-        <div class="product-thumb">
-          <img src="/images/3.jpg">
-          <a href="#" class="btn-round"><i class="fa fa-shopping-cart"></i></a>
-        </div>
+      
+      
 
-        <div class="product-title">
-          <h3>Other Pack</h3>
-
-          <p>₹900<span>₹950</span></p>
-          <span class="save">Save ₹32</span>
-        </div>
-
-      </div>
-    </div>
-
-
-    <div class="box">
-      <div class="single-product">
-        <div class="product-thumb">
-          <img src="/images/product.jpg">
-          <a href="#" class="btn-round"><i class="fa fa-shopping-cart"></i></a>
-        </div>
-
-        <div class="product-title">
-          <h3>Not Pack</h3>
-
-          <p>₹900<span>₹950</span></p>
-          <span class="save">Save ₹32</span>
-        </div>
-
-      </div>
-    </div>
-
-    <div class="box">
-      <div class="single-product">
-        <div class="product-thumb">
-          <img src="/images/product1.jpeg">
-          <a href="#" class="btn-round"><i class="fa fa-shopping-cart"></i></a>
-        </div>
-
-        <div class="product-title">
-          <h3>Orange Three</h3>
-
-          <p>₹900<span>₹950</span></p>
-          <span class="save">Save ₹32</span>
-        </div>
-
-      </div>
-    </div>
-    <div class="box">
-
-      <div class="single-product">
-        <div class="product-thumb">
-          <img src="/images/product.jpg">
-          <a href="#" class="btn-round"><i class="fa fa-shopping-cart"></i></a>
-        </div>
-
-        <div class="product-title">
-          <h3>Orange One</h3>
-
-          <p>₹900<span>₹950</span></p>
-          <span class="save">Save ₹32</span>
-        </div>
-      </div>
-    </div>
-
-
-    <div class="box">
-
-      <div class="single-product">
-        <div class="product-thumb">
-          <img src="/images/product1.jpeg">
-          <a href="#" class="btn-round"><i class="fa fa-shopping-cart"></i></a>
-
-        </div>
-
-        <div class="product-title">
-          <h3>Apple Two</h3>
-
-          <p>₹900<span>₹950</span></p>
-          <span class="save">Save ₹32</span>
-        </div>
-      </div>
-    </div>
-
-
-    <div class="box">
-      <div class="single-product">
-        <div class="product-thumb">
-          <img src="/images/product2.jpg">
-          <a href="#" class="btn-round"><i class="fa fa-shopping-cart"></i></a>
-        </div>
-
-        <div class="product-title">
-          <h3>Something</h3>
-
-          <p>₹900<span>₹950</span></p>
-          <span class="save">Save ₹32</span>
-        </div>
-
-      </div>
-    </div>
-
+      
+      <div class="col-lg-4 col-md-6 col-12">
+        <div class="blog-single mb-30">
+  
+  <div class="blog-thumb">
+    <a href="https://www.verywellhealth.com/the-benefits-of-shilajit-89514"><img src="https://www.verywellhealth.com/thmb/QkcFHb1Sbdr3ZZZfWFSALh6OdAQ=/768x0/filters:no_upscale():max_bytes(150000):strip_icc():format(webp)/the-benefits-of-shilajit-89514-recirc-db3bf515dca94c938c437d4036e7fa7e.jpg" alt="Ways to Experience the Matcha Heaven" /></a>  
+  </div>
+  
+  <div class="blog-content pt-25">
+    <span class="blog-date"><time datetime="2018-12-08T06:05:00Z">Dec 15, 2020</time> </span> 
+    <h3><a href="https://www.verywellhealth.com/the-benefits-of-shilajit-89514">The Health Benefits of Shilajit </a></h3>
+    
+   	 <p> <p>Shilajit is a blackish-brownish resin rich in minerals that comes from layers of rock in several mountain ranges throughout the world... </p>
+     
+     <a class="readmore button" href="https://www.verywellhealth.com/the-benefits-of-shilajit-89514">Read more</a>
   </div>
 </div>
 
-<div class="offer2">
-  <a href=""><img src="/images/shopping4.jpeg" alt=""></a>
-  <a href=""><img src="/images/shopping4.jpeg" alt=""></a>
-  <a href=""><img src="/images/shopping4.jpeg" alt=""></a>
-</div>
-
-<div class="productslider1">
-  <h3 class="title">Special Deals
-    <hr>
-  </h3>
-  <div class="parent-box owl-carousel">
-
-    <div class="box">
-      <div class="single-product">
-        <div class="product-thumb">
-          <img src="/images/product3.jpeg">
-          <a href="#" class="btn-round"><i class="fa fa-shopping-cart"></i></a>
-        </div>
-
-        <div class="product-title">
-          <h3>Mobile Phone</h3>
-
-          <p>₹900<span>₹950</span></p>
-          <span class="save">Save ₹32</span>
-        </div>
 
       </div>
-    </div>
-
-
-    <div class="box">
-      <div class="single-product">
-        <div class="product-thumb">
-          <img src="/images/product4.jpg">
-          <a href="#" class="btn-round"><i class="fa fa-shopping-cart"></i></a>
-        </div>
-
-        <div class="product-title">
-          <h3>Face Wash</h3>
-
-          <p>₹900<span>₹950</span></p>
-          <span class="save">Save ₹32</span>
-        </div>
-      </div>
-    </div>
-
-
-
-    <div class="box">
-
-      <div class="single-product">
-        <div class="product-thumb">
-          <img src="/images/1.png">
-          <a href="#" class="btn-round"><i class="fa fa-shopping-cart"></i></a>
-        </div>
-
-        <div class="product-title">
-          <h3>Mango Three</h3>
-
-          <p>₹900<span>₹950</span></p>
-          <span class="save">Save ₹32</span>
-        </div>
-
-      </div>
-    </div>
-
-    <div class="box">
-      <div class="single-product">
-        <div class="product-thumb">
-          <img src="/images/2.jpg">
-          <a href="#" class="btn-round"><i class="fa fa-shopping-cart"></i></a>
-        </div>
-
-        <div class="product-title">
-          <h3>Some pack</h3>
-
-          <p>₹900<span>₹950</span></p>
-          <span class="save">Save ₹32</span>
-        </div>
-
-      </div>
-    </div>
-
-    <div class="box">
-      <div class="single-product">
-        <div class="product-thumb">
-          <img src="/images/3.jpg">
-          <a href="#" class="btn-round"><i class="fa fa-shopping-cart"></i></a>
-        </div>
-
-        <div class="product-title">
-          <h3>Other Pack</h3>
-
-          <p>₹900<span>₹950</span></p>
-          <span class="save">Save ₹32</span>
-        </div>
-
-      </div>
-    </div>
-
-
-    <div class="box">
-      <div class="single-product">
-        <div class="product-thumb">
-          <img src="/images/product.jpg">
-          <a href="#" class="btn-round"><i class="fa fa-shopping-cart"></i></a>
-        </div>
-
-        <div class="product-title">
-          <h3>Not Pack</h3>
-
-          <p>₹900<span>₹950</span></p>
-          <span class="save">Save ₹32</span>
-        </div>
-
-      </div>
-    </div>
-
-    <div class="box">
-      <div class="single-product">
-        <div class="product-thumb">
-          <img src="/images/product1.jpeg">
-          <a href="#" class="btn-round"><i class="fa fa-shopping-cart"></i></a>
-        </div>
-
-        <div class="product-title">
-          <h3>Orange Three</h3>
-
-          <p>₹900<span>₹950</span></p>
-          <span class="save">Save ₹32</span>
-        </div>
-
-      </div>
-    </div>
-    <div class="box">
-
-      <div class="single-product">
-        <div class="product-thumb">
-          <img src="/images/product.jpg">
-          <a href="#" class="btn-round"><i class="fa fa-shopping-cart"></i></a>
-        </div>
-
-        <div class="product-title">
-          <h3>Orange One</h3>
-
-          <p>₹900<span>₹950</span></p>
-          <span class="save">Save ₹32</span>
-        </div>
-      </div>
-    </div>
-
-
-    <div class="box">
-
-      <div class="single-product">
-        <div class="product-thumb">
-          <img src="/images/product1.jpeg">
-          <a href="#" class="btn-round"><i class="fa fa-shopping-cart"></i></a>
-
-        </div>
-
-        <div class="product-title">
-          <h3>Apple Two</h3>
-
-          <p>₹900<span>₹950</span></p>
-          <span class="save">Save ₹32</span>
-        </div>
-      </div>
-    </div>
-
-
-    <div class="box">
-      <div class="single-product">
-        <div class="product-thumb">
-          <img src="/images/product2.jpg">
-          <a href="#" class="btn-round"><i class="fa fa-shopping-cart"></i></a>
-        </div>
-
-        <div class="product-title">
-          <h3>Something</h3>
-
-          <p>₹900<span>₹950</span></p>
-          <span class="save">Save ₹32</span>
-        </div>
-
-      </div>
-    </div>
-
+      
+      
+      <div class="col-lg-4 col-md-6 col-12">
+        <div class="blog-single mb-30">
+  
+  <div class="blog-thumb">
+    <a href="http://www.herbline.com/5-herbs-hair-oil-bring-healthy-hair-back/"><img src="http://www.herbline.com/wp-content/uploads/2017/10/5-herbs-hair-oil.jpg" alt="World’s most popular tea drinks is sabujcha." /></a>  
+  </div>
+  
+  <div class="blog-content pt-25">
+    <span class="blog-date"><time datetime="2018-12-08T06:03:00Z">Oct 04, 2018</time> </span> 
+    <h3><a href="http://www.herbline.com/5-herbs-hair-oil-bring-healthy-hair-back/">5 Herbs Hair Oil - Bring Healthy Hair Back.</a></h3>
+    
+   	 <p> <p>Today, every person is always on the go. Between work, travel & home, the person is left with little or no time to look after oneself. Added to this is the environmental pollution which takes its toll on our bodies... </p>
+     
+     <a class="readmore button" href="http://www.herbline.com/5-herbs-hair-oil-bring-healthy-hair-back/">Read more</a>
   </div>
 </div>
 
-<input type="hidden" id="itemsPerPage" value="{{productsPerPage}}">
-<input type="hidden" id="pageNum" value="{{pageNum}}">
-<input type="hidden" id="totalItemCount" value="{{totalProductCount}}">
-<input type="hidden" id="paginateUrl" value="{{paginateUrl}}">
-<input type="hidden" id="searchTerm" value="{{searchTerm}}">
-{{!-- <div class="col-md-12">
-  <div id="pager" class="d-flex justify-content-center"></div>
-</div> --}}
 
-<div class="newsletter">
-  <div class="side">
-    <i class="fas fa-mail-bulk"></i>
-    <div class="signupnews">
-      <h4>Sign Up for Newsletter</h4>
-      <small>Keep me updated</small>
-    </div>
+      </div>
+      
+      
+      <div class="col-lg-4 col-md-6 col-12">
+        <div class="blog-single mb-30">
+  
+  <div class="blog-thumb">
+    <a href="https://www.healthline.com/health/shilajit#_noHeaderPrefixedContent"><img src="https://res.cloudinary.com/du8msdgbj/images/v1530873328/qh2zgvxci0mazembq9rs/shilajit-0.jpg" alt="How to Make Ginger Tea and Matcha-Ginger Tea" /></a>  
   </div>
-  <div class="right-side">
-    <form action="">
-      <input type="text" placeholder="Enter your Email Address">
-      <button type="submit"><i class="far fa-paper-plane"></i></button>
-    </form>
+  
+  <div class="blog-content pt-25">
+    <span class="blog-date"><time datetime="2018-12-08T06:01:00Z">Mar 07, 2019</time> </span> 
+    <h3><a href="https://www.healthline.com/health/shilajit#_noHeaderPrefixedContent">Benefits of Shilajit</a></h3>
+    
+   	 <p> <p>What is shilajit?... </p>
+     
+     <a class="readmore button" href="https://www.healthline.com/health/shilajit#_noHeaderPrefixedContent">Read more</a>
   </div>
 </div>
+
+
+      </div>
+      
+</div>
+  </div>
+</div>
+<!-- News Area End -->
+
+
+
+
+
+
+
+<style>
+  #section-1543487950029{
+    
+    
+    
+        
+    background: #ffffff 
+      url("../cdn.shopify.com/s/files/1/0053/5665/0560/files/bg-1_594c18c4-b004-48c6-8ae6-265fce35613f3d38.jpg?v=1543496463") no-repeat scroll center center / cover;
+    
+    
+  }
+  @media (max-width: 767px) {
+    #section-1543487950029{
+      
+      
+      
+      
+      
+    }
+  }
+</style>
+
+
+
+
+</div><div id="shopify-section-1543555834385" class="shopify-section">
+
+<!-- Start Brand Area -->
+
+<!-- End Brand Area -->
+
+
+
+
+
+
+<style>
+  #section-1543555834385{
+    
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+        }
+  @media (max-width: 767px) {
+    #section-1543555834385{
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+    }
+  }
+</style> 
+
+
+<script>
+  
+  
+
+    /* Brand logo active */
+    $('.brand-logo-active').owlCarousel({
+      loop: true,
+      nav: false,
+      autoplay: false,
+      autoplayTimeout: 5000,
+      
+      item: 5,
+      
+      
+      margin: 80,
+      
+      responsive: {
+        0: {
+          items: 2,
+          margin: 10,
+        },
+        480: {
+          items: 2,
+          margin: 20,
+        },
+        768: {
+          items: 3,
+          margin: 20,
+        },
+        992: {
+          items: 3,
+          margin: 100,
+        },
+        1200: {
+          items: 4
+        }
+      }
+    })
+
+</script>
+
+
+
+
+
+</div><div id="shopify-section-1543497607968" class="shopify-section">
+<div class="newsletter-area bg-image-2 pt-90 pb-100" id="section-1543497607968">
+  
+  
+  
+  <div class="container">
+    <div class="product-top-bar section-border mb-45">
+      <div class="section-title-wrap text-center">
+        <h3 class="section-title">Join to our Newsletter</h3>
+      </div>
+    </div>
+  </div>
+  
+  <div class="container">
+    <div class="row justify-content-md-center">
+      <div class="col-lg-6 col-md-10 col-md-auto">
+        <div class="footer-newsletter">
+          <div id="mc_embed_signup" class="subscribe-form"><form method="post" action="https://sabujcha-demo.myshopify.com/contact#Contact_1543497607968" id="Contact_1543497607968" accept-charset="UTF-8" class="contact-form"><input type="hidden" name="form_type" value="customer" /><input type="hidden" name="utf8" value="✓" /><div class="popup-subscribe-form newsletter-form  validate">
+              <input type="hidden" name="contact[tags]" value="newsletter">
+              <input class="news-field email" type="email" name="contact[email]" id="Email" value=""
+                     placeholder="Enter your e-mail" aria-label="Enter your e-mail"  autocorrect="off" autocapitalize="off">
+              <div class="submit-button">
+                <button type="submit" class="default-btn" name="commit" id="Subscribe">Subscribe!</button>
+              </div>
+            </div></form> 
+            
+            
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  
+  
+  
+</div>
+
+
+
+<style>
+  #section-1543497607968{
+    
+    
+    
+        
+    background: #ffffff 
+      url("../cdn.shopify.com/s/files/1/0053/5665/0560/files/bg-28400.jpg?v=1545103891") no-repeat scroll center center / cover;
+    
+    
+  }
+  @media (max-width: 767px) {
+    #section-1543497607968{
+      
+      
+      
+      
+      
+    }
+  }
+</style>
+
+
+
+
+
+</div><!-- END content_for_index -->
+    </main>

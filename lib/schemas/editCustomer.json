@@ -2,39 +2,24 @@
     "$id": "editCustomer",
     "type": "object",
     "properties": {
-        "company": {
-            "type": "string"
-        },
         "email": {
             "type": "string",
             "format": "emailAddress"
         },
         "firstName": {
-            "type": "string",
-            "isNotEmpty": true
-        },
-        "lastName": {
-            "type": "string",
-            "isNotEmpty": true
-        },
-        "address1": {
-            "type": "string",
-            "isNotEmpty": true
-        },
-        "address2": {
             "type": "string"
         },
-        "country": {
-            "type": "string",
-            "isNotEmpty": true
+        "lastName": {
+            "type": "string"
+        },
+        "address1": {
+            "type": "string"
         },
         "state": {
-            "type": "string",
-            "isNotEmpty": true
+            "type": "string"
         },
         "postcode": {
-            "type": "string",
-            "isNotEmpty": true
+            "type": "string"
         },
         "phone": {
             "type": "string",
@@ -45,13 +30,6 @@
         }
     },
     "required": [
-        "email",
-        "firstName",
-        "lastName",
-        "address1",
-        "country",
-        "state",
-        "postcode",
-        "phone"
+
     ]
 }

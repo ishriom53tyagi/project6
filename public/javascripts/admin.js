@@ -214,6 +214,7 @@ $(document).ready(function (){
                 data: {
                     productTitle: $('#productTitle').val(),
                     productPrice: $('#productPrice').val(),
+                    productDiscountPrice: $('#productDiscountPrice').val(),
                     productPublished: $('#productPublished').val(),
                     productStock: $('#productStock').val(),
                     productDescription: $('#productDescription').val(),
@@ -251,6 +252,7 @@ $(document).ready(function (){
                     productId: $('#productId').val(),
                     productTitle: $('#productTitle').val(),
                     productPrice: $('#productPrice').val(),
+                    productDiscountPrice: $('#productDiscountPrice').val(),
                     productPublished: $('#productPublished').val(),
                     productStock: $('#productStock').val(),
                     productStockDisable: $('#productStockDisable').is(':checked'),
@@ -722,6 +724,102 @@ $(document).ready(function (){
             });
         }
     });
+
+    $(document).on('click', '#settings-categories-new', function(e){
+        e.preventDefault();
+        $.ajax({
+            method: 'POST',
+            url: '/admin/settings/categories/new',
+            data: {
+                newNavCategories: $('#newNavCategories').val(),
+            }
+        })
+        .done(function(msg){
+            showNotification(msg.message, 'success', true);
+        })
+        .fail(function(msg){
+            showNotification(msg.message, 'danger', true);
+        });
+    });
+
+    $(document).on('click', '#settings-category-update', function(e){
+        e.preventDefault();
+        var id = $(this).attr('data-id');
+        console.log("Something Called");
+        $.ajax({
+            method: 'POST',
+            url: '/admin/settings/categories/update',
+            data: {
+                categoryId : id,
+                submenuValue: $('#navsubmenuvalue').val()
+            }
+        })
+        .done(function(msg){
+            showNotification(msg.message, 'success', true);
+        })
+        .fail(function(msg){
+            showNotification(msg.message, 'danger', true);
+        });
+    });
+    
+    $(document).on('click', '.deletecategory', function(e){
+        e.preventDefault();
+        var id = $(this).attr('data-id');
+        $.ajax({
+            method: 'POST',
+            url: '/admin/settings/categories/delete',
+            data: {
+                categoryId : id
+            }
+        })
+        .done(function(msg){
+            showNotification(msg.message, 'success', true);
+        })
+        .fail(function(msg){
+            showNotification(msg.message, 'danger', true);
+        });
+    });
+
+    $(document).on('click', '.deletesubmenu', function(e){
+        e.preventDefault();
+        var id = $('#categoryidvalue').val();
+        var value = $(this).attr('data-value');
+        $.ajax({
+            method: 'POST',
+            url: '/admin/settings/categories/deletesubmenu',
+            data: {
+                categoryId : id,
+                subName: value
+            }
+        })
+        .done(function(msg){
+            showNotification(msg.message, 'success', true);
+        })
+        .fail(function(msg){
+            showNotification(msg.message, 'danger', true);
+        });
+    });
+
+    $(document).on('click', '#changeCategoryname', function(e){
+        e.preventDefault();
+        var id = $(this).attr('data-id');
+        var value = $('#newCategoryValue').val();
+        $.ajax({
+            method: 'POST',
+            url: '/admin/settings/categories/changename',
+            data: {
+                categoryId : id,
+                newName: value
+            }
+        })
+        .done(function(msg){
+            showNotification(msg.message, 'success', true);
+        })
+        .fail(function(msg){
+            showNotification(msg.message, 'danger', true);
+        });
+    });
+
 
     if($('#draggable_list').length){
         $('#draggable_list').sortable({
