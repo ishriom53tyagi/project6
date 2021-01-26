@@ -126,7 +126,7 @@ router.post('/checkout_action',async (req, res, next) => {
 
                     // send the email with the response
                     // TODO: Should fix this to properly handle result
-                    //common.sendEmail(req.session.paymentEmailAddr, 'Your payment with ' + config.cartTitle, common.getEmailTemplate(paymentResults));
+                    common.sendEmail(req.session.paymentEmailAddr, 'Your payment with ' + config.cartTitle, common.getEmailTemplate(paymentResults));
                 
            // console.log("Session email Id is here"+req.session.customerEmail);
            //await mailer.sendEmail('admin@bnbherbs.in',req.session.customerEmail,'Order Complete',html)
@@ -321,7 +321,7 @@ var customer = await db.customers.findOne({_id: common.getId(req.session.custome
 
                 // send the email with the response
                 // TODO: Should fix this to properly handle result
-                // common.sendEmail(req.session.paymentEmailAddr, 'Your payment with ' + config.cartTitle, common.getEmailTemplate(paymentResults));
+                common.sendEmail(req.session.paymentEmailAddr, 'Your payment with ' + config.cartTitle, common.getEmailTemplate(paymentResults));
 
                 // redirect to outcome
                 res.status(200).json({id: newId});
