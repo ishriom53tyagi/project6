@@ -1,5 +1,5 @@
 
-<div class="product-layout col-sm-9 offset-sm-1">
+<div class="product-layout col-sm-11 offset-sm-1">
     <div class="row">
         {{!-- Product Images --}}
         <div class="col-sm-12 col-md-6 m-auto">
@@ -37,7 +37,7 @@
 
 
         {{!-- Product Details --}}
-        <div class="col-sm-12 col-md-6 pro-details m-auto">
+        <div class="col-sm-12 col-md-6 pro-details mx-auto">
             <div class="row">
                 <h1 class="col-md-10 product-title text-truncate">{{result.productTitle}}</h1>
                 {{#if variants}}
@@ -99,11 +99,7 @@
                 <div class="features">
                     <h1 class="heading">Features</h1>
                     <div class="body_text">
-                        <ul>
-                            <li>Removes stains effectively</li>
-                            <li>Leaves a pleasant fragrance</li>
-                            <li>Has the power of 10 hands</li>
-                        </ul>
+                        <p>{{result.productMiniDescription}}</p>
                     </div>
                 </div>
                 {{!-- {{#if result.productComment}}

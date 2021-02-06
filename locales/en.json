@@ -220,5 +220,6 @@
 	"Ascending": "Ascending",
 	"Select the order in which the products should be sorted.": "Select the order in which the products should be sorted.",
 	"Address": "Address",
-	"Product Max price": "Product Max price"
+	"Product Max price": "Product Max price",
+	"Product Mini Description": "Product Mini Description"
 }
