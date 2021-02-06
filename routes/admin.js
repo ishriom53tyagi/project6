@@ -17,9 +17,9 @@ const csrfProtection = csrf({ cookie: true });
 var cloudinary = require('cloudinary').v2;
 
 cloudinary.config({ 
-    cloud_name: 'hoiuqedcf', 
-    api_key: '849651669432825', 
-    api_secret: 'FdsuCdcqhNFa-7vCU8GZfExKA_Y' 
+    cloud_name: 'dxnpzwdzg', 
+    api_key: '388419544629742', 
+    api_secret: '8LszomLP-TWJALUrWYjh55HvWBg' 
   });
 
 // Regex
@@ -650,30 +650,15 @@ router.post('/admin/file/upload', restrict, checkAccess, upload.single('uploadFi
             fs.unlinkSync(file.path);
 
             // Return error
-            res.status(400).json({ message: 'File upload error. Please try again.' });
+            res.status(400).json({ message: 'Product Not found. Please try again.' });
             return;
         }
-
-        const productPath = product._id.toString();
-        const uploadDir = path.join('public/uploads', productPath);
-
-        // Check directory and create (if needed)
-        common.checkDirectorySync(uploadDir);
-
-        const source = fs.createReadStream(file.path);
-        const dest = fs.createWriteStream(path.join(uploadDir, file.originalname.replace(/ /g, '_')));
-
-        // save the new file
-        source.pipe(dest);
-        source.on('end', () => { });
-
-        // delete the temp file.
-        fs.unlinkSync(file.path);
-
-        const imagePath = path.join('/uploads', productPath, file.originalname.replace(/ /g, '_'));
-        var hostingurl = "https://jammubasket.herokuapp.com"
-        var tempImagePath = hostingurl.concat(imagePath);
-        cloudinary.uploader.upload(tempImagePath, 
+        var origpath = path.resolve(file.path,file.originalname);
+        console.log(origpath);
+        console.log("original name\n \n");
+        console.log(path.resolve(__filename),"\n",path.resolve(__dirname));
+        
+        cloudinary.uploader.upload(file.path,
         async function(error, result) {
             if(result){
                 var json_String = JSON.stringify(result);
@@ -694,10 +679,12 @@ router.post('/admin/file/upload', restrict, checkAccess, upload.single('uploadFi
                 else{
                     await db.products.updateOne({ _id: common.getId(req.body.productId) }, { $push: { productImage: img_obj } });
                 }
+                fs.unlinkSync(file.path);
                 var str = "File uploaded successfully";
                 res.status(200).json({ message:  str});
             }
             else {
+                fs.unlinkSync(file.path);
                 res.status(400).json({ message: 'File upload error. Please try again.' });
                 return;
             }
@@ -706,7 +693,7 @@ router.post('/admin/file/upload', restrict, checkAccess, upload.single('uploadFi
         return;
     }
     // Return error
-    res.status(400).json({ message: 'File upload error. Please try again.' });
+    res.status(400).json({ message: 'File Not Found error. Please try again.' });
 });
 
 // delete a file via ajax request
@@ -818,6 +805,175 @@ router.post('/admin/searchall', restrict, async (req, res, next) => {
         orders,
         products
     });
+});
+
+// Categories menu
+router.get('/admin/settings/categories', csrfProtection, restrict, async (req, res) => {
+    const db = req.app.db;
+
+    var category = await db.categories.find({}).toArray();
+    if(!category){
+        category = false;
+    }
+    res.render('settings-categories', {
+        title: 'Catgories List',
+        session: req.session,
+        admin: true,
+        message: common.clearSessionValue(req.session, 'message'),
+        messageType: common.clearSessionValue(req.session, 'messageType'),
+        helpers: req.handlebars.helpers,
+        config: req.app.config,
+        categories: category,
+        csrfToken: req.csrfToken()
+    });
+});
+
+// categories edit list
+router.get('/admin/settings/categories/edit/:id', csrfProtection, restrict, async (req, res) => {
+    const db = req.app.db;
+    const catId = req.params.id; 
+    const category = await db.categories.findOne({ _id: common.getId(catId) });
+    res.render('settings-categories-edit', {
+        title: 'Catgories Edit',
+        session: req.session,
+        admin: true,
+        message: common.clearSessionValue(req.session, 'message'),
+        messageType: common.clearSessionValue(req.session, 'messageType'),
+        helpers: req.handlebars.helpers,
+        config: req.app.config,
+        category: category,
+        csrfToken: req.csrfToken()
+    });
+});
+
+// New Categories Heading add
+router.post('/admin/settings/categories/new', restrict, checkAccess,async (req, res) => {
+    const db = req.app.db;
+
+    if(!req.body.newNavCategories){
+        res.status(400).json({message: "Name Field Not Empty"});
+        return;
+    }
+
+    const item = {
+        title: req.body.newNavCategories,
+        submenu: []
+    };
+    
+    try{
+        const teempvar = await db.categories.insertOne(item);
+        res.status(200).json({ message: "Categories created successfull"});
+    }
+    catch(ex){
+        res.status(400).json({ message: "Error inserting Category title" });
+        return;
+    }
+});
+router.post('/admin/settings/categories/update', restrict, checkAccess,async (req, res) => {
+    const db = req.app.db;
+
+    const category = await db.categories.findOne({ _id: common.getId(req.body.categoryId)});
+    if(!category){
+        res.status(400).json({ message: "Error Category Not Found"});
+        return;
+    }
+    if(!req.body.submenuValue){
+        res.status(400).json({message : "Submenu Can't Be empty"});
+        return;
+    }
+    
+    try{
+        const value = await db.categories.findOneAndUpdate({ _id: category._id },{ $push: { submenu: req.body.submenuValue }});
+        req.app.categories = await db.categories.find({}).toArray();
+        res.status(200).json({ message: "Categories Updated"});
+    }catch(ex){
+        console.log(ex);
+        res.status(400).json({ message: "Error Updating Categories"});
+    }
+});
+// delete a category
+router.post('/admin/settings/categories/delete', restrict, checkAccess,async (req, res) => {
+    const db = req.app.db;
+
+    try {
+        await db.categories.findOneAndDelete({ _id: common.getId(req.body.categoryId)});
+        req.app.categories = await db.categories.find({}).toArray();
+        res.status(200).json({message: "Category Deleted"});
+    }
+    catch(ex){
+        console.log(ex);
+        res.status(400).json({message: "Error Deleting Category"});
+    }
+});
+
+// Update Category Name 
+router.post('/admin/settings/categories/changename', restrict, checkAccess,async (req, res) => {
+    const db = req.app.db;
+
+    try {
+        await db.categories.findOneAndUpdate({ _id: common.getId(req.body.categoryId)},{$set: { title: req.body.newName}});
+        req.app.categories = await db.categories.find({}).toArray();
+        res.status(200).json({message: "Category Name Changed"});
+    }
+    catch(ex){
+        console.log(ex);
+        res.status(400).json({message: "Error Updating Category"});
+    }
+});
+
+// Delete Submenu
+router.post('/admin/settings/categories/deletesubmenu', restrict, checkAccess,async (req, res) => {
+    const db = req.app.db;
+    console.log(req.body.categoryId,req.body.subName);
+    try {
+        await db.categories.findOneAndUpdate({ _id: common.getId(req.body.categoryId)},{ $pull: { submenu: req.body.subName}});
+        req.app.categories = await db.categories.find({}).toArray();
+        res.status(200).json({message: "Category Submenu Deleted"});
+    }
+    catch(ex){
+        console.log(ex);
+        res.status(400).json({message: "Error Updating Category"});
+    }
+});
+
+// new menu item
+router.post('/admin/settings/menu/new', restrict, checkAccess, (req, res) => {
+    const result = common.newMenu(req);
+    if(result === false){
+        res.status(400).json({ message: 'Failed creating menu.' });
+        return;
+    }
+    res.status(200).json({ message: 'Menu created successfully.' });
+});
+
+// update existing menu item
+router.post('/admin/settings/menu/update', restrict, checkAccess, (req, res) => {
+    const result = common.updateMenu(req);
+    if(result === false){
+        res.status(400).json({ message: 'Failed updating menu.' });
+        return;
+    }
+    res.status(200).json({ message: 'Menu updated successfully.' });
+});
+
+// delete menu item
+router.post('/admin/settings/menu/delete', restrict, checkAccess, (req, res) => {
+    const result = common.deleteMenu(req, req.body.menuId);
+    if(result === false){
+        res.status(400).json({ message: 'Failed deleting menu.' });
+        return;
+    }
+    res.status(200).json({ message: 'Menu deleted successfully.' });
+});
+
+// We call this via a Ajax call to save the order from the sortable list
+router.post('/admin/settings/menu/saveOrder', restrict, checkAccess, (req, res) => {
+    const result = common.orderMenu(req, res);
+    if(result === false){
+        res.status(400).json({ message: 'Failed saving menu order' });
+        return;
+    }
+    res.status(200).json({});
 });
 
 module.exports = router;

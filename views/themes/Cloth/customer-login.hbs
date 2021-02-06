@@ -1,4 +1,4 @@
-<main class="login-page container py-4 py-lg-5 my-4">
+{{!-- <main class="login-page container py-4 py-lg-5 my-4">
   <div class="row">
     <div class="col-md-6 m-auto">
       <div class="card border-0 box-shadow">
@@ -48,4 +48,67 @@
       </div>
     </div>
   </div>
-</main>
+</main> --}}
+
+<main>
+      <div class="customer-page theme-default-margin">
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-6 offset-lg-3 col-md-8 offset-md-2">
+        <div class="login">
+          <div id="CustomerLoginForm">
+            <input type="hidden" name="form_type" value="customer_login" /><input type="hidden" name="utf8" value="✓" />
+            
+            <div class="login-form-container">
+              <div class="login-text">
+                <h2>Login</h2><p>Please login using account detail bellow.</p></div>
+              <div class="login-form">
+                <input type="email" name="email" id="email" class="input-full" placeholder="Email" autocorrect="off" autocapitalize="off" autofocus>
+                
+                <input type="password" value="" name="customer[password]" id="password" class="input-full" placeholder="Password">
+                
+                <div class="login-toggle-btn">
+                  <div class="form-action-button">
+                    <button type="submit" class="theme-default-button" id="customerloginForm">Sign In</button>
+                    
+                    <a href="#recover" id="RecoverPassword">Forgot your password?</a>
+                    
+                  </div>
+                  <div class="account-optional-action">
+                    <a href="/customer/register" id="customer_register_link">Create account</a>
+                  </div>
+                </div>
+              </div>
+            </div>
+        
+          </div>
+          <div id="RecoverPasswordForm" style="display: none;">
+            <form ><input type="hidden" name="form_type" value="recover_customer_password" /><input type="hidden" name="utf8" value="✓" />
+            
+            
+            <div class="login-form-container">
+              <div class="login-text">
+                <h2>Reset your password</h2>
+                <p>We will send you an email to reset your password.</p>
+              </div>
+              <div class="login-form">
+                <input type="email" value="" name="email" id="RecoverEmail" class="input-full" placeholder="Email" autocorrect="off" autocapitalize="off">
+                <div class="login-toggle-btn">
+                  <div class="form-action-button">
+                    <button type="submit" class="theme-default-button" >Submit</button>
+                    <a href="#" id="HideRecoverPasswordLink">Cancel</a>
+                  </div>
+                </div>
+              </div>
+            </div>
+            </form>
+          </div>
+          
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+    </main>

@@ -77,6 +77,18 @@ $(document).ready(function () {
     $(document).on('click', '.btn-delete-from-cart', function (e) {
         deleteFromCart($(e.target));
     });
+    
+$('.meanmenu-reveal').on('click',function(e){
+    $(this).toggleClass('meanclose');
+    if($(this).hasClass('meanclose')) {
+        $(this).find('span').remove()
+        $('.menu-overflow-mobile').css('display','block');
+    }
+    else{
+        $(this).append('<span></span> <span></span> <span></span>');
+        $('.menu-overflow-mobile').css('display','none');
+    }
+});
 
     if ($('#pager').length) {
         var pageNum = $('#pageNum').val();
@@ -311,6 +323,51 @@ $(document).ready(function () {
         e.preventDefault();
     });
 
+    $('#razorpay').on('click', function(e){
+        if(!e.isDefaultPrevented()) {
+            e.preventDefault();
+        }
+        $.ajax({
+            method: 'POST',
+            url: '/checkout/order/new',
+            data: {
+                firstName: $('#shipFirstname').val(),
+                lastName: $('#shipLastname').val(),
+                address: $('#shipAddr1').val(),
+                state: $('#shipState').val(),
+                postcode: $('#shipPostcode').val()
+            }
+        })
+        .done(function (msg){
+            console.log(msg);
+            $.ajax({
+                method: 'POST',
+                url: '/checkout/order/set',
+                data: {
+                    order_id: msg.message
+                }
+            });
+            window.location = '/checkout/information';
+        })
+        .fail(function (msg){
+            showNotification(msg.responseJSON.message, 'danger');
+        });
+    });
+    $('#cod').on('click',function(e){
+        e.preventDefault();
+        $.ajax({
+            method: 'POST',
+            url: '/checkout/order/reset',
+            data: {}
+        })
+        .done(function (msg){
+            window.location = '/checkout/information';
+        })
+        .fail(function (msg){
+            showNotification(msg.responseJSON.message, 'danger');
+        });
+        
+    });
     // Customer saving own details
     $('#customerSave').validator().on('click', function (e) {
         e.preventDefault();
@@ -319,18 +376,13 @@ $(document).ready(function () {
                     method: 'POST',
                     url: '/customer/update',
                     data: {
-                        email: $('#shipEmail').val(),
-                        company: $('#shipCompany').val(),
                         firstName: $('#shipFirstname').val(),
                         lastName: $('#shipLastname').val(),
                         address1: $('#shipAddr1').val(),
-                        address2: $('#shipAddr2').val(),
-                        country: $('#shipCountry').val(),
                         state: $('#shipState').val(),
                         postcode: $('#shipPostcode').val(),
-                        phone: $('#shipPhoneNumber').val(),
                         password: $('#newCustomerPassword').val(),
-                        orderComment: $('#orderComment').val()
+                        confirmpassword: $('#newCustomerPassword2').val()
                     }
                 })
                 .done(function () {
@@ -350,18 +402,13 @@ $(document).ready(function () {
                     method: 'POST',
                     url: '/customer/update',
                     data: {
-                        email: $('#shipEmail').val(),
-                        company: $('#shipCompany').val(),
                         firstName: $('#shipFirstname').val(),
                         lastName: $('#shipLastname').val(),
                         address1: $('#shipAddr1').val(),
-                        address2: $('#shipAddr2').val(),
-                        country: $('#shipCountry').val(),
                         state: $('#shipState').val(),
                         postcode: $('#shipPostcode').val(),
-                        phone: $('#shipPhoneNumber').val(),
                         password: $('#newCustomerPassword').val(),
-                        orderComment: $('#orderComment').val()
+                        confirmpassword: $('#newCustomerPassword2').val()
                     }
                 })
                 .done(function () {
@@ -372,7 +419,9 @@ $(document).ready(function () {
                 });
         }
     });
-
+    $('.expand-filter').on('click',function(){
+        $('.filter').toggleClass('displaynone1');
+    });
     // Customer saving Password
     $('#passwordSave').validator().on('click', function (e) {
         e.preventDefault();
@@ -381,18 +430,13 @@ $(document).ready(function () {
                     method: 'POST',
                     url: '/customer/update',
                     data: {
-                        email: $('#shipEmail').val(),
-                        company: $('#shipCompany').val(),
                         firstName: $('#shipFirstname').val(),
                         lastName: $('#shipLastname').val(),
                         address1: $('#shipAddr1').val(),
-                        address2: $('#shipAddr2').val(),
-                        country: $('#shipCountry').val(),
                         state: $('#shipState').val(),
                         postcode: $('#shipPostcode').val(),
-                        phone: $('#shipPhoneNumber').val(),
                         password: $('#newCustomerPassword').val(),
-                        orderComment: $('#orderComment').val()
+                        confirmpassword: $('#newCustomerPassword2').val()
                     }
                 })
                 .done(function () {
@@ -508,6 +552,7 @@ $(document).ready(function () {
             .done(function (msg) {
                 updateCartDiv();
                 showNotification(msg.message, 'success');
+                location.reload();
             })
             .fail(function (msg) {
                 showNotification(msg.responseJSON.message, 'danger');
@@ -551,6 +596,7 @@ $(document).ready(function () {
                 .done(function (msg) {
                     updateCartDiv();
                     showNotification(msg.message, 'success');
+                    location.reload();
                 })
                 .fail(function (msg) {
                     showNotification(msg.responseJSON.message, 'danger');
@@ -856,4 +902,29 @@ function emptyCart() {
             updateCartDiv();
             showNotification(msg.message, 'success', true);
         });
+}
+//show notification function 
+function showNotification(msg, type, reloadPage, redirect){
+    // defaults to false
+    reloadPage = reloadPage || false;
+
+    // defaults to null
+    redirect = redirect || null;
+
+    // Check for message or fallback to unknown
+    if(!msg){
+        msg = 'Unknown error has occured. Check inputs.';
+    }
+
+    $('#notify_message').removeClass();
+    $('#notify_message').addClass('alert-' + type);
+    $('#notify_message').html(msg);
+    $('#notify_message').slideDown(600).delay(2500).slideUp(600, function(){
+        if(redirect){
+            window.location = redirect;
+        }
+        if(reloadPage === true){
+            location.reload();
+        }
+    });
 }

@@ -98,6 +98,7 @@ router.post('/admin/product/insert', restrict, checkAccess, async (req, res) => 
         productPermalink: req.body.productPermalink,
         productTitle: common.cleanHtml(req.body.productTitle),
         productPrice: req.body.productPrice,
+        productDiscountPrice: req.body.produtDiscountPrice,
         productDescription: common.cleanHtml(req.body.productDescription),
         productPublished: common.convertBool(req.body.productPublished),
         productTags: req.body.productTags,
@@ -313,12 +314,14 @@ router.post('/admin/product/update', restrict, checkAccess, async (req, res) => 
         res.status(400).json({ message: 'Permalink already exists. Pick a new one.' });
         return;
     }
-
+console.log(req.body);
     const productDoc = {
         productId: req.body.productId,
         productPermalink: req.body.productPermalink,
         productTitle: common.cleanHtml(req.body.productTitle),
         productPrice: req.body.productPrice,
+        productMiniDescription: req.body.productMiniDescription,
+        productDiscountPrice: req.body.productDiscountPrice,
         productDescription: common.cleanHtml(req.body.productDescription),
         productPublished: common.convertBool(req.body.productPublished),
         productTags: req.body.productTags,

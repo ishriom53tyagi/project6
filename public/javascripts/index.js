@@ -32,6 +32,12 @@ $(document).ready(function () {
     $('#content').addClass('blur');
   }
 
+  $('.reviewinner h4 a').on('click',function(){
+    console.log("input cliked");
+    $('.reviewinput').toggleClass('displaynone');
+});
+
+
   function removeBlur() {
     $('#background').removeClass('blur');
     $('#content').removeClass('blur');
@@ -113,4 +119,24 @@ $(document).ready(function () {
     $(".forgot").toggleClass("forgot-fade");
   });
 
+  $($('.descheading h3')[0]).addClass('active');
+  $('.descproduct .desccont').css('display','none');
+  $($('.descproduct .desccont')[0]).css('display','block');
+  $('.descheading h3').on('click',function(){
+      $('.descheading h3').removeClass('active');
+      $(this).addClass('active');
+      var index = $('.descheading h3').index(this);
+      $('.descproduct .desccont').css('display','none');
+      $($('.descproduct .desccont')[index]).css('display','block');
+  });
+
+  $('.mean-expand').on('click',function(e){
+   
+    if (jQuery(this).hasClass("mean-clicked")) {
+    jQuery(this).prev('ul').slideUp(300, function(){});
+} else {
+    jQuery(this).prev('ul').slideDown(300, function(){});
+}
+jQuery(this).toggleClass("mean-clicked");
+  });
 });

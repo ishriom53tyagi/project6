@@ -263,6 +263,21 @@ handlebars = handlebars.create({
             }
             return '';
         },
+        forTimes: (n,block) =>{
+            var accum = '';
+            for(var i = 0; i < n; ++i)
+                accum += block.fn(i);
+            return accum;
+        },
+        forTimesminus: (n,block) =>{
+            if(!n){
+                n = 0;
+            }
+            var accum = '';
+            for(var i = 0; i < 5-n; ++i)
+                accum += block.fn(i);
+            return accum;
+        },
         upperFirst: (value) => {
             if(value){
                 return value.replace(/^\w/, (chr) => {
@@ -270,6 +285,12 @@ handlebars = handlebars.create({
                 });
             }
             return value;
+        },
+        discount: (value1, value2, options) => {
+            val1 = parseFloat(value1);
+            val2 = parseFloat(value2);
+
+            return parseInt(((val2 - val1) * 100)/ val2);
         },
         math: (lvalue, operator, rvalue, options) => {
             lvalue = parseFloat(lvalue);
@@ -470,13 +491,13 @@ initDb(config.databaseConnectionString, async (err, db) => {
         console.log(colors.red('Error connecting to MongoDB: ' + err));
         process.exit(2);
     }
-
-    // add db to app for routes
-    app.db = db;
-    app.config = config;
-    app.port = app.get('port');
-
+     // add db to app for routes
+     app.db = db;
+     app.config = config;
+     app.port = app.get('port');
+     app.categories = await db.categories.find({}).toArray();
     // Fire up the cron job to clear temp held stock
+    
     cron.schedule('*/1 * * * *', async () => {
         const validSessions = await db.sessions.find({}).toArray();
         const validSessionIds = [];

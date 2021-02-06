@@ -19,42 +19,42 @@ const { restrict } = require('../lib/auth');
 
 //*********************************//
 
-const authy = require('authy')(process.env.Authy_Key);
+const authy = require('authy')('V0qA6IGiXySlZIK5X328BUBQM0XTy9u7');
 
 const apiLimiter = rateLimit({
     windowMs: 300000, // 5 minutes
     max: 5
 });
 
-router.post('/customer/register', function(req, res) {
+router.post('/customer/register',async function(req, res) {
     const config = req.app.config;
+    const db = req.app.db;
 	console.log('New register request...');
 
 	var isSuccessful = false;
 
 	var email = req.body.shipEmail;
 	var phone = req.body.shipPhoneNumber;;
-	var countryCode = '+91';
+    var countryCode = '+91';
+    const customer =  await db.customers.findOne({ email: email });
+            if(customer){
+                req.session.message = "Customer with that email exist";
+                req.session.messageType = 'danger';
+                res.redirect('/customer/register');
+                return;
+            } 
 	
 	authy.register_user(email, phone, countryCode, function (regErr, regRes) {
     	console.log('In Registration...');
     	if (regErr) {
        		console.log(regErr);
-               res.send('There was some error registering the user.');
-               res.redirect('/checkout/information');
+               res.redirect('/customer/register');
                return;
     	} else if (regRes) {
 			console.log(regRes);
 			console.log("Here we go for the practice part"+regRes.user.id);
 
-            // Set the customer into the session
-            req.session.customerEmail = req.body.shipEmail;
-            req.session.customerFirstname = req.body.shipFirstname;
-            req.session.customerLastname = req.body.shipLastname;
-            req.session.customerAddress1 = req.body.shipAddr1;
-            req.session.customerState = req.body.shipState;
-            req.session.customerPostcode = req.body.shipPostcode;
-            req.session.customerPhone = req.body.shipPhoneNumber;
+            // Set the customer into the sessions
 
 
 
@@ -62,24 +62,19 @@ router.post('/customer/register', function(req, res) {
 				console.log('Requesting SMS...');
     			if (smsErr) {
     				console.log(smsErr);
-					res.send('There was some error sending OTP to cell phone.');
-                    req.session.message = result.error_text;
+                    req.session.message = smsErr;
                     req.session.messageType = 'danger';
-                    res.redirect('/checkout/information');
+                    res.redirect('/customer/register');
                     return;
     			} else if (smsRes) {
-                    let paymentType = '';
-                    if(req.session.cartSubscription){
-                        paymentType = '_subscription';
-                    }
-                        res.render(`${config.themeViews}checkout-information`, {
-                            title: 'Checkout - Information',
+                    req.session.customerPhone = phone;
+                    req.session.customerEmail = email;
+                        res.render(`${config.themeViews}customer-register`, {
+                            title: 'Customer Register',
+                            categories: req.app.categories,
                             config: req.app.config,
                             session: req.session,
-                            paymentType,
                             requestId: regRes.user.id,
-                            cartClose: false,
-                            page: 'checkout-information',
                             message: clearSessionValue(req.session, 'message'),
                             messageType: clearSessionValue(req.session, 'messageType'),
                             helpers: req.handlebars.helpers,
@@ -94,7 +89,7 @@ router.post('/customer/register', function(req, res) {
 router.post('/customer/confirm', async (req, res)=> {
 	console.log('New verify request...');
     const config = req.app.config;
-
+    const db = req.app.db;
 	const id = req.body.requestId;
 	const token = req.body.pin;
 
@@ -102,31 +97,22 @@ router.post('/customer/confirm', async (req, res)=> {
 		console.log('In Verification...');
 		if (verifyErr) {
 			console.log(verifyErr);
-            res.send('OTP verification failed.');
-            res.redirect('/checkout/information');
+            req.session.message = "Otp not verified";
+            req.session.messageType = "danger";
+            res.redirect('/customer/register');
             return;
 		} else if (verifyRes) {
             console.log("Is session working properly"+req.session.customerEmail);
-            const db = req.app.db;
+            
     
             const customerObj = {
                 email: req.session.customerEmail,
-                firstName: req.session.customerFirstname,
-                lastName: req.session.customerLastname,
-                address1: req.session.customerAddress1,
-                state: req.session.customerState,
-                postcode: req.session.customerPostcode,
                 phone: req.session.customerPhone,
-                password: bcrypt.hashSync(req.body.shipPassword, 10),
+                password: bcrypt.hashSync(req.body.accountpassword, 10),
                 created: new Date()
             };
         
-            const schemaResult = validateJson('newCustomer', customerObj);
-            if(!schemaResult.result){
-                console.log("validation occur due to deleted some items here");
-                res.status(400).json(schemaResult.errors);
-                return;
-            }
+         
         
             // check for existing customer
             const customer =  await db.customers.findOne({ email: req.session.customerEmail });
@@ -149,11 +135,6 @@ router.post('/customer/confirm', async (req, res)=> {
                     req.session.customerPresent = true;
                     req.session.customerId = customerReturn._id;
                     req.session.customerEmail = customerReturn.email;
-                    req.session.customerFirstname = customerReturn.firstName;
-                    req.session.customerLastname = customerReturn.lastName;
-                    req.session.customerAddress1 = customerReturn.address1;
-                    req.session.customerState = customerReturn.state;
-                    req.session.customerPostcode = customerReturn.postcode;
                     req.session.customerPhone = customerReturn.phone;
                 //    req.session.orderComment = req.body.orderComment;
     
@@ -170,7 +151,7 @@ router.post('/customer/confirm', async (req, res)=> {
                         return;
                     }
                     // we have a customer under that email so we compare the password
-                    bcrypt.compare(req.body.shipPassword, customer.password)
+                    bcrypt.compare(req.body.accountpassword, customer.password)
                     .then((result) => {
                         if(!result){
                             // password is not correct
@@ -187,7 +168,9 @@ router.post('/customer/confirm', async (req, res)=> {
                             showFooter: true
                           });  */
                         //  res.send('Verified Account');
-                          res.redirect('/checkout/information');
+                        req.session.message = "User Created";
+                        req.session.messageType = 'success';
+                          res.redirect('/');
                           return;
                     })
                     .catch((err) => {
@@ -319,24 +302,33 @@ router.post('/customer/save', async (req, res) => {
 });
 
 // Get customer orders
-router.get('/customer/account', async (req, res) => {
+router.get('/customer/account/:page?', async (req, res) => {
     const db = req.app.db;
     const config = req.app.config;
-
+    var allcustomer = await db.customers.find({}).toArray();
+    console.log(allcustomer);
     if(!req.session.customerPresent){
         res.redirect('/customer/login');
         return;
     }
-
+   
+    var customer = await db.customers.findOne({_id: getId(req.session.customerId)});
     const orders = await db.orders.find({
         orderCustomer: getId(req.session.customerId)
     })
     .sort({ orderDate: -1 })
     .toArray();
+    var ordershow = false;
+    if(req.params.page == 'orders') {
+        ordershow = true;
+    }
     res.render(`${config.themeViews}customer-account`, {
         title: 'Orders',
+        categories: req.app.categories,
         session: req.session,
         orders,
+        ordershow: ordershow,
+        customer: customer,
         message: clearSessionValue(req.session, 'message'),
         messageType: clearSessionValue(req.session, 'messageType'),
         countryList: getCountryList(),
@@ -354,18 +346,31 @@ router.post('/customer/update', async (req, res) => {
         return;
     }
 
-    const customerObj = {
-        company: req.body.company,
-        email: req.body.email,
-        firstName: req.body.firstName,
-        lastName: req.body.lastName,
-        address1: req.body.address1,
-        address2: req.body.address2,
-        country: req.body.country,
-        state: req.body.state,
-        postcode: req.body.postcode,
-        phone: req.body.phone
-    };
+    var customerObj = {};
+    if(req.body.firstName) {
+        customerObj["firstName"] = req.body.firstName;
+    }
+    if(req.body.lastName) {
+        customerObj["lastName"] = req.body.lastName;
+    }
+    if(req.body.address1) {
+        customerObj["addressline"] = req.body.address1;
+    }
+    if(req.body.state) {
+        customerObj["state"] = req.body.state;
+    }
+    if(req.body.postcode) {
+        customerObj["postcode"] = req.body.postcode;
+    }
+    if(req.body.password) {
+        if(req.body.password == req.body.confirmpassword) {
+            customerObj["password"] = bcrypt.hashSync(req.body.password, 10);
+        }
+        else {
+            req.status(400).json({message: "Password Not Matched"});
+            return;
+        }
+    }
 
     const schemaResult = validateJson('editCustomer', customerObj);
     if(!schemaResult.result){
@@ -622,6 +627,20 @@ router.get('/customer/login', async (req, res, next) => {
     res.render(`${config.themeViews}customer-login`, {
         title: 'Customer login',
         config: req.app.config,
+        categories: req.app.categories,
+        session: req.session,
+        message: clearSessionValue(req.session, 'message'),
+        messageType: clearSessionValue(req.session, 'messageType'),
+        helpers: req.handlebars.helpers
+    });
+});
+router.get('/customer/register', async (req, res, next) => {
+    const config = req.app.config;
+
+    res.render(`${config.themeViews}customer-register`, {
+        title: 'Customer Register',
+        config: req.app.config,
+        categories: req.app.categories,
         session: req.session,
         message: clearSessionValue(req.session, 'message'),
         messageType: clearSessionValue(req.session, 'messageType'),
@@ -637,6 +656,7 @@ router.get('/customer/contact', async (req, res, next) => {
         title: 'Contact',
         config: req.app.config,
         session: req.session,
+        categories: req.app.categories,
         message: clearSessionValue(req.session, 'message'),
         messageType: clearSessionValue(req.session, 'messageType'),
         helpers: req.handlebars.helpers,
@@ -650,6 +670,7 @@ router.get('/customer/aboutus', async (req, res, next) => {
         title: 'About Us',
         config: req.app.config,
         session: req.session,
+        categories: req.app.categories,
         message: clearSessionValue(req.session, 'message'),
         messageType: clearSessionValue(req.session, 'messageType'),
         helpers: req.handlebars.helpers,
@@ -663,6 +684,7 @@ router.get('/customer/forgot-password', async (req, res, next) => {
         title: 'Forgot Password',
         config: req.app.config,
         session: req.session,
+        categories: req.app.categories,
         message: clearSessionValue(req.session, 'message'),
         messageType: clearSessionValue(req.session, 'messageType'),
         helpers: req.handlebars.helpers,
@@ -678,6 +700,7 @@ router.get('/customer/privacy', (req, res) => {
       page: req.query.path,
       config,
       session: req.session,
+      categories: req.app.categories,
       message: clearSessionValue(req.session, 'message'),
       messageType: clearSessionValue(req.session, 'messageType'),
       helpers: req.handlebars.helpers,
@@ -693,6 +716,7 @@ router.get('/customer/delivery', (req, res) => {
       page: req.query.path,
       config,
       session: req.session,
+      categories: req.app.categories,
       message: clearSessionValue(req.session, 'message'),
       messageType: clearSessionValue(req.session, 'messageType'),
       helpers: req.handlebars.helpers,
@@ -708,6 +732,7 @@ router.get('/customer/terms', (req, res) => {
       page: req.query.path,
       config,
       session: req.session,
+      categories: req.app.categories,
       message: clearSessionValue(req.session, 'message'),
       messageType: clearSessionValue(req.session, 'messageType'),
       helpers: req.handlebars.helpers,
@@ -742,14 +767,6 @@ router.post('/customer/login_action', async (req, res) => {
         req.session.customerPresent = true;
         req.session.customerId = customer._id;
         req.session.customerEmail = customer.email;
-        req.session.customerCompany = customer.company;
-        req.session.customerFirstname = customer.firstName;
-        req.session.customerLastname = customer.lastName;
-        req.session.customerAddress1 = customer.address1;
-        req.session.customerAddress2 = customer.address2;
-        req.session.customerCountry = customer.country;
-        req.session.customerState = customer.state;
-        req.session.customerPostcode = customer.postcode;
         req.session.customerPhone = customer.phone;
 
         res.status(200).json({
@@ -771,6 +788,7 @@ router.get('/customer/forgotten', (req, res) => {
         route: 'customer',
         forgotType: 'customer',
         config: req.app.config,
+        categories: req.app.categories,
         helpers: req.handlebars.helpers,
         message: clearSessionValue(req.session, 'message'),
         messageType: clearSessionValue(req.session, 'messageType'),
@@ -838,6 +856,7 @@ router.get('/customer/reset/:token', async (req, res) => {
         token: req.params.token,
         route: 'customer',
         config: req.app.config,
+        categories: req.app.categories,
         message: clearSessionValue(req.session, 'message'),
         message_type: clearSessionValue(req.session, 'message_type'),
         show_footer: 'show_footer',

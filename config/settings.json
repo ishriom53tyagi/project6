@@ -1,5 +1,5 @@
 {
-    "cartTitle": "Jammu Basket",
+    "cartTitle": "Bnb Herbs",
     "cartDescription": "Basket CMS",
     "cartLogo": "images/loogo.jpg",
     "baseUrl": "http://localhost:1111",
@@ -17,7 +17,7 @@
     "customCss": "",
     "currencySymbol": "₹",
     "paymentGateway": "stripe",
-    "databaseConnectionString": "mongodb://localhost:27017/medicine",
+    "databaseConnectionString": "mongodb+srv://bnbherbs:bnbherbs@cluster0.e3if4.mongodb.net/bnbherbs?retryWrites=true&w=majority",
     "theme": "Cloth",
     "trackStock": false,
     "orderHook": "",

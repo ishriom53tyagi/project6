@@ -2,11 +2,14 @@ const express = require('express');
 const router = express.Router();
 const colors = require('colors');
 const stripHtml = require('string-strip-html');
-const moment = require('moment');
+var moment = require('moment-timezone');
 const _ = require('lodash');
 const common = require('../lib/common');
+const mailer = require('../misc/mailer');
 const { indexOrders } = require('../lib/indexing');
 const numeral = require('numeral');
+const Razorpay = require('razorpay');
+const crypto = require('crypto');
 const {
     getId,
     hooker,
@@ -24,50 +27,42 @@ const {
     getCountryList
 } = require('../lib/common');
 const countryList = getCountryList();
+var keyid = "rzp_test_Q4SdVCKHGsa45S";
+var keysecret = "doUGurZrLU4jd4ZIj65Gbfpn";
+var instance = new Razorpay({
+    key_id: keyid,
+    key_secret: keysecret
+  })
 
 //This is how we take checkout action
 
-router.post('/checkout_action', (req, res, next) => {
+router.post('/checkout_action',async (req, res, next) => {
     const db = req.app.db;
     const config = req.app.config;
- //   const stripeConfig = common.getPaymentConfig();
 
-    // Create the Stripe payload
-   /* const chargePayload = {
-        amount: numeral(req.session.totalCartAmount).format('0.00').replace('.', ''),
-        currency: stripeConfig.stripeCurrency.toLowerCase(),
-        source: req.body.stripeToken,
-        description: stripeConfig.stripeDescription,
-        shipping: {
-            name: `${req.session.customerFirstname} ${req.session.customerFirstname}`,
-            address: {
-                line1: req.session.customerAddress1,
-                line2: req.session.customerAddress2,
-                postal_code: req.session.customerPostcode,
-                state: req.session.customerState,
-                country: req.session.customerCountry
-            }
-        }
-    };  */
-
-    // charge via stripe
-   /* stripe.charges.create(chargePayload, (err, charge) => {
-        if(err){
-            console.info(err.stack);
-            req.session.messageType = 'danger';
-            req.session.message = 'Your payment has declined. Please try again';
-            req.session.paymentApproved = false;
-            req.session.paymentDetails = '';
-            res.redirect('/checkout/payment');
-            return;
-        }
-   */
+    
+    var customerObj = {};
+    if(req.body.shipFirstname) {
+        customerObj["firstName"] = req.body.shipFirstname;
+    }
+ 
+    if(req.body.shipLastname) {
+        customerObj["lastName"] = req.body.shipLastname;
+    }
+    if(req.body.shipAddr1) {
+        customerObj["addressline"] = req.body.shipAddr1;
+    }
+    if(req.body.shipState) {
+        customerObj["state"] = req.body.shipState;
+    }
+    if(req.body.shipPostcode) {
+        customerObj["postcode"] = req.body.shipPostcode;
+    }
+    await db.customers.findOneAndUpdate({_id: common.getId(req.session.customerId)},{$set: customerObj});
+    var customer = await db.customers.findOne({_id: common.getId(req.session.customerId)});
         // order status
         let paymentStatus = 'Paid';
-       /* if(charge.paid !== true){
-            paymentStatus = 'Declined';
-        } */
-
+     
         // new order doc
         const orderDoc = {
            // orderPaymentId: charge.id,
@@ -80,13 +75,13 @@ router.post('/checkout_action', (req, res, next) => {
             orderCustomer: common.getId(req.session.customerId),
             orderEmail: req.session.customerEmail,
            // orderCompany: req.session.customerCompany,
-            orderFirstname: req.session.customerFirstname,
-            orderLastname: req.session.customerLastname,
-            orderAddr1: req.session.customerAddress1,
+            orderFirstname: customer.firstName,
+            orderLastname: customer.lastName,
+            orderAddr1: customer.addressline,
            // orderAddr2: req.session.customerAddress2,
           //  orderCountry: req.session.customerCountry,
-            orderState: req.session.customerState,
-            orderPostcode: req.session.customerPostcode,
+            orderState: customer.state,
+            orderPostcode: customer.postcode,
             orderPhoneNumber: req.session.customerPhone,
             //orderComment: req.session.orderComment,
             orderStatus: paymentStatus,
@@ -94,7 +89,7 @@ router.post('/checkout_action', (req, res, next) => {
             orderProducts: req.session.cart,
             orderType: 'Single'
         };
-
+        
         // insert order into DB
         db.orders.insertOne(orderDoc, (err, newDoc) => {
             if(err){
@@ -106,7 +101,7 @@ router.post('/checkout_action', (req, res, next) => {
 
             // add to lunr index
             indexOrders(req.app)
-            .then(() => {
+            .then(async () => {
                 // if approved, send email etc
                     // set the results
                     req.session.messageType = 'success';
@@ -128,21 +123,23 @@ router.post('/checkout_action', (req, res, next) => {
                     if(req.session.cart){
                         common.emptyCart(req, res, 'function');
                     }
-
+                    const html=`Thanku from ordering from BnB Herbs`;
                     // send the email with the response
                     // TODO: Should fix this to properly handle result
-                    common.sendEmail(req.session.paymentEmailAddr, 'Your payment with ' + config.cartTitle, common.getEmailTemplate(paymentResults));
-
+                    //common.sendEmail(req.session.paymentEmailAddr, 'Your payment with ' + config.cartTitle, common.getEmailTemplate(paymentResults));
+                
+                   console.log("Session email Id is here"+req.session.customerEmail);
+                   try
+                   {
+                    await mailer.sendEmail('admin@bnbherbs.in',req.session.customerEmail,'Order Complete',html)
+                   }
+                    catch(err)
+                    {
+                        console.log(err);   
+                    }
                     // redirect to outcome
                     res.redirect('/payment/' + newId);
-                /*else{
-                    // redirect to failure
-                    req.session.messageType = 'danger';
-                    req.session.message = 'Your payment has declined. Please try again';
-                    req.session.paymentApproved = false;
-                    req.session.paymentDetails = '<p><strong>Order ID: </strong>' + newId + '</p><p><strong>Transaction ID: </strong>' + charge.id + '</p>';
-                    res.redirect('/payment/' + newId);
-                } */
+                
             });
         });
     });
@@ -160,76 +157,199 @@ router.get('/payment/:orderId', async (req, res, next) => {
         return;
     }
 
-    // If stock management is turned on payment approved update stock level
-    if(config.trackStock && req.session.paymentApproved){
-        // Check to see if already updated to avoid duplicate updating of stock
-        if(order.productStockUpdated !== true){
-            Object.keys(order.orderProducts).forEach(async (productKey) => {
-                const product = order.orderProducts[productKey];
-                const dbProduct = await db.products.findOne({ _id: getId(product.productId) });
-                let productCurrentStock = dbProduct.productStock;
-
-                // If variant, get the stock from the variant
-                if(product.variantId){
-                    const variant = await db.variants.findOne({
-                        _id: getId(product.variantId),
-                        product: getId(product._id)
-                    });
-                    if(variant){
-                        productCurrentStock = variant.stock;
-                    }else{
-                        productCurrentStock = 0;
-                    }
-                }
-
-                // Calc the new stock level
-                let newStockLevel = productCurrentStock - product.quantity;
-                if(newStockLevel < 1){
-                    newStockLevel = 0;
-                }
-
-                // Update stock
-                if(product.variantId){
-                    // Update variant stock
-                    await db.variants.updateOne({
-                        _id: getId(product.variantId)
-                    }, {
-                        $set: {
-                            stock: newStockLevel
-                        }
-                    }, { multi: false });
-                }else{
-                    // Update product stock
-                    await db.products.updateOne({
-                        _id: getId(product.productId)
-                    }, {
-                        $set: {
-                            productStock: newStockLevel
-                        }
-                    }, { multi: false });
-                }
-
-                // Add stock updated flag to order
-                await db.orders.updateOne({
-                    _id: getId(order._id)
-                }, {
-                    $set: {
-                        productStockUpdated: true
-                    }
-                }, { multi: false });
-            });
-            console.info('Updated stock levels');
-        }
-    }
-
-    // If hooks are configured, send hook
-    if(config.orderHook){
-        await hooker(order);
-    };
-    let paymentView = `${config.themeViews}payment-complete`;
-    if(order.orderPaymentGateway === 'Blockonomics') paymentView = `${config.themeViews}payment-complete-blockonomics`;
     res.render('success', {
         title: 'Payment complete',
+        config: req.app.config,
+        categories: req.app.categories,
+        session: req.session,
+        result: order,
+        message: clearSessionValue(req.session, 'message'),
+        messageType: clearSessionValue(req.session, 'messageType'),
+        helpers: req.handlebars.helpers,
+        showFooter: 'showFooter',
+    });
+});
+
+router.get('/emptycart', async (req, res, next) => {
+    emptyCart(req, res, '');
+});
+router.post('/checkout/order/reset', async (req,res)=>{
+    req.session.orderidgenerated = false;
+    req.session.razorOrderId = null;
+    res.status(200).json({message: "Reset Successfull"});
+    return;
+});
+router.post('/checkout/order/new',async (req,res)=>{
+    
+    
+    if(!req.body.firstName || !req.body.lastName || !req.body.address || !req.body.state || !req.body.postcode ) {
+        res.status(400).json({message: "Name, Address and Postcode is Required"});
+        return;
+    }
+    req.session.firstName = req.body.firstName;
+    req.session.lastName = req.body.lastName;
+    req.session.address = req.body.address;
+    req.session.state = req.body.state;
+    req.session.postcode = req.body.postcode;
+    var amount = parseInt(Number(req.session.totalCartAmount) * 100);
+    var options = {
+        amount: amount,  // amount in the smallest currency unit
+        currency: "INR",
+        receipt: "rcptid_11"
+      };
+      req.session.razorpayamount = amount;
+      console.log(options);
+      var orderid = '';
+      instance.orders.create(options, function(err, order) {
+          if(err){
+              console.log(err);
+          }
+        console.log(order);
+        req.session.orderidgenerated = true;
+        orderid = order.id;
+        req.session.razorOrderId = order.id;
+        res.status(200).send({message: order.id});
+        return;
+      });     
+});
+router.post('/checkout/order/set', async (req,res)=>{
+    console.log("checkout set session",req.body.order_id);
+    req.session.razororderId = req.body.order_id;
+    req.session.razoridgenerated = true;
+    return;
+});
+router.get('/checkout/pay',async (req,res)=>{
+    var db = req.app.db;
+    const order = await db.orders.findOne({_id: common.getId(req.session.orderdbpay)});
+    if(!order){
+        req.session.message = "No Order for this payment";
+        req.session.messageType = "danger";
+        res.redirect('/customer/account');
+        return;
+    }
+    res.render('payamount',{
+        title: "Payment Gateway",
+        config: req.app.config,
+        session: req.session,
+        categories: req.app.categories,
+        order: order,
+        razorpayid: req.session["razorOrderId"],
+        razoramount: req.session["razorpayamount"],
+        keyId: "rzp_test_rBXuI8IeffKFxy",
+        message: clearSessionValue(req.session, 'message'),
+        messageType: clearSessionValue(req.session, 'messageType'),
+        helpers: req.handlebars.helpers,
+        showFoooter: 'showFooter'
+    });
+});
+router.post('/checkout/confirm/razorpay',async (req,res)=>{
+    const db = req.app.db;
+    var bodymessage = req.body.razorpay_order_id + `|` + req.body.razorpay_payment_id;
+    console.log(req.body);
+    var secret = "doUGurZrLU4jd4ZIj65Gbfpn"; // from the dashboard
+    var generated_signature = crypto.createHmac("sha256",secret).update(bodymessage.toString()).digest('hex');
+    console.log(generated_signature);
+    console.log(req.body.razorpay_signature);
+  if (req.body.razorpay_signature && generated_signature == req.body.razorpay_signature) {    
+  
+ 
+var customerObj = {
+    "firstName": req.session.firstName,
+    "lastName": req.session.lastName,
+    "state": req.session.state,
+    "postcode": req.session.postcode,
+    "address": req.session.address
+};
+await db.customers.findOneAndUpdate({_id: common.getId(req.session.customerId)},{$set: customerObj});
+var customer = await db.customers.findOne({_id: common.getId(req.session.customerId)});
+    // order status
+    let paymentStatus = 'Paid';
+ 
+    // new order doc
+    const orderDoc = {
+       // orderPaymentId: charge.id,
+      //  orderPaymentGateway: 'Stripe',
+       // orderPaymentMessage: charge.outcome.seller_message,
+        orderTotal: req.session.totalCartAmount,
+        orderShipping: req.session.totalCartShipping,
+        orderItemCount: req.session.totalCartItems,
+        orderProductCount: req.session.totalCartProducts,
+        orderCustomer: common.getId(req.session.customerId),
+        orderEmail: req.session.customerEmail,
+       // orderCompany: req.session.customerCompany,
+        orderFirstname: customer.firstName,
+        orderLastname: customer.lastName,
+        orderAddr1: customer.addressline,
+       // orderAddr2: req.session.customerAddress2,
+      //  orderCountry: req.session.customerCountry,
+        orderState: customer.state,
+        orderPostcode: customer.postcode,
+        orderPhoneNumber: req.session.customerPhone,
+        //orderComment: req.session.orderComment,
+        orderStatus: paymentStatus,
+        orderDate: new Date(),
+        orderProducts: req.session.cart,
+        orderType: 'Single'
+    };
+    
+    // insert order into DB
+    db.orders.insertOne(orderDoc, (err, newDoc) => {
+        if(err){
+            console.info(err.stack);
+        }
+
+        // get the new ID
+        const newId = newDoc.insertedId;
+
+        // add to lunr index
+        indexOrders(req.app)
+        .then(() => {
+            // if approved, send email etc
+                // set the results
+                req.session.messageType = 'success';
+                req.session.message = 'Your payment was successfully completed';
+                req.session.paymentEmailAddr = newDoc.ops[0].orderEmail;
+                req.session.paymentApproved = true;
+                req.session.paymentDetails = '<p><strong>Order ID: </strong>' + newId ;
+
+                // set payment results for email
+                const paymentResults = {
+                    message: req.session.message,
+                    messageType: req.session.messageType,
+                    paymentEmailAddr: req.session.paymentEmailAddr,
+                    paymentApproved: true,
+                    paymentDetails: req.session.paymentDetails
+                };
+
+                // clear the cart
+                if(req.session.cart){
+                    common.emptyCart(req, res, 'function');
+                }
+
+                // send the email with the response
+                // TODO: Should fix this to properly handle result
+                common.sendEmail(req.session.paymentEmailAddr, 'Your payment with ' + config.cartTitle, common.getEmailTemplate(paymentResults));
+
+                // redirect to outcome
+                res.status(200).json({id: newId});
+                return;
+            
+        });
+    });
+}
+else  {
+    res.status(400).json({message: "Payment Failed"});
+    return;
+}
+  });
+
+  router.get('/success',async (req,res)=>{
+      const db = req.app.db;
+      var order = await db.orders.findOne({_id: common.getId(req.session.orderdbpay)});
+      req.session.orderdbpay = null;
+    res.render('success', {
+        title: 'Payment complete',
+        categories: req.app.categories,
         config: req.app.config,
         session: req.session,
         result: order,
@@ -237,22 +357,27 @@ router.get('/payment/:orderId', async (req, res, next) => {
         messageType: clearSessionValue(req.session, 'messageType'),
         helpers: req.handlebars.helpers,
         showFooter: 'showFooter',
-        menu: sortMenu(await getMenu(db))
     });
-});
-
-router.get('/emptycart', async (req, res, next) => {
-    emptyCart(req, res, '');
-});
+  });
 
 router.get('/checkout/information', async (req, res, next) => {
     const config = req.app.config;
+    const db = req.app.db;
+
+    const customerArray = await db.customers.findOne({
+        _id: common.getId(req.session.customerId)});
 
     // if there is no items in the cart then render a failure
     if(!req.session.cart){
         req.session.message = 'The are no items in your cart. Please add some items before checking out';
         req.session.messageType = 'danger';
         res.redirect('/');
+        return;
+    }
+    if(!req.session.customerPresent){
+        req.session.message = 'Login Required';
+        req.session.messageType = 'danger';
+        res.redirect('/customer/login');
         return;
     }
 
@@ -266,6 +391,11 @@ router.get('/checkout/information', async (req, res, next) => {
         title: 'Checkout - Information',
         config: req.app.config,
         session: req.session,
+        categories: req.app.categories,
+        customerArray: customerArray,
+        razorpayid: req.session["razorOrderId"],
+        razoramount: req.session["razorpayamount"],
+        keyId: "rzp_test_Q4SdVCKHGsa45S",
         paymentType,
         cartClose: false,
         page: 'checkout-information',
@@ -273,7 +403,6 @@ router.get('/checkout/information', async (req, res, next) => {
         message: clearSessionValue(req.session, 'message'),
         messageType: clearSessionValue(req.session, 'messageType'),
         helpers: req.handlebars.helpers,
-        showFooter: 'showFooter'
     });
 });
 
@@ -321,13 +450,36 @@ router.get('/checkout/shipping', async (req, res, next) => {
     });
 });
 
-router.get('/checkout/cart', (req, res) => {
+router.get('/checkout/cart', async(req, res) => {
     const config = req.app.config;
-
+    const db = req.app.db;
+    var newuserdiscount = [];
+    var discounts = await db.discounts.find({isHide: false,new: "No",minimum: {$gt : 0}}).toArray();
+    var discounts2 = [];
+    var ordes = await db.orders.findOne({orderCustomer: getId(req.session.customerId)});
+    if(!ordes && req.session.customerPresent) {
+        newuserdiscount = await db.discounts.find({isHide: false,new: "Yes"}).toArray();
+    }
+    for(var i=0;i<discounts.length;i++){
+        if(discounts[i].onceUser) {
+            if(req.session.customerPresent) {
+            var temptest = await db.orders.findOne({orderCustomer: getId(req.session.customerId), orderPromoCode: discounts[i].code});
+            if(!temptest) {
+                discounts2.push(discounts[i]);
+            }
+        }
+        }
+        else {
+            discounts2.push(discounts[i]);
+        }
+    }
     res.render(`${config.themeViews}checkout-cart`, {
         title: 'Checkout - Cart',
         page: req.query.path,
         config,
+        categories: req.app.categories,
+        discounts: discounts2,
+        newuserdiscount: newuserdiscount,
         session: req.session,
         message: clearSessionValue(req.session, 'message'),
         messageType: clearSessionValue(req.session, 'messageType'),
@@ -369,6 +521,7 @@ router.get('/checkout/payment', async (req, res) => {
         title: 'Checkout - Payment',
         config: req.app.config,
         paymentConfig: getPaymentConfig(),
+        categories: req.app.categories,
         session: req.session,
         paymentPage: true,
         paymentType,
@@ -396,6 +549,7 @@ router.get('/blockonomics_payment', (req, res, next) => {
         config: req.app.config,
         paymentConfig: getPaymentConfig(),
         session: req.session,
+        categories: req.app.categories,
         paymentPage: true,
         paymentType,
         cartClose: true,
@@ -492,8 +646,42 @@ router.get('/product/:id', async (req, res) => {
     const db = req.app.db;
     const config = req.app.config;
     const productsIndex = req.app.productsIndex;
-
+    var editreviewPermission = false;
+    var reviewPermission = false;
+    var rdata = {};
     const product = await db.products.findOne({ $or: [{ _id: getId(req.params.id) }, { productPermalink: req.params.id }] });
+    const existvalue = "orderProducts.".concat(product._id);
+    const ordersUser = await db.orders.findOne({$and: [{ orderCustomer: getId(req.session.customerId) }, { [existvalue] : { $exists : true } }] });
+    const reviewUser = await db.reviews.findOne({ $and: [{ productId: getId(product._id) }, { userId: getId(req.session.customerId) }] });
+    const reviewslist = await db.reviews.find({ productId: getId(product._id) }).toArray();
+    var date = moment(new Date(), 'DD/MM/YYYY HH:mm').toDate().toString().split('GMT')[0].concat("GMT+0530 (GMT+05:30)");
+    const offers = await db.discounts.find({}).toArray();
+    var firstoffer = null;
+    var secondoffer = null;
+    for(let a in offers){
+        if(moment(new Date(date)).isBetween(new Date(offers[a].start), new Date(offers[a].end))) {
+            if(secondoffer){
+                break;
+            }
+            else if(firstoffer){
+                secondoffer = offers[a];
+            }
+            else {
+                firstoffer = offers[a];
+            }
+        }
+    }
+    if(!reviewslist){
+        reviewslist = false;
+    }
+    if(reviewUser && req.session.customerPresent) {
+        editreviewPermission = true;
+        rdata.title = reviewUser.title;
+        rdata.description = reviewUser.description;
+    }
+    else if(ordersUser && req.session.customerPresent ) {
+        reviewPermission = true;
+    }
     if(!product){
         res.render('error', { title: 'Not found', message: 'Product not found', helpers: req.handlebars.helpers, config });
         return;
@@ -519,28 +707,37 @@ router.get('/product/:id', async (req, res) => {
     let relatedProducts = {};
     if(config.showRelatedProducts){
         const lunrIdArray = [];
-        const productTags = product.productTags.split(',');
+        // const productTags = product.productTags.split(',');
         const productTitleWords = product.productTitle.split(' ');
-        const searchWords = productTags.concat(productTitleWords);
-        searchWords.forEach((word) => {
-            productsIndex.search(word).forEach((id) => {
+        // const searchWords = productTags.concat(productTitleWords);
+        const searchWords = productTitleWords;
+            productsIndex.search(product.productTitle).forEach((id) => {
                 lunrIdArray.push(getId(id.ref));
             });
-        });
         relatedProducts = await db.products.find({
-            _id: { $in: lunrIdArray, $ne: product._id }
+            _id: { $in: lunrIdArray, $ne: product._id },
+            productPublished: true
         }).limit(4).toArray();
     }
+
+    console.log(product);
 
     res.render(`${config.themeViews}product`, {
         title: product.productTitle,
         result: product,
         variants,
         images: images,
+        firstoffer: firstoffer,
+        secondoffer: secondoffer,
         relatedProducts,
         productDescription: stripHtml(product.productDescription),
         metaDescription: config.cartTitle + ' - ' + product.productTitle,
         config: config,
+        categories: req.app.categories,
+        reviewPermission: reviewPermission,
+        editreviewPermission: editreviewPermission,
+        reviews: reviewslist,
+        rdata, rdata,
         session: req.session,
         pageUrl: config.baseUrl + req.originalUrl,
         message: clearSessionValue(req.session, 'message'),
@@ -684,6 +881,7 @@ router.post('/product/removefromcart', async (req, res, next) => {
     const db = req.app.db;
 
     // Check for item in cart
+    
     if(!req.session.cart[req.body.cartId]){
         return res.status(400).json({ message: 'Product not found in cart' });
     }
@@ -718,21 +916,7 @@ router.post('/product/emptycart', async (req, res, next) => {
 router.post('/product/addtocart', async (req, res, next) => {
     const db = req.app.db;
     const config = req.app.config;
-    let productQuantity = req.body.productQuantity ? parseInt(req.body.productQuantity) : 1;
-    const productComment = req.body.productComment ? req.body.productComment : null;
-
-    // If maxQuantity set, ensure the quantity doesn't exceed that value
-    if(config.maxQuantity && productQuantity > config.maxQuantity){
-        return res.status(400).json({
-            message: 'The quantity exceeds the max amount. Please contact us for larger orders.'
-        });
-    }
-
-    // Don't allow negative quantity
-    if(productQuantity < 1){
-        productQuantity = 1;
-    }
-
+    
     // setup cart object if it doesn't exist
     if(!req.session.cart){
         req.session.cart = {};
@@ -761,25 +945,9 @@ router.post('/product/addtocart', async (req, res, next) => {
     // Variant checks
     let productCartId = product._id.toString();
     let productPrice = parseFloat(product.productPrice).toFixed(2);
-    let productVariantId;
-    let productVariantTitle;
     let productStock = product.productStock;
+    var productQuantity = 1;
 
-    // Check if a variant is supplied and override values
-    if(req.body.productVariant){
-        const variant = await db.variants.findOne({
-            _id: getId(req.body.productVariant),
-            product: getId(req.body.productId)
-        });
-        if(!variant){
-            return res.status(400).json({ message: 'Error updating cart. Variant not found.' });
-        }
-        productVariantId = getId(req.body.productVariant);
-        productVariantTitle = variant.title;
-        productCartId = req.body.productVariant;
-        productPrice = parseFloat(variant.price).toFixed(2);
-        productStock = variant.stock;
-    }
 
     // If stock management on check there is sufficient stock for this product
     if(config.trackStock){
@@ -821,6 +989,7 @@ router.post('/product/addtocart', async (req, res, next) => {
     // if exists we add to the existing value
     let cartQuantity = 0;
     if(req.session.cart[productCartId]){
+        
         cartQuantity = parseInt(req.session.cart[productCartId].quantity) + productQuantity;
         req.session.cart[productCartId].quantity = cartQuantity;
         req.session.cart[productCartId].totalItemPrice = productPrice * parseInt(req.session.cart[productCartId].quantity);
@@ -832,14 +1001,11 @@ router.post('/product/addtocart', async (req, res, next) => {
         const productObj = {};
         productObj.productId = product._id;
         productObj.title = product.productTitle;
-        productObj.quantity = productQuantity;
         productObj.totalItemPrice = productPrice * productQuantity;
         productObj.productDescription = product.productDescription;
+        productObj.quantity = productQuantity;
         productObj.productImage = product.productImage;
-        productObj.productComment = productComment;
-        productObj.productSubscription = product.productSubscription;
-        productObj.variantId = productVariantId;
-        productObj.variantTitle = productVariantTitle;
+        
         if(product.productPermalink){
             productObj.link = product.productPermalink;
         }else{
@@ -861,9 +1027,9 @@ router.post('/product/addtocart', async (req, res, next) => {
     // Update checking cart for subscription
     updateSubscriptionCheck(req, res);
 
-    if(product.productSubscription){
-        req.session.cartSubscription = product.productSubscription;
-    }
+    // if(product.productSubscription){
+    //     req.session.cartSubscription = product.productSubscription;
+    // }
 
     res.status(200).json({
         message: 'Cart successfully updated',
@@ -871,7 +1037,92 @@ router.post('/product/addtocart', async (req, res, next) => {
         totalCartItems: req.session.totalCartItems
     });
 });
+router.post('/product/addreview', async (req, res, next) => {
+    const db = req.app.db;
 
+    if(!req.body.stars){
+        res.status(400).json({ message: 'Error ! Enter the stars Rating' });
+        res.redirect(req.body.link);
+        return;
+    }
+    if(!req.body.productreviewId){
+        res.status(400).json({ message: 'Error ! Product Not Found' });
+        res.redirect(req.body.link);
+        return;
+    }
+    if(!req.session.customerId){
+        res.status(400).json({ message: 'Error ! Login To Continue' });
+        res.redirect(req.body.link);
+        return;
+    }
+    const user = await db.customers.findOne({ _id: getId(req.session.customerId)});
+    username = user.firstName;
+    const reviewItem = {
+        title: req.body.reviewTitle,
+        rating: req.body.stars,
+        username: username,
+        date: new Date(),
+        description: req.body.reviewtextarea,
+        productId: getId(req.body.productreviewId),
+        userId: getId(req.session.customerId)
+    }
+
+    try{
+        const newDoc = await db.reviews.insertOne(reviewItem);
+        const product = await db.products.findOne({ _id: getId(req.body.productreviewId)});
+        const reviewslist = await db.reviews.find({ productId: getId(product._id) }).toArray();
+        var i = 0;
+        var totalrating = 0;
+        for(i=0;i<reviewslist.length;i++){
+            totalrating += parseInt(reviewslist[i].rating);
+        }
+        totalrating = Math.round(totalrating / reviewslist.length);
+        const updatedproduct = await db.products.findOneAndUpdate({_id:product._id},{ $set: {"productRating": totalrating}});
+        res.redirect(req.body.link);
+    }catch(ex){
+        console.log(ex);
+        res.status(400).json({ message: 'Error Inserting Reviews. Please try again.' });
+    }
+});
+
+// Update Review 
+router.post('/product/editreview', async (req, res, next) => {
+    const db = req.app.db;
+    
+    if(!req.body.stars){
+        res.status(400).json({ message: 'Error ! Enter the stars Rating' });
+        res.redirect(req.body.link);
+        return;
+    }
+    if(!req.body.productreviewId){
+        res.status(400).json({ message: 'Error ! Product Not Found' });
+        res.redirect(req.body.link);
+        return;
+    }
+    if(!req.session.customerId){
+        res.status(400).json({ message: 'Error ! Login To Continue' });
+        res.redirect(req.body.link);
+        return;
+    }
+
+    try{
+        const updatedreview = await db.reviews.findOneAndUpdate({ productId: getId(req.body.productreviewId), userId: getId(req.session.customerId)},{ $set: {"title": req.body.reviewTitle, "description": req.body.reviewtextarea, "rating": req.body.stars}});
+        const reviewslist = await db.reviews.find({ productId: getId(req.body.productreviewId) }).toArray();
+        var i = 0;
+        var totalrating = 0;
+        for(i=0;i<reviewslist.length;i++){
+            totalrating += parseInt(reviewslist[i].rating);
+        }
+        totalrating = Math.round(totalrating / reviewslist.length);
+        const updatedproduct = await db.products.findOneAndUpdate({_id: getId(req.body.productreviewId)},{ $set: {"productRating": totalrating}});
+        res.redirect(req.body.link);
+    }
+    catch(ex){
+        console.log(ex);
+        res.redirect(req.body.link);
+    }
+
+});
 // search products
 router.get('/search/:searchTerm/:pageNum?', (req, res) => {
     const db = req.app.db;
@@ -906,6 +1157,7 @@ router.get('/search/:searchTerm/:pageNum?', (req, res) => {
             results: results.data,
             filtered: true,
             session: req.session,
+            categories: req.app.categories,
             metaDescription: req.app.config.cartTitle + ' - Search term: ' + searchTerm,
             searchTerm: searchTerm,
             message: clearSessionValue(req.session, 'message'),
@@ -962,6 +1214,7 @@ router.get('/category/:cat/:pageNum?', (req, res) => {
                 filtered: true,
                 session: req.session,
                 searchTerm: searchTerm,
+                categories: req.app.categories,
                 metaDescription: `${req.app.config.cartTitle} - Category: ${searchTerm}`,
                 message: clearSessionValue(req.session, 'message'),
                 messageType: clearSessionValue(req.session, 'messageType'),
@@ -1020,50 +1273,34 @@ router.get('/sitemap.xml', (req, res, next) => {
     });
 });
 
-router.get('/page/:pageNum', (req, res, next) => {
-    const db = req.app.db;
-    const config = req.app.config;
-    const numberProducts = config.productsPerPage ? config.productsPerPage : 6;
-
-    Promise.all([
-        paginateProducts(true, db, req.params.pageNum, {}, getSort()),
-        getMenu(db)
-    ])
-        .then(([results, menu]) => {
-            // If JSON query param return json instead
-            if(req.query.json === 'true'){
-                res.status(200).json(results.data);
-                return;
-            }
-
-            res.render(`${config.themeViews}index`, {
-                title: 'Shop',
-                results: results.data,
-                session: req.session,
-                message: clearSessionValue(req.session, 'message'),
-                messageType: clearSessionValue(req.session, 'messageType'),
-                metaDescription: req.app.config.cartTitle + ' - Products page: ' + req.params.pageNum,
-                config: req.app.config,
-                productsPerPage: numberProducts,
-                totalProductCount: results.totalItems,
-                pageNum: req.params.pageNum,
-                paginateUrl: 'page',
-                helpers: req.handlebars.helpers,
-                showFooter: 'showFooter',
-                menu: sortMenu(menu)
-            });
-        })
-        .catch((err) => {
-            console.error(colors.red('Error getting products for page', err));
-        });
-});
-
-// The main entry point of the shop
 router.get('/:page?', async (req, res, next) => {
+    
     const db = req.app.db;
     const config = req.app.config;
     const numberProducts = config.productsPerPage ? config.productsPerPage : 6;
+    var productsIndex = req.app.productsIndex;
 
+    var medicine1 = [];
+    productsIndex.search("medicine").forEach((id)=>{
+        medicine1.push(getId(id.ref));
+    });
+    var medicineProduct = await db.products.aggregate([
+        {$match: {_id: {$in: medicine1},productStock: {$gt: 0}}},
+        {$limit: 4}
+    ]).toArray();
+
+    var medicine2 = [];
+    productsIndex.search("bnbSpecial").forEach((id)=>{
+        medicine2.push(getId(id.ref));
+    });
+    var medicineProduct2 = await db.products.aggregate([
+        {$match: {_id: {$in: medicine2},productStock: {$gt: 0}}},
+        {$limit: 4}
+    ]).toArray();
+    
+    console.log(medicineProduct);
+    var k = moment().utcOffset('+05:30').format();
+   
     // if no page is specified, just render page 1 of the cart
     if(!req.params.page){
         Promise.all([
@@ -1076,12 +1313,15 @@ router.get('/:page?', async (req, res, next) => {
                     res.status(200).json(results.data);
                     return;
                 }
-
+            
                 res.render(`${config.themeViews}index`, {
                     title: `${config.cartTitle} - Shop`,
                     theme: config.theme,
                     results: results.data,
+                    medicineProduct:medicineProduct,
+                    medicineProduct2:medicineProduct2,
                     session: req.session,
+                    categories: req.app.categories,
                     message: clearSessionValue(req.session, 'message'),
                     messageType: clearSessionValue(req.session, 'messageType'),
                     config,
@@ -1111,6 +1351,7 @@ router.get('/:page?', async (req, res, next) => {
                 page: page,
                 searchTerm: req.params.page,
                 session: req.session,
+                categories: req.app.categories,
                 message: clearSessionValue(req.session, 'message'),
                 messageType: clearSessionValue(req.session, 'messageType'),
                 config: req.app.config,
@@ -1131,5 +1372,6 @@ router.get('/:page?', async (req, res, next) => {
         }
     }
 });
+
 
 module.exports = router;

@@ -29,11 +29,28 @@
             </div>
             <div class="col-sm-6">
                 <div class="form-group">
+                    <label for="productDiscountPrice" class="control-label">{{ @root.__ "Product Max price" }} *</label>
+                    <div class="input-group">
+                        <div class="input-group-prepend">
+                            <label class="input-group-text">{{currencySymbol config.currencySymbol}}</label>
+                        </div>
+                        <input type="number" id="productDiscountPrice" class="form-control" value="{{result.productDiscountPrice}}" step="any" required/>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-6">
+                <div class="form-group">
                     <label for="productPublished" class="control-label">{{ @root.__ "Status" }}</label>
                     <select class="form-control" id="productPublished">
                         <option value="true"  {{selectState result.productPublished "true"}}>{{ @root.__ "Published" }}</option>
                         <option value="false" {{selectState result.productPublished "false"}}>{{ @root.__ "Draft" }}</option>
                     </select>
+                </div>
+            </div>
+            <div class="col-12">
+                <div class="form-group">
+                    <label for="productMiniDescription" class="control-label">{{ @root.__ "Product Mini Description" }} *</label>
+                    <input type="text" id="productMiniDescription" class="form-control" minlength="5" maxlength="200" value="{{result.productMiniDescription}}" required/>
                 </div>
             </div>
             {{#if config.trackStock}}

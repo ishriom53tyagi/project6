@@ -30,10 +30,10 @@
     <link rel="stylesheet" href="/stylesheets/bootstrap.css">
 
     <!-- JS, Popper.js, and jQuery -->
+    <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
     <link rel="stylesheet" href="/stylesheets/pushy{{config.env}}.css">
-    <link href="https://fonts.googleapis.com/css2?family=Open+Sans&display=swap" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Roboto&display=swap" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Source+Sans+Pro&display=swap" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+<link href="https://fonts.googleapis.com/css2?family=Work+Sans:wght@100;200;300;400;500;600;700;800;900&display=swap" rel="stylesheet"> 
     {{#if admin}}
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/gijgo/1.9.13/combined/css/gijgo.min.css"
         integrity="sha256-bH0WSMuCFoG/dxeox/5aOWmaZl729yDg4ylckwSRTfU=" crossorigin="anonymous" />
@@ -46,26 +46,41 @@
     <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
     <link rel="stylesheet" href="/stylesheets/codemirror-style.min.css">
     <link rel="stylesheet" href="/stylesheets/etalage.css">
-    {{!-- <link rel="stylesheet" href="/stylesheets/style{{config.env}}.css"> --}}
+    <link href="/cdn.shopify.com/s/files/1/0053/5665/0560/t/2/assets/owl.carousel.min22a5.css?v=10084739304461680995" rel="stylesheet" type="text/css" media="all" />
+
     {{#if admin}}
     <link rel="stylesheet" href="/stylesheets/admin{{config.env}}.css">
     {{/if}}
+
+
+<link href="/cdn.shopify.com/s/files/1/0053/5665/0560/t/2/assets/meanmenu.min07f7.css?v=3064370016492856624" rel="stylesheet" type="text/css" media="all" />
+
+<link href="/cdn.shopify.com/s/files/1/0053/5665/0560/t/2/assets/themify-icons40bc.css?v=1782837867860931872" rel="stylesheet" type="text/css" media="all" />
+
+<link href="/cdn.shopify.com/s/files/1/0053/5665/0560/t/2/assets/font-awesome.mina741.css?v=14053330696143262969" rel="stylesheet" type="text/css" media="all" />
+<link href="/cdn.shopify.com/s/files/1/0053/5665/0560/t/2/assets/ionicons.minb771.css?v=18436430612067519620" rel="stylesheet" type="text/css" media="all" />
     <link rel="stylesheet" href="/stylesheets/owl.carousel.min.css">
-    {{!-- <link rel="stylesheet" href="/stylesheets/vendor.css"> --}}
+    <link href="/cdn.shopify.com/s/files/1/0053/5665/0560/t/2/assets/style271f.css?v=16524583298396696142" rel="stylesheet" type="text/css" media="all" />
+    <link href="/cdn.shopify.com/s/files/1/0053/5665/0560/t/2/assets/responsive8230.css?v=11256273084078173228" rel="stylesheet" type="text/css" media="all" />
+
     <link rel="stylesheet" href="/stylesheets/style.css">
-    {{!-- <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script> --}}
+   <!-- Theme Default CSS -->
+<link href="/cdn.shopify.com/s/files/1/0053/5665/0560/t/2/assets/theme-defaultcf74.css" rel="stylesheet" type="text/css" media="all" />
+<!-- Make your theme CSS calls here -->
+<link href="/cdn.shopify.com/s/files/1/0053/5665/0560/t/2/assets/theme-custom48e4.css" rel="stylesheet" type="text/css" media="all" />
+
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"
         integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
         integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous">
     </script>
-
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.3.14/angular.min.js"></script>
+  <script src="/javascripts/all.js"></script>
+    
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
-    <script src="https://kit.fontawesome.com/da9abaff04.js" crossorigin="anonymous"></script>
-    {{!-- <script src="/javascripts/fontawesome.js"></script> --}}
+    
+    
     <script src="/javascripts/bootstrap.js"></script>
-    {{!-- <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js" integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI" crossorigin="anonymous"></script> --}}
+    
     {{#if admin}}
     <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.min.js"
         integrity="sha256-4iQZ6BVL4qNKlQ27TExEhBN1HFPvAvAMbFavKKosSWQ=" crossorigin="anonymous"></script>
@@ -89,11 +104,14 @@
     <script src="/javascripts/cssbeautify.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.touchswipe/1.6.4/jquery.touchSwipe.min.js"></script>
     <script src="/javascripts/jquery.etalage.min.js"></script>
+<script src="/cdn.shopify.com/s/files/1/0053/5665/0560/t/2/assets/owl.carousel.min29bc.js?v=7581371558069594612"></script>
+
+    
     <script src="/javascripts/index.js"></script>
-    <script src="/javascripts/common{{config.env}}.js"></script>
-    <script src="/javascripts/expressCart{{config.env}}.js"></script>
+    <script src="/javascripts/common.js"></script>
+    <script src="/javascripts/expressCart.js"></script>
     {{#if admin}}
-    <script src="/javascripts/admin{{config.env}}.js"></script>
+    <script src="/javascripts/admin.js"></script>
     {{/if}}
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-tokenfield/0.12.0/bootstrap-tokenfield.min.js"
         integrity="sha256-jdwX0QzXB7z7Xc7Vz0ovtIHWO5qIZWg0aLcGv44JDgE=" crossorigin="anonymous"></script>
@@ -237,446 +255,398 @@
     <body>
         {{/if}}
         {{#unless admin}}
-        <!-- Sign in / sign up modal-->
-        <div class="modal fade" id="signin-modal" tabindex="-1" role="dialog">
-            <div class="modal-dialog modal-dialog-centered" role="document">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <ul class="nav nav-tabs card-header-tabs" role="tablist">
-                            <li class="nav-item"><a class="nav-link active" href="#signin-tab" data-toggle="tab"
-                                    role="tab" aria-selected="true"><i class="czi-unlocked mr-2 mt-n1"></i>Sign in</a>
-                            </li>
-                            {{!-- <li class="nav-item"><a class="nav-link" href="#signup-tab" data-toggle="tab" role="tab"
-                                    aria-selected="false"><i class="czi-user mr-2 mt-n1"></i>Sign up</a></li> --}}
-                        </ul>
-                        <button class="close" type="button" data-dismiss="modal" aria-label="Close"><span
-                                aria-hidden="true">&times;</span></button>
-                    </div>
-                    <div class="modal-body tab-content py-4">
-                        <form class="needs-validation tab-pane fade show active" autocomplete="off" novalidate
-                            id="signin-tab">
-                            <div class="form-group">
-                                <label for="si-email">Email address</label>
-                                <input class="form-control" type="email" id="email" name="email"
-                                    placeholder="johndoe@example.com" required>
-                                <div class="invalid-feedback">Please provide a valid email address.</div>
-                            </div>
-                            <div class="form-group">
-                                <label for="si-password">Password</label>
-                                <div class="password-toggle">
-                                    <input class="form-control" type="password" id="password" name="password" required>
-                                    <label class="password-toggle-btn">
-                                        <input class="custom-control-input password-show" type="checkbox"><i
-                                            class="czi-eye password-toggle-indicator"></i><span class="sr-only">Show
-                                            password</span>
-                                    </label>
-                                </div>
-                            </div>
-                            <div class="form-group d-flex flex-wrap justify-content-between">
-                                <div class="custom-control custom-checkbox mb-2">
-                                    <input class="custom-control-input" type="checkbox" id="si-remember">
-                                    <label class="custom-control-label" for="si-remember">Remember me</label>
-                                </div><a class="font-size-sm" href="/customer/forgot-password">Forgot password?</a>
-                            </div>
-                            <button class="btn btn-primary btn-block btn-shadow" id="customerloginForm"
-                                type="submit">Sign in</button>
+    {{!-- Search Wrapper --}}
+
+        
+
+      <header class="header-area gray-bg clearfix">
+  <div class="header-bottom">
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-3 col-md-4 col-8">
+          <div class="logo"><a href="/" class="theme-logo">
+  <img src="/images/bnb.png" alt="BNB Herbs" style="height: 50px;">BNB Herbs
+</a></div>
+        </div>
+     
+        <div class="col-lg-9 col-md-8 col-12">
+             <div class="search-wrapper padding-100 w-100" style="margin-top: 25px;">
+       
+        <div class="container">
+            <div class="row">
+                <div class="col-12">
+                    <div class="search-content">
+                        <form >
+                            <input type="search" name="frm_search" id="frm_search" style="background-color: white;color: black;" placeholder="Search Here..." autofocus="true">
+                            <button id="btn_search" type="submit" style="display: none;"><i class="fas fa-search"></i></button>
                         </form>
                     </div>
                 </div>
             </div>
         </div>
-
-        <header class="box-shadow-sm fixed-top" id="top">
-            <div class="bg-light">
-                <div class="navbar navbar-expand-lg navbar-light">
-                    <div class="container"><a class="navbar-brand d-none d-sm-block mr-3 flex-shrink-0" href="/"
-                            style="min-width: 7rem;"><img width="142" src="/images/300Light.png"
-                                alt="Cartzilla" /></a><a class="navbar-brand d-sm-none mr-2" href="/"
-                            style="min-width: 4.625rem;"><img width="55" src="/images/200Light.png"
-                                alt="Cartzilla" /></a>
-                        <form class="input-group-overlay d-none d-lg-flex mx-4">
-                            <input class="form-control appended-form-control" name="frm_search" id="frm_search" type="search" aria-label="Search"
-                                placeholder="Search for products">
-                            <button class="input-group-append-overlay search-button" id="btn_search" type="submit"><span class="input-group-text"><i
-                                        class="czi-search"></i></span></button>
-                   </form>
-                        {{!-- <div class="input-group">
-                            <input class="form-control"  placeholder="{{ @root.__ "Search shop" }}" >
-                            <div class="input-group-append">
-                                <button class="btn btn-outline-success" >{{ @root.__ "Search" }}</button>
-                            </div>
-                        </div> --}}
-                        <div class="navbar-toolbar d-flex flex-shrink-0 align-items-center">
-                            <button class="navbar-toggler" type="button" data-toggle="collapse"
-                                data-target="#navbarCollapse"><span class="navbar-toggler-icon"></span></button><a
-                                class="navbar-tool navbar-stuck-toggler" href="#"><span
-                                    class="navbar-tool-tooltip">Expand menu</span>
-                                <div class="navbar-tool-icon-box"><i class="navbar-tool-icon czi-menu"></i></div>
-                            </a><a class="navbar-tool d-none d-lg-flex" href="account-wishlist.html"><span
-                                    class="navbar-tool-tooltip">Wishlist</span>
-                                <div class="navbar-tool-icon-box"><i class="navbar-tool-icon czi-heart"></i></div>
-                            </a>
-                            {{#if @root.session.customerPresent}}
-                            <div class="dropdown ml-1 ml-lg-0 mr-n1 mr-lg-2">
-                                <button class="btn dropdown-toggle" type="button" id="dropdownMenuButton"
-                                    data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                    <i class="navbar-tool-icon czi-user"></i>
-                                </button>
-                                <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                                    <li><a class="dropdown-item" href="/customer/account">Account</a></li>
-                                    <li><a class="dropdown-item" href="/checkout/cart">Cart</a></li>
-                                    <li><a class="dropdown-item" href="/customer/logout">Logout</a></li>
-                                </div>
-                            </div>
-                            {{else}}
-                            <a class="navbar-tool ml-1 ml-lg-0 mr-n1 mr-lg-2" href="#signin-modal" data-toggle="modal">
-                                <div class="navbar-tool-icon-box"><i class="navbar-tool-icon czi-user"></i></div>
-                                <div class="navbar-tool-text ml-n3"><small>Hello, Sign in</small>My Account</div>
-                            </a>
-                            {{/if}}
-
-                            {{!-- Cart Starts here --}}
-                            <div class="navbar-tool dropdown ml-3">
-                                {{#if @root.session.cart}}
-                                <a class="navbar-tool-icon-box bg-secondary dropdown-toggle" href="/checkout/information">
-                                    <span class="navbar-tool-label"
-                                        id="cart-count">{{@root.session.totalCartItems}}</span>
-                                    <i class="navbar-tool-icon czi-cart"></i>
-                                </a>
-                                <a class="navbar-tool-text" href="/checkout/information"><small>My
-                                        Cart</small>{{currencySymbol config.currencySymbol}}{{formatAmount @root.session.totalCartAmount}}</a>
-                                {{else}}
-                                <a class="navbar-tool-icon-box bg-secondary dropdown-toggle" href="/checkout/information">
-                                    <span class="navbar-tool-label" id="cart-count">0</span>
-                                    <i class="navbar-tool-icon czi-cart"></i>
-                                </a>
-                                <a class="navbar-tool-text" href="/checkout/information"><small>My
-                                        Cart</small>{{currencySymbol @root.config.currencySymbol}}0</a>
-                                {{/if}}
-                                <!-- Cart dropdown-->
-                                <div class="dropdown-menu dropdown-menu-right" style="width: 20rem;">
-                                    <div class="widget widget-cart px-3 pt-2 pb-3">
-                                        <div data-simplebar data-simplebar-auto-hide="false">
-                                            {{#each @root.session.cart}}
-                                            <div class="widget-cart-item py-2 border-bottom">
-                                                <div class="cart-delete">
-                                                    <button class="close btn-delete-from-cart"
-                                                        data-cartid="{{@key}}"
-                                                        type="button"><span class="czi-trash"
-                                                            aria-hidden="true"></span></button>
-                                                </div>
-                                                <div class="media align-items-center">
-                                                    {{#if productImage}}
-                                                    <a class="d-block mr-2" href="/product/{{this.link}}">
-                                                        <img width="64" src="{{this.productImage.[0].path}}"
-                                                            alt="{{this.title}} product image">
-                                                    </a>
-                                                    {{else}}
-                                                    <a class="d-block mr-2" href="/product/{{this.link}}">
-                                                        <img width="64" src="/uploads/placeholder.png"
-                                                            alt="{{this.title}} product image">
-                                                    </a>
-                                                    {{/if}}
-                                                    <div class="media-body">
-                                                        <h6 class="widget-product-title"><a
-                                                                href="/product/{{this.link}}">{{this.title}}</a>
-                                                        </h6>
-                                                        <div class="widget-product-meta cart-buttons">
-                                                            {{currencySymbol @root.config.currencySymbol}} <span
-                                                                class="text-accent mr-2">{{formatAmount this.totalItemPrice}}</span>
-                                                            {{#ifCond @root.cartReadOnly '!=' true}}
-                                                            <div class="cart-quantity">
-                                                                <button class="btn-qty-minus" type="button"><i
-                                                                        class="fas fa-minus"></i></button>
-                                                                <input type="number"
-                                                                    class="cart-product-quantity text-center"
-                                                                    data-cartid="{{@key}}"
-                                                                    data-id="{{../this.productId}}" maxlength="2"
-                                                                    value="{{../this.quantity}}">
-                                                                <button class="btn-qty-add" type="button"><i
-                                                                        class="fas fa-plus"></i></button>
-                                                            </div>
-
-                                                            {{else}}
-                                                            <div
-                                                                class="col-4 col-md-6 col-lg-5 col-xl-7 no-pad-left mb-2">
-                                                            </div>
-                                                            {{/ifCond}}
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            {{/each}}
-                                        </div>
-
-                                        <div class="d-flex flex-wrap justify-content-between align-items-center py-3">
-                                            <div class="font-size-sm mr-2 py-2"><span
-                                                    class="text-muted">Subtotal:</span><span
-                                                    class="text-accent font-size-base ml-1">{{currencySymbol @root.config.currencySymbol}}{{formatAmount @root.session.totalCartAmount}}</span>
-                                            </div>
-                                        </div><a class="btn btn-primary btn-sm btn-block" href="/checkout/information"><i
-                                                class="czi-card mr-2 font-size-base align-middle"></i>Checkout</a>
-                                    </div>
-
-                                </div>
-
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="navbar navbar-expand-lg navbar-light navbar-stuck-menu mt-n2 pt-0 pb-2">
-                    <div class="container">
-                        <div class="collapse navbar-collapse" id="navbarCollapse">
-                            <!-- Search-->
-                            <div class="input-group-overlay d-lg-none my-3">
-                                <div class="input-group-prepend-overlay search"><span class="input-group-text"><i
-                                            class="czi-search"></i></span></div>
-                                <input class="form-control prepended-form-control" type="search"
-                                    placeholder="Search for products" aria-label="Search">
-                            </div>
-
-                            <!-- Primary menu-->
-                            <ul class="navbar-nav mx-auto">
-                                <li class="nav-item dropdown"><a class="nav-link dropdown-toggle" href="#"
-                                        data-toggle="dropdown">Fruits</a>
-                                    <ul class="dropdown-menu">
-                                        <li class="dropdown position-static mb-0"><a
-                                                class="dropdown-item py-2 border-bottom"
-                                                href="home-fashion-store-v1.html"><span
-                                                    class="d-block text-heading">Fashion Store v.1</span><small
-                                                    class="d-block text-muted">Classic shop layout</small></a>
-                                            <div class="dropdown-menu h-100 animation-0 mt-0 p-3"><a class="d-block"
-                                                    href="home-fashion-store-v1.html" style="width: 250px;"><img
-                                                        src="img/home/preview/th01.jpg" alt="Fashion Store v.1" /></a>
-                                            </div>
-                                        </li>
-                                        <li class="dropdown position-static mb-0"><a
-                                                class="dropdown-item py-2 border-bottom"
-                                                href="home-fashion-store-v2.html"><span
-                                                    class="d-block text-heading">Fashion Store v.2</span><small
-                                                    class="d-block text-muted">Slider + Featured categories</small></a>
-                                            <div class="dropdown-menu h-100 animation-0 mt-0 p-3"><a class="d-block"
-                                                    href="home-fashion-store-v2.html" style="width: 250px;"><img
-                                                        src="img/home/preview/th02.jpg" alt="Fashion Store v.2" /></a>
-                                            </div>
-                                        </li>
-                                    </ul>
-                                </li>
-                                <li class="nav-item dropdown"><a class="nav-link dropdown-toggle" href="#"
-                                        data-toggle="dropdown">Beverages</a>
-                                    <div class="dropdown-menu p-0">
-                                        <div class="d-flex flex-wrap flex-md-nowrap px-2">
-                                            <div class="mega-dropdown-column py-4 px-3">
-                                                <div class="widget widget-links mb-3">
-                                                    <h6 class="font-size-base mb-3">Shop layouts</h6>
-                                                    <ul class="widget-list">
-                                                        <li class="widget-list-item pb-1"><a class="widget-list-link"
-                                                                href="shop-grid-ls.html">Shop Grid - Left Sidebar</a>
-                                                        </li>
-                                                        <li class="widget-list-item pb-1"><a class="widget-list-link"
-                                                                href="shop-grid-rs.html">Shop Grid - Right Sidebar</a>
-                                                        </li>
-                                                        <li class="widget-list-item pb-1"><a class="widget-list-link"
-                                                                href="shop-grid-ft.html">Shop Grid - Filters on Top</a>
-                                                        </li>
-                                                        <li class="widget-list-item pb-1"><a class="widget-list-link"
-                                                                href="shop-list-ls.html">Shop List - Left Sidebar</a>
-                                                        </li>
-                                                        <li class="widget-list-item pb-1"><a class="widget-list-link"
-                                                                href="shop-list-rs.html">Shop List - Right Sidebar</a>
-                                                        </li>
-                                                        <li class="widget-list-item pb-1"><a class="widget-list-link"
-                                                                href="shop-list-ft.html">Shop List - Filters on Top</a>
-                                                        </li>
-                                                    </ul>
-                                                </div>
-                                                <div class="widget widget-links">
-                                                    <h6 class="font-size-base mb-3">Marketplace</h6>
-                                                    <ul class="widget-list">
-                                                        <li class="widget-list-item pb-1"><a class="widget-list-link"
-                                                                href="marketplace-category.html">Category Page</a></li>
-                                                        <li class="widget-list-item pb-1"><a class="widget-list-link"
-                                                                href="marketplace-single.html">Single Item Page</a></li>
-                                                        <li class="widget-list-item pb-1"><a class="widget-list-link"
-                                                                href="marketplace-vendor.html">Vendor Page</a></li>
-                                                        <li class="widget-list-item pb-1"><a class="widget-list-link"
-                                                                href="marketplace-cart.html">Cart</a></li>
-                                                        <li class="widget-list-item pb-1"><a class="widget-list-link"
-                                                                href="marketplace-checkout.html">Checkout</a></li>
-                                                    </ul>
-                                                </div>
-                                            </div>
-                                            <div class="mega-dropdown-column py-4 px-3">
-                                                <div class="widget widget-links">
-                                                    <h6 class="font-size-base mb-3">Shop pages</h6>
-                                                    <ul class="widget-list">
-                                                        <li class="widget-list-item pb-1"><a class="widget-list-link"
-                                                                href="shop-categories.html">Shop Categories</a></li>
-                                                        <li class="widget-list-item pb-1"><a class="widget-list-link"
-                                                                href="shop-single-v1.html">Product Page v.1</a></li>
-                                                        <li class="widget-list-item pb-1"><a class="widget-list-link"
-                                                                href="shop-single-v2.html">Product Page v.2</a></li>
-                                                        <li class="widget-list-item pb-1"><a class="widget-list-link"
-                                                                href="shop-cart.html">Cart</a></li>
-                                                        <li class="widget-list-item pb-1"><a class="widget-list-link"
-                                                                href="checkout-details.html">Checkout - Details</a></li>
-                                                        <li class="widget-list-item pb-1"><a class="widget-list-link"
-                                                                href="checkout-shipping.html">Checkout - Shipping</a>
-                                                        </li>
-                                                        <li class="widget-list-item pb-1"><a class="widget-list-link"
-                                                                href="checkout-payment.html">Checkout - Payment</a></li>
-                                                        <li class="widget-list-item pb-1"><a class="widget-list-link"
-                                                                href="checkout-review.html">Checkout - Review</a></li>
-                                                        <li class="widget-list-item pb-1"><a class="widget-list-link"
-                                                                href="checkout-complete.html">Checkout - Complete</a>
-                                                        </li>
-                                                        <li class="widget-list-item pb-1"><a class="widget-list-link"
-                                                                href="order-tracking.html">Order Tracking</a></li>
-                                                        <li class="widget-list-item pb-1"><a class="widget-list-link"
-                                                                href="comparison.html">Product Comparison</a></li>
-                                                    </ul>
-                                                </div>
-                                            </div>
-                                            <div class="mega-dropdown-column py-4 pr-3">
-                                                <div class="widget widget-links mb-3">
-                                                    <h6 class="font-size-base mb-3">Grocery store</h6>
-                                                    <ul class="widget-list">
-                                                        <li class="widget-list-item pb-1"><a class="widget-list-link"
-                                                                href="grocery-catalog.html">Product Catalog</a></li>
-                                                        <li class="widget-list-item pb-1"><a class="widget-list-link"
-                                                                href="grocery-single.html">Single Product Page</a></li>
-                                                        <li class="widget-list-item pb-1"><a class="widget-list-link"
-                                                                href="grocery-checkout.html">Checkout</a></li>
-                                                    </ul>
-                                                </div><a class="d-block" href="#"><img src="img/shop/menu-banner.jpg"
-                                                        alt="Promo banner" /></a>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </li>
-                                <li class="nav-item dropdown"><a class="nav-link dropdown-toggle" href="#"
-                                        data-toggle="dropdown">Flours</a>
-                                    <ul class="dropdown-menu">
-                                        <li class="dropdown"><a class="dropdown-item dropdown-toggle" href="#"
-                                                data-toggle="dropdown">Navbar Variants</a>
-                                            <ul class="dropdown-menu">
-                                                <li><a class="dropdown-item" href="navbar-1-level-light.html">1 Level
-                                                        Light</a></li>
-                                                <li><a class="dropdown-item" href="navbar-1-level-dark.html">1 Level
-                                                        Dark</a></li>
-                                                <li><a class="dropdown-item" href="navbar-2-level-light.html">2 Level
-                                                        Light</a></li>
-                                                <li><a class="dropdown-item" href="navbar-2-level-dark.html">2 Level
-                                                        Dark</a></li>
-                                                <li><a class="dropdown-item" href="navbar-3-level-light.html">3 Level
-                                                        Light</a></li>
-                                                <li><a class="dropdown-item" href="navbar-3-level-dark.html">3 Level
-                                                        Dark</a></li>
-                                                <li><a class="dropdown-item"
-                                                        href="home-electronics-store.html">Electronics Store</a></li>
-                                                <li><a class="dropdown-item"
-                                                        href="home-marketplace.html">Marketplace</a></li>
-                                                <li><a class="dropdown-item" href="home-grocery-store.html">Side Menu
-                                                        (Grocery)</a></li>
-                                                <li><a class="dropdown-item"
-                                                        href="home-single-store.html">Transparent</a></li>
-                                            </ul>
-                                        </li>
-                                        <li class="dropdown-divider"></li>
-                                        <li><a class="dropdown-item" href="about.html">About Us</a></li>
-                                        <li><a class="dropdown-item" href="contacts.html">Contacts</a></li>
-                                        <li class="dropdown"><a class="dropdown-item dropdown-toggle" href="#"
-                                                data-toggle="dropdown">Help Center</a>
-                                            <ul class="dropdown-menu">
-                                                <li><a class="dropdown-item" href="help-topics.html">Help Topics</a>
-                                                </li>
-                                                <li><a class="dropdown-item" href="help-single-topic.html">Single
-                                                        Topic</a></li>
-                                                <li><a class="dropdown-item" href="help-submit-request.html">Submit a
-                                                        Request</a></li>
-                                            </ul>
-                                        </li>
-                                        <li class="dropdown"><a class="dropdown-item dropdown-toggle" href="#"
-                                                data-toggle="dropdown">404 Not Found</a>
-                                            <ul class="dropdown-menu">
-                                                <li><a class="dropdown-item" href="404-simple.html">404 - Simple
-                                                        Text</a></li>
-                                                <li><a class="dropdown-item" href="404-illustration.html">404 -
-                                                        Illustration</a></li>
-                                            </ul>
-                                        </li>
-                                    </ul>
-                                </li>
-
-                                <li class="nav-item dropdown"><a class="nav-link dropdown-toggle" href="#"
-                                        data-toggle="dropdown">Dairy Products</a>
-                                    <ul class="dropdown-menu">
-                                        <li class="dropdown position-static mb-0"><a
-                                                class="dropdown-item py-2 border-bottom"
-                                                href="home-fashion-store-v1.html"><span
-                                                    class="d-block text-heading">Fashion Store v.1</span><small
-                                                    class="d-block text-muted">Classic shop layout</small></a>
-                                            <div class="dropdown-menu h-100 animation-0 mt-0 p-3"><a class="d-block"
-                                                    href="home-fashion-store-v1.html" style="width: 250px;"><img
-                                                        src="img/home/preview/th01.jpg" alt="Fashion Store v.1" /></a>
-                                            </div>
-                                        </li>
-                                        <li class="dropdown position-static mb-0"><a
-                                                class="dropdown-item py-2 border-bottom"
-                                                href="home-fashion-store-v2.html"><span
-                                                    class="d-block text-heading">Fashion Store v.2</span><small
-                                                    class="d-block text-muted">Slider + Featured categories</small></a>
-                                            <div class="dropdown-menu h-100 animation-0 mt-0 p-3"><a class="d-block"
-                                                    href="home-fashion-store-v2.html" style="width: 250px;"><img
-                                                        src="img/home/preview/th02.jpg" alt="Fashion Store v.2" /></a>
-                                            </div>
-                                        </li>
-                                        <li class="dropdown position-static mb-0"><a
-                                                class="dropdown-item py-2 border-bottom"
-                                                href="home-electronics-store.html"><span
-                                                    class="d-block text-heading">Electronics Store</span><small
-                                                    class="d-block text-muted">Slider + Promo banners</small></a>
-                                            <div class="dropdown-menu h-100 animation-0 mt-0 p-3"><a class="d-block"
-                                                    href="home-electronics-store.html" style="width: 250px;"><img
-                                                        src="img/home/preview/th03.jpg" alt="Electronics Store" /></a>
-                                            </div>
-                                        </li>
-                                        <li class="dropdown position-static mb-0"><a
-                                                class="dropdown-item py-2 border-bottom"
-                                                href="home-marketplace.html"><span
-                                                    class="d-block text-heading">Marketplace</span><small
-                                                    class="d-block text-muted">Multi-vendor, digital goods</small></a>
-                                            <div class="dropdown-menu h-100 animation-0 mt-0 p-3"><a class="d-block"
-                                                    href="home-marketplace.html" style="width: 250px;"><img
-                                                        src="img/home/preview/th04.jpg" alt="Marketplace" /></a></div>
-                                        </li>
-                                        <li class="dropdown position-static mb-0"><a
-                                                class="dropdown-item py-2 border-bottom"
-                                                href="home-single-store.html"><span class="d-block text-heading">Single
-                                                    Product Store</span><small class="d-block text-muted">Single product
-                                                    / mono brand</small></a>
-                                            <div class="dropdown-menu h-100 animation-0 mt-0 p-3"><a class="d-block"
-                                                    href="home-single-store.html" style="width: 250px;"><img
-                                                        src="img/home/preview/th05.jpg"
-                                                        alt="Single Product / Brand Store" /></a></div>
-                                        </li>
-                                        <li class="dropdown position-static mb-0"><a class="dropdown-item py-2"
-                                                href="home-grocery-store.html"><span
-                                                    class="d-block text-heading">Grocery Store</span><small
-                                                    class="d-block text-muted">Full width + Side menu</small></a>
-                                            <div class="dropdown-menu h-100 animation-0 mt-0 p-3"><a class="d-block"
-                                                    href="home-grocery-store.html" style="width: 250px;"><img
-                                                        src="img/home/preview/th06.jpg" alt="Grocery Store" /></a></div>
-                                        </li>
-                                    </ul>
-                                </li>
-                            </ul>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </header>
+    </div>
+         
         </div>
+            <div class="mobile-menu-area col-12">
+   <div class="mobile-menu mean-container"><div class="mean-bar">
+       <a class="meanmenu-reveal" style="text-align: center; text-indent: 0px; font-size: 18px;position: fixed;top: 35px;margin-right: 20px"><span></span><span></span><span></span></a>
+       <nav class="mean-nav">
+                                <ul class="menu-overflow-mobile" style="display: none;">
+                                    <li><a href="/">HOME</a></li>
+                                    <li><a href="/customer/aboutus">About</a></li>
+                                    {{#if @root.session.customerPresent}}
+                                    <li><a href="/customer/account">My Account</a></li>
+                                    <li><a href="/customer/logout">Logout</a></li>
+                                    {{else}}
+                                    <li><a href="/customer/register">Register</a></li>
+                                    <li><a href="/customer/login">Login</a></li>
+                                    {{/if}}
+                                    <li><a href="shop.html"> Shop </a>
+                                        <ul style="display: none;">
+                                            {{#each categories}}
+                                            
+                                            <li><a href="#">{{this.title}}</a>
+                                                <ul style="display: none;">
+                                                    {{#each this.submenu}}
+                                                    <li><a href="/category/{{this}}">{{this}}</a></li>
+                                                    {{/each}}
+                                                </ul>
+                                            <a class="mean-expand" href="#" style="font-size: 18px">+</a></li>
+                                            
+                                            {{/each}}
+                                        </ul>
+                                    <a class="mean-expand" href="#" style="font-size: 18px">+</a></li>
+                                    <li><a href="#">PRODUCT</a>
+                                        <ul style="display: none;">
+                                            <li><a href="/category/imunnity">Imunnity Booster</a></li>
+                                            <li><a href="/category/shilajit">Shilajit</a></li>
+                                            <li><a href="/category/herbalOil">Herbal Hair Oil</a></li>
+                                        </ul>
+                                    <a class="mean-expand" href="#" style="font-size: 18px">+</a></li>
+                                    <li class="mean-last"><a href="contact.html"> Contact us </a></li>
+                                </ul>
+                            </nav></div>
+                            <div class="mean-push"></div><nav id="mobile-menu-active" style="display: none;">
+                                <ul class="menu-overflow">
+                                    <li><a href="/">HOME</a>
+                                        <ul>
+                                            <li><a href="index.html">home version 1</a></li>
+                                            <li><a href="index-2.html">home version 2</a></li>
+                                        </ul>
+                                    </li>
+                                    <li><a href="#">pages</a>
+                                        <ul>
+                                            <li><a href="about-us.html">about us </a></li>
+                                            <li><a href="shop.html">shop Grid</a></li>
+                                            <li><a href="shop-list.html">shop list</a></li>
+                                            <li><a href="product-details.html">product details</a></li>
+                                            <li><a href="cart-page.html">cart page</a></li>
+                                            <li><a href="checkout.html">checkout</a></li>
+                                            <li><a href="wishlist.html">wishlist</a></li>
+                                            <li><a href="my-account.html">my account</a></li>
+                                            <li><a href="login-register.html">login / register</a></li>
+                                            <li><a href="contact.html">contact</a></li>
+                                        </ul>
+                                    </li>
+                                    <li><a href="shop.html"> Shop </a>
+                                        <ul>
+                                            <li><a href="#">Categories 01</a>
+                                                <ul>
+                                                    <li><a href="shop.html">Aconite</a></li>
+                                                    <li><a href="shop.html">Ageratum</a></li>
+                                                    <li><a href="shop.html">Allium</a></li>
+                                                    <li><a href="shop.html">Anemone</a></li>
+                                                    <li><a href="shop.html">Angelica</a></li>
+                                                    <li><a href="shop.html">Angelonia</a></li>
+                                                </ul>
+                                            </li>
+                                            <li><a href="#">Categories 02</a>
+                                                <ul>
+                                                    <li><a href="shop.html">Balsam</a></li>
+                                                    <li><a href="shop.html">Baneberry</a></li>
+                                                    <li><a href="shop.html">Bee Balm</a></li>
+                                                    <li><a href="shop.html">Begonia</a></li>
+                                                    <li><a href="shop.html">Bellflower</a></li>
+                                                    <li><a href="shop.html">Bergenia</a></li>
+                                                </ul>
+                                            </li>
+                                            <li><a href="#">Categories 03</a>
+                                                <ul>
+                                                    <li><a href="shop.html">Caladium</a></li>
+                                                    <li><a href="shop.html">Calendula</a></li>
+                                                    <li><a href="shop.html">Carnation</a></li>
+                                                    <li><a href="shop.html">Catmint</a></li>
+                                                    <li><a href="shop.html">Celosia</a></li>
+                                                    <li><a href="shop.html">Chives</a></li>
+                                                </ul>
+                                            </li>
+                                            <li><a href="#">Categories 04</a>
+                                                <ul>
+                                                    <li><a href="shop.html">Daffodil</a></li>
+                                                    <li><a href="shop.html">Dahlia</a></li>
+                                                    <li><a href="shop.html">Daisy</a></li>
+                                                    <li><a href="shop.html">Diascia</a></li>
+                                                    <li><a href="shop.html">Dusty Miller</a></li>
+                                                    <li><a href="shop.html">Dame’s Rocket</a></li>
+                                                </ul>
+                                            </li>
+                                        </ul>
+                                    </li>
+                                    <li><a href="#">BLOG</a>
+                                        <ul>
+                                            <li><a href="blog-masonry.html">Blog Masonry</a></li>
+                                            <li><a href="#">Blog Standard</a>
+                                                <ul>
+                                                    <li><a href="blog-left-sidebar.html">left sidebar</a></li>
+                                                    <li><a href="blog-right-sidebar.html">right sidebar</a></li>
+                                                    <li><a href="blog-no-sidebar.html">no sidebar</a></li>
+                                                </ul>
+                                            </li>
+                                            <li><a href="#">Post Types</a>
+                                                <ul>
+                                                    <li><a href="blog-details-standerd.html">Standard post</a></li>
+                                                    <li><a href="blog-details-audio.html">audio post</a></li>
+                                                    <li><a href="blog-details-video.html">video post</a></li>
+                                                    <li><a href="blog-details-gallery.html">gallery post</a></li>
+                                                    <li><a href="blog-details-link.html">link post</a></li>
+                                                    <li><a href="blog-details-quote.html">quote post</a></li>
+                                                </ul>
+                                            </li>
+                                        </ul>
+                                    </li>
+                                    <li><a href="contact.html"> Contact us </a></li>
+                                </ul>
+                            </nav>
+                        </div> 
+      </div>
+      </div>
+    <div class="row">
+      <div class="col-12">
+         <div class="header-bottom-right flex-start">
+            <div class="main-menu">
+              <nav>
+                
+<ul>
+    
+                         
+           
+  
+  
+  <li  class="dropdown-holder top-hover"  data-columns=""><a href="/"><span>Home</span></a>
+
+  </li>
+  
+  
+  
+  
+  <li><a href="/customer/aboutus"><span>About</span></a></li>
+  
+  
+  
+  
+  <li  class="dropdown-holder top-hover"  data-columns=""><a href="#"><span>Shop</span></a>
+    <ul class="submenu ">
+      
+      
+
+      {{#each categories}}
+      <li class="mega-menu-title"><a href="#" class="mega-menu-title"><h3>{{this.title}}</h3></a>
+        <ul>
+            {{#each this.submenu}}
+          <li><a href="/category/{{this}}">{{this}}</a></li>
+            {{/each}}
+          
+           
+        </ul>
+      </li>
+      {{/each}}
+
+
+      
+      
+    </ul>
+  </li>
+  
+  
+  
+  
+  <li  class="dropdown-holder top-hover"  data-columns=""><a href="#"><span>Product</span></a>
+    <ul class="submenu ">
+      
+      
+
+      
+
+      <li><a href="/category/imunnity">Imunnity Booster</a></li>
+      
+      
+      
+
+      
+
+      <li><a href="/category/shilajit">Shilajit</a></li>
+      
+      
+      
+
+      
+
+      <li><a href="/category/herbalOil">Herbal Hair Oil</a></li>
+      
+      
+      
+    </ul>
+  </li>
+  
+  
+  
+  {{#if @root.session.customerPresent}}
+    <li  class="dropdown-holder top-hover"  data-columns=""><a href="/customer/account"><span>My Account</span></a>
+    <ul class="submenu ">
+      
+      
+
+      
+
+      <li><a href="/customer/logout">Logout</a></li>
+      
+      
+      
+
+      
+
+      <li><a href="/customer/account">Profile</a></li>
+      
+      
+    </ul>
+  </li>
+  {{else}}
+  <li  class="dropdown-holder top-hover"  data-columns=""><a href="/customer/login"><span>Login/Register</span></a>
+    <ul class="submenu ">
+      
+      
+
+      
+
+      <li><a href="/customer/login">Login</a></li>
+      
+      
+      
+
+      
+
+      <li><a href="/customer/register">Register</a></li>
+      
+      
+    </ul>
+  </li>
+  {{/if}}
+  
+  
+  
+  <li><a href="/customer/contact"><span>Contact</span></a></li>
+  
+  
+</ul>
+
+<script>
+  $('.mega-menu-title').parent('ul').addClass('mega-menu');
+  $('.mega-menu').parent('li').addClass('mega-menu-position top-hover');
+</script>
+
+
+              </nav>
+            </div><div class="header-cart">
+
+
+
+<a href="/checkout/cart">
+  <div class="cart-icon"><span class="count bigcounter">{{@root.session.totalCartItems}}</span>
+    <i class="ti-shopping-cart"></i>
+  </div>
+</a>
+
+
+
+<div class="header-minicart shopping-cart-content minicart">
+  {{#unless @root.session.cart}}
+  <div class="cart-empty-title"  style="display:block;">
+    <h3>Your cart is currently empty.</h3>
+  </div>
+  {{/unless}}
+
+
+  <div class="single-product-cart"  style="">
+
+    <ul class="minicart-header single-cart-item-loop do-nicescrol">
+      {{#if @root.session.cart}}
+      {{#each @root.session.cart}}
+      <li class="single-shopping-cart">
+                                                <div class="shopping-cart-img">
+                                                    <a href="#"><img alt="" src="{{this.productImage.[0].path}}"></a>
+                                                </div>
+                                                <div class="shopping-cart-title">
+                                                    <h4><a href="#">{{this.title}} </a></h4>
+                                                    <h6>Qty: {{this.quantity}}</h6>
+                                                    <span>₹{{this.totalItemPrice}}</span>
+                                                </div>
+                                                <div class="shopping-cart-delete">
+                                                    <a href="#" class=""><i class="ion ion-close btn-delete-from-cart" data-cartid={{this.productId}}></i></a>
+                                                </div>
+                                            </li>
+                                            {{/each}}
+                                            {{/if}}
+    </ul>
+
+    <div class="shopping-cart-total">
+      <h4>Total  <span class="shop-total shopping-cart__total"><span class=money>₹{{@root.session.totalCartAmount}}</span></span></h4>
+    </div>
+
+    <div class="shopping-cart-btn">
+      <a href="/checkout/cart">View Cart</a>
+      <a href="/checkout/information">Checkout</a>
+    </div>
+    
+    
+  </div>
+
+</div></div>
+          </div>
+      </div>
+    </div>
+     
+    </div>
+  </div>
+</header>
+        
+{{#if requestId}}
+        <div id="one-time-newsletter" class="popup_wrapper">
+  <div class="newsletter_popup_inner">
+   
+    <div class="subscribe_area area-2">
+      <div class="subscribe-image">
+        
+        <img src="/cdn.shopify.com/s/files/1/0053/5665/0560/files/newsletter_440x550_crop_centerfd7a.jpg?v=1544520603">
+        
+      </div>
+      <div class="subscribe-content">
+        <h2 class="">OTP Verification</h2>
+        <p class="">Join over 1,000 people who get free and fresh content delivered automatically each time we publish</p>
+        <div class="form-group subscribe-form-group">          
+          <form action="/customer/confirm" method="post" >
+            <input type="text" class="form-control subscribe-form-input" id="mail" value="" name="pin" placeholder="Otp Value Send to your phone">
+            <input type="password" class="form-control subscribe-form-input" id="shipPassword" value="" name="accountpassword" placeholder="Strong Password">
+            <input type="hidden" name="requestId" value="{{@root.requestId}}">
+            <button type="submit" class="newsletter-btn" id="subscribe">Create Account</button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>			
+</div>
+{{/if}}
+
+<div class="wrapper"><div id="shopify-section-header" class="shopify-section">
         {{/unless}}
         <div class="site-overlay"></div>
 
@@ -720,11 +690,10 @@
             </div>
         </div>
         {{else}}
-        <div class="nav-top container-fluid h-100" id="container">
-            <div class="row">
-                {{{body}}}
-            </div>
+        <div class="top-marg-150">
+{{{body}}}
         </div>
+        
         {{/if}}
         <input type="hidden" id="input_notify_message" value="{{message}}">
         <input type="hidden" id="input_notify_messageType" value="{{messageType}}">
@@ -735,73 +704,110 @@
             value="{{@root.config.maxQuantity}}">{{/if}}
         <div id="notify_message"></div>
         {{#if showFooter}}
-        <div class="footer">
-            <div class="upper-footer">
-                <div class="contactus navbar-expand-lg">
-                    <h3>Contact Us
-                        <hr>
-                    </h3>
-                    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#address"
-                        aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-                        <i class="far fa-plus-square"></i>
-                    </button>
-                    <ul class="collapse navbar-collapse" id="address">
-                        <li><i class="fas fa-street-view"></i> Some Random Address, Khatoli</li>
-                        <li><i class="fas fa-envelope"></i> abcd@xyz.com</li>
-                        <li><i class="fas fa-phone"></i> 1234567890</li>
-                    </ul>
-                </div>
-                <div class="extra navbar-expand-lg">
-                    <h3>Extra
-                        <hr>
-                    </h3>
-                    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#extras"
-                        aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-                        <i class="far fa-plus-square"></i>
-                    </button>
-                    <ul class="collapse navbar-collapse" id="extras">
-                        <li><a href="/customer/aboutus">About Us</a></li>
-                        <li><a href="/customer/contact">Contact Us</a></li>
-                        <li><a href="/customer/privacy">Privacy Policy</a></li>
-                        <li><a href="/customer/delivery">Delivery Information</a></li>
-                        <li><a href="/customer/terms">Terms & Conditions</a></li>
-                    </ul>
-                </div>
-                <div class="Account navbar-expand-lg">
-                    <h3>Account
-                        <hr>
-                    </h3>
-                    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#myaccount"
-                        aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-                        <i class="far fa-plus-square"></i>
-                    </button>
-                    <ul class="collapse navbar-collapse" id="myaccount">
-                        <li><a href="/customer/account">My Account</a></li>
-                        <li><a href="/checkout/cart">Cart</a></li>
-                        <li><a href="/customer/account">Order History</a></li>
-                    </ul>
-                </div>
-            </div>
-          
-            <div class="lower-footer">
-                <ul>
-                    <li><a href=""><i class="fab fa-facebook-square"></i></a></li>
-                    <li><a href=""><i class="fab fa-twitter-square"></i></a></li>
-                    <li><a href=""><i class="fab fa-instagram-square"></i></a></li>
-                    <li><a href=""><i class="fab fa-linkedin"></i></a></li>
-                </ul>
-            </div>
-            <div class="most-lower">
-                <h5>Made with love by Shri Shri Om Tyagi © 2020</h5>
-                <a href="#top"><i class="fas fa-caret-up"></i></a>
-            </div>
+           <div id="shopify-section-footer-top" class="shopify-section"><div class="footer-top" id="footer-top">
+  <div class="container">
+    <div class="row"><div class="col-lg-3 col-md-6 col-sm-6">
+        <div class="footer-widget mb-40">
+          <div class="footer-title mb-25"><h4 class="footer-widget-title">My Account</h4></div>
+          <div class="footer-content">
+            <ul><li><a href="/customer/account">My Account</a></li><li><a href="/customer/account">Order History</a></li><li><a href="#">Newsletter</a></li></ul>
+          </div>
         </div>
+      </div><div class="col-lg-3 col-md-6 col-sm-6">
+        <div class="footer-widget mb-40">
+          <div class="footer-title mb-25"><h4 class="footer-widget-title">Information</h4></div>
+          <div class="footer-content">
+            <ul><li><a href="/customer/delivery">Shipping and Return Policy</a></li><li><a href="/customer/privacy">Privacy Policy</a></li><li><a href="/customer/terms">Terms & Conditions</a></li></ul>
+          </div>
+        </div>
+      </div><div class="col-lg-3 col-md-6 col-sm-6">
+        <div class="footer-widget footer-widget-red footer-black-color mb-40">
+          <div class="footer-title mb-25"><h4 class="footer-widget-title">Contact Us</h4></div>
+          <div class="footer-about">
+            
+            <p>UGF,RZ-D-1/94 PLOT NO 22,Mahavir enclave,Street NO 5,Palam Village,New Delhi,South West Delhi ,110045</p>
+            
 
+            <div class="footer-contact mt-20">
+              <ul>
+                
+                <li>+91 9319284485</li>
+                
+              
+                
+              </ul>
+            </div>
+
+            <div class="footer-contact mt-20">
+              <ul>
+                <li>info@bnbHerbs.com</li>
+                
+              </ul>
+            </div>
+          </div>
         </div>
+      </div><div class="col-lg-3 col-md-6 col-sm-6">
+        <div class="footer-widget footer-widget-red footer-black-color mb-40">
+          <div class="footer-title mb-25"><h4 class="footer-widget-title">Find us</h4></div>
+          <div class="footer_social_desc mb-25">
+            
+            <p>B & B AGRO INDIA ENTERPRISES</p>
+            
+          </div>
+          
+          <div class="footer-social-icons">
+
+            
+            <a href="#"><i class="fa fa-twitter"></i></a>        
+            
+            
+            <a href="https://instagram.com/bnb_herbs?igshid=1ra5mizeqmlr9"><i class="fa fa-instagram"></i></a>        
+               
+            
+            <a href="https://www.facebook.com/bnbherbs/"><i class="fa fa-facebook"></i></a>       
+            
+            
+            <a href="#"><i class="fa fa-linkedin"></i></a>       
+            
+            
+            <a href="#"><i class="fa fa-pinterest"></i></a>        
+            
+            
+            
+             
+          </div>
+        </div>
+      </div></div>
+  </div>
+</div>
+  <div id="shopify-section-footer-bottom" class="shopify-section">
+<div class="footer-bottom pb-25 pt-25 gray-bg-2">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-6">
+        <div class="copyright">
+          <p>Copyright &copy; <a href="#" title="#">bnb Herbs</a>. All Right Reserved</p>
+        </div>
+      </div>
+      <div class="col-md-6">
+        <div class="payment-img f-right">
+          <a href="#"><img src="/cdn.shopify.com/s/files/1/0053/5665/0560/files/payment6980.png?v=1543378421" alt=""></a>  
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+
+
+</div>
         {{/if}}
         <script src="/javascripts/pushy.min.js"></script>
         <script src="/javascripts/owl.carousel.min.js"></script>
-        <script src="/javascripts/pricerange.js"></script>
+      
+
         {{#if admin}}
         {{> partials/globalSearchModal}}
         {{> partials/validationModal}}
