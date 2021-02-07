@@ -292,6 +292,12 @@ handlebars = handlebars.create({
 
             return parseInt(((val2 - val1) * 100)/ val2);
         },
+        fixMini: (html) => {
+            html = html.split("\\n");
+            console.log(html);
+        
+            return html;
+        },
         math: (lvalue, operator, rvalue, options) => {
             lvalue = parseFloat(lvalue);
             rvalue = parseFloat(rvalue);

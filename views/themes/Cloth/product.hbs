@@ -1,119 +1,138 @@
 
-<div class="product-layout col-sm-11 offset-sm-1">
-    <div class="row">
-        {{!-- Product Images --}}
-        <div class="col-sm-12 col-md-6 m-auto">
-            {{#if result.productImage}}
+<div class="product-layout col-sm-11 ml-auto mr-auto top-marg-100">
+    <div class="single-product-area section-padding-100 clearfix">
 
-            <div class="row bg-scr">
-                <ul id="etalage">
-                    {{#each result.productImage}}
-                    <li>
-                        <img class="etalage_thumb_image" src="{{this.path}}">
-                        <img class="etalage_source_image" src="{{this.path}}">
-                    </li>
-                    {{/each}}
-                </ul>
-            </div>
-
-            <div class="row sm-scr">
-                <ul id="etalage1">
-                    {{#each result.productImage}}
-                    <li>
-                        <img class="etalage_thumb_image" src="{{this.path}}">
-                        <img class="etalage_source_image" src="{{this.path}}">
-                    </li>
-                    {{/each}}
-                </ul>
-            </div>
-
-            {{else}}
-            <div class="title-image-container">
-                <img src="/uploads/placeholder.png" id="product-title-image" class="product-title-image img-fluid"
-                    alt="...">
-            </div>
-            {{/if}}
-        </div>
-
-
-        {{!-- Product Details --}}
-        <div class="col-sm-12 col-md-6 pro-details mx-auto">
-            <div class="row">
-                <h1 class="col-md-10 product-title text-truncate">{{result.productTitle}}</h1>
-                {{#if variants}}
-                <h4 class="col-md-10 product-price mp-0">{{currencySymbol config.currencySymbol}}{{variants.0.price}}
-                </h4>
-                {{else}}
-                <div class="d-inline-flex">
-                    <p class="col-md-10 mrp-top"> <span class="price">M.R.P: </span>
-                        <span class="mrp">{{currencySymbol config.currencySymbol}} {{result.productDiscountPrice}}</span></p>
-
-                    <h4 class="col-md-10 product-price mp-0"> <span class="price">Price: </span>
-                        {{currencySymbol config.currencySymbol}}{{result.productPrice}}</h4>
-                </div>
-
-                <p class="taxes col-md-10">Inclusive of all taxes</p>
-                {{/if}}
-                {{#if variants}}
-                <h4 class="col-md-10 product-option">{{ @root.__ "Options" }}</h4>
-                <div class="col-md-10">
-                    <select id="product_variant" class="form-control">
-                        {{#each variants}}
-                        <option value="{{this._id}}" data-price="{{this.price}}">{{this.title}}</option>
-                        {{/each}}
-                    </select>
-                </div>
-                {{/if}}
-                {{#if config.trackStock}}
-                {{#ifCond result.productStock '==' 0}}
-                <div class="col-md-10">
-                    <h4 class="text-danger text-center">
-                        Out of stock
-                    </h4>
-                </div>
-                {{/ifCond}}
-                {{/if}}
-                <div class="col-md-10 productOptions">
-                    <div class="input-group">
-                        <div class="input-group-prepend input-btn">
-                            <button class="form-control pull-left btn-number qty-btn-minus" type="button">
-                                <i class="fa fa-minus" aria-hidden="true"></i>
-                            </button>
+                <div class="row">
+                    <div class="col-12 col-md-7">
+                        <div class="single_product_thumb">
+                            <div id="product_details_slider" class="carousel slide row" data-ride="carousel">
+                                
+                                <div class="carousel-inner col-sm-9 col-md-9">
+                                    {{#if result.productImage}}
+                                    {{#each result.productImage}}
+                                    
+                                    <div class="carousel-item {{#ifCond @index "==" 0}} active{{/ifCond}}">
+                                        <a class="gallery_img" href="{{this.path}}">
+                                            <img class="d-block w-100" src="{{this.path}}" alt="First slide">
+                                        </a>
+                                    </div>
+                                   
+                                    {{/each}}
+                                
+                                    {{else}}
+                                    <div class="carousel-item active">
+                                        <a class="gallery_img" href="/images/p1.jpeg">
+                                            <img class="d-block w-100" src="/images/p1.jpeg" alt="First slide">
+                                        </a>
+                                    </div>
+                                    <div class="carousel-item">
+                                        <a class="gallery_img" href="/images/p5.jpeg">
+                                            <img class="d-block w-100" src="/images/p5.jpeg" alt="Second slide">
+                                        </a>
+                                    </div>
+                                    <div class="carousel-item">
+                                        <a class="gallery_img" href="/images/p5.jpeg">
+                                            <img class="d-block w-100" src="/images/p5.jpeg" alt="Third slide">
+                                        </a>
+                                    </div>
+                                    <div class="carousel-item">
+                                        <a class="gallery_img" href="/images/p1.jpeg">
+                                            <img class="d-block w-100" src="/images/p1.jpeg" alt="Fourth slide">
+                                        </a>
+                                    </div>
+                                    {{/if}}
+                                </div>
+                                <div class="carousel-indicators col-sm-2 col-md-2 mt-4">
+                                    {{#if result.productImage}}
+                                    {{#each result.productImage}}
+                                    
+                                    <li class="{{#ifCond @index "==" 0}}active{{/ifCond}}"  data-target="#product_details_slider" data-slide-to="{{@index}}" style="background-image: url({{this.path}});max-width: 100px">
+                                    </li>
+                                   
+                                    {{/each}}
+                                 
+                                    {{else}}
+                                    <li class="active" data-target="#product_details_slider" data-slide-to="0" style="background-image: url(/images/p1.jpeg);">
+                                    </li>
+                                    <li data-target="#product_details_slider" data-slide-to="1" style="background-image: url(/images/p5.jpeg);">
+                                    </li>
+                                    <li data-target="#product_details_slider" data-slide-to="2" style="background-image: url(/images/p5.jpeg);">
+                                    </li>
+                                    <li data-target="#product_details_slider" data-slide-to="3" style="background-image: url(/images/p1.jpeg);">
+                                    </li>
+                                    {{/if}}
+                                </div>
+                            </div>
+                           
                         </div>
-                        <div class="col-quan">
-                            <input type="number" class="form-control add-color text-center dropdown no-pad"
-                                id="product_quantity" min="1" max="10" value="1">
-                        </div>
-                        <div class="input-group-append input-btn">
-                            <button class="form-control pull-left btn-number qty-btn-plus" type="button">
-                                <i class="fa fa-plus" aria-hidden="true"></i>
-                            </button>
-                        </div>
+                    </div>
+                    <div class="col-12 col-md-5">
+                        <div class="single_product_desc">
+                            <!-- Product Meta Data -->
+                            <div class="product-meta-data">
+                                <div class="line"></div>
+                                <p class="product-price">{{currencySymbol config.currencySymbol}}{{result.productPrice}}</p>
+                                <a href="#">
+                                    <h6>{{result.productTitle}}</h6>
+                                </a>
+                                <!-- Ratings & Review -->
+                                <div class="ratings-review mb-15 d-flex align-items-center justify-content-between">
+                                    <div class="ratings">
+                                        {{#forTimes result.productRating}}
+                                          <i class="fas fa-star i"></i>
+                                          {{/forTimes}}
+                                          {{#forTimesminus result.productRating}}
+                                           <i class="far fa-star i"></i>
+                                          {{/forTimesminus}}
+                                          <small>Based on {{reviews.length}} Reviews</small>
+                                    </div>
+                                    <div class="review">
+                                        <a href="#descheading">Write A Review</a>
+                                    </div>
+                                </div>
+                                <!-- Avaiable -->
+                                {{#if result.productStock}}
+                                <p class="avaibility top-marg-5"><i class="fa fa-circle"></i> In Stock</p>
+                                <small>({{result.productStock}}) pcs left</small>
+                                {{else}}
+                                <p class="avaibility non-avaibility"><i class="fa fa-circle"></i> Not In Stock</p>
+                                {{/if}}
+                            </div>
 
-                        <div class="col-md-4 btnAddToCart">
-                            <button class="btn btn-primary btn-block product-add-to-cart"
-                                type="button">{{ @root.__ "Add to cart" }}</button>
+                            <div class="short_overview my-4">
+                                <p>{{result.productMiniDescription}}</p>
+                            </div>
+
+                            <!-- Add to Cart Form -->
+                            <div class="cart clearfix">
+                                <div class="cart-btn d-flex bottom-marg-20">
+                                    <p>Qty</p>
+                                    <div class="quantity">
+                                        <span class="qty-minus" onclick="var effect = document.getElementById('product_quantity'); var qty = effect.value; if( !isNaN( qty ) &amp;&amp; qty &gt; 1 ) effect.value--;return false;"><i class="fa fa-caret-down" aria-hidden="true"></i></span>
+                                        <input type="number" class="qty-text" id="product_quantity" step="1" min="1" max="300" name="quantity" value="1">
+                                        <span class="qty-plus" onclick="var effect = document.getElementById('product_quantity'); var qty = effect.value; if( !isNaN( qty )) effect.value++;return false;"><i class="fa fa-caret-up" aria-hidden="true"></i></span>
+                                    </div>
+                                    {{#if result.productStock}}
+                                        <button  name="addtocart" value="5" class="btn btn-success product-add-to-cart marg-left-20">Add to cart</button>
+                                        {{else}}
+                                        <button class="btn btn-success .marg-left-20" disabled>Coming Soon</button>
+                                        {{/if}}
+                                </div>
+                                
+                            </div>
+
+                            {{!-- Offers --}}
+                            <div class="promooffers">
+                                <h6> <strong class="text-danger">Note:</strong> The Product Image shown is for reference purpose only. The real product may be different because of the climate, season and surrounding conditions.</h6>
+                                
+                            </div>
+
                         </div>
                     </div>
                 </div>
-                <div class="features">
-                    <h1 class="heading">Features</h1>
-                    <div class="body_text">
-                        <p>{{result.productMiniDescription}}</p>
-                    </div>
-                </div>
-                {{!-- {{#if result.productComment}}
-                <div class="col-md-10">
-                    {{ @root.__ "Leave a comment?" }}
-                    <textarea class="form-control" id="product_comment"></textarea>
-                </div>
-                {{/if}} --}}
-
-            </div>
         </div>
-    </div>
     
-    <hr>
+  
     <div class="row pl-0">
          <div class="descproduct">
 		<div class="descheading" id="descheading">
