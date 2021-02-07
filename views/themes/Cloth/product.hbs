@@ -112,11 +112,11 @@
                                         <input type="number" class="qty-text" id="product_quantity" step="1" min="1" max="300" name="quantity" value="1">
                                         <span class="qty-plus" onclick="var effect = document.getElementById('product_quantity'); var qty = effect.value; if( !isNaN( qty )) effect.value++;return false;"><i class="fa fa-caret-up" aria-hidden="true"></i></span>
                                     </div>
-                                    {{#if result.productStock}}
+                                    {{!-- {{#if result.productStock}} --}}
                                         <button  name="addtocart" value="5" class="btn btn-success product-add-to-cart marg-left-20">Add to cart</button>
-                                        {{else}}
+                                        {{!-- {{else}}
                                         <button class="btn btn-success .marg-left-20" disabled>Coming Soon</button>
-                                        {{/if}}
+                                        {{/if}} --}}
                                 </div>
                                 
                             </div>
@@ -127,10 +127,10 @@
                                 
                             </div>
 
-                        <div class="col-md-4 btnAddToCart">
+                        {{!-- <div class="col-md-4 btnAddToCart">
                             <button class="btn btn-primary btn-block product-add-to-cart" 
                                 type="button">{{ @root.__ "Add to cart" }}</button>
-                        </div>
+                        </div> --}}
                     </div>
                 </div>
         </div>
