@@ -101,7 +101,7 @@ router.post('/checkout_action',async (req, res, next) => {
 
             // add to lunr index
             indexOrders(req.app)
-            .then(() => {
+            .then(async () => {
                 // if approved, send email etc
                     // set the results
                     req.session.messageType = 'success';
@@ -123,13 +123,20 @@ router.post('/checkout_action',async (req, res, next) => {
                     if(req.session.cart){
                         common.emptyCart(req, res, 'function');
                     }
-
+                    const html=`Thanku from ordering from BnB Herbs`;
                     // send the email with the response
                     // TODO: Should fix this to properly handle result
-                    common.sendEmail(req.session.paymentEmailAddr, 'Your payment with ' + config.cartTitle, common.getEmailTemplate(paymentResults));
+                    //common.sendEmail(req.session.paymentEmailAddr, 'Your payment with ' + config.cartTitle, common.getEmailTemplate(paymentResults));
                 
-           // console.log("Session email Id is here"+req.session.customerEmail);
-           //await mailer.sendEmail('admin@bnbherbs.in',req.session.customerEmail,'Order Complete',html)
+                   console.log("Session email Id is here"+req.session.customerEmail);
+                   try
+                   {
+                    await mailer.sendEmail('admin@bnbherbs.in',req.session.customerEmail,'Order Complete',html)
+                   }
+                    catch(err)
+                    {
+                        console.log(err);   
+                    }
                     // redirect to outcome
                     res.redirect('/payment/' + newId);
                 

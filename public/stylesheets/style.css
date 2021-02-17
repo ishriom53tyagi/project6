@@ -268,7 +268,7 @@ input[type=number]::-webkit-outer-spin-button {
   margin-top: 90px;
 }
 .top-marg-150 {
-  margin-top: 150px;
+  margin-top: 110px;
 }
 .marg-left-5 {
   margin-left: 5px !important;
@@ -2681,7 +2681,7 @@ Price Range */
   .single-product-area .single_product_thumb {
     position: relative;
     z-index: 1;
-    margin-bottom: 100px; }
+    margin-bottom: 20px; }
     .single-product-area .single_product_thumb .carousel-indicators {
       margin: 0 7.5px; 
       max-height: 510px;

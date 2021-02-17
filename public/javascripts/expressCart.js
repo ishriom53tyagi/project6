@@ -552,6 +552,7 @@ $('.meanmenu-reveal').on('click',function(e){
             .done(function (msg) {
                 updateCartDiv();
                 showNotification(msg.message, 'success');
+                location.reload();
             })
             .fail(function (msg) {
                 showNotification(msg.responseJSON.message, 'danger');
