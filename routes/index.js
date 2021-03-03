@@ -27,8 +27,8 @@ const {
     getCountryList
 } = require('../lib/common');
 const countryList = getCountryList();
-var keyid = "rzp_test_Q4SdVCKHGsa45S";
-var keysecret = "doUGurZrLU4jd4ZIj65Gbfpn";
+var keyid = "rzp_live_BB6pHJLZdvUA7t";
+var keysecret = "wXaUfsRdgaRQptIteCItdOwl";
 var instance = new Razorpay({
     key_id: keyid,
     key_secret: keysecret
