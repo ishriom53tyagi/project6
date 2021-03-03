@@ -246,7 +246,7 @@ router.post('/checkout/confirm/razorpay',async (req,res)=>{
     const db = req.app.db;
     var bodymessage = req.body.razorpay_order_id + `|` + req.body.razorpay_payment_id;
     console.log(req.body);
-    var secret = "doUGurZrLU4jd4ZIj65Gbfpn"; // from the dashboard
+    var secret = "wXaUfsRdgaRQptIteCItdOwl"; // from the dashboard
     var generated_signature = crypto.createHmac("sha256",secret).update(bodymessage.toString()).digest('hex');
     console.log(generated_signature);
     console.log(req.body.razorpay_signature);
@@ -385,7 +385,7 @@ router.get('/checkout/information', async (req, res, next) => {
     if(req.session.cartSubscription){
         paymentType = '_subscription';
     }
-
+  
     // render the payment page
     res.render(`${config.themeViews}checkout-information`, {
         title: 'Checkout - Information',
@@ -395,7 +395,7 @@ router.get('/checkout/information', async (req, res, next) => {
         customerArray: customerArray,
         razorpayid: req.session["razorOrderId"],
         razoramount: req.session["razorpayamount"],
-        keyId: "rzp_test_Q4SdVCKHGsa45S",
+        keyId: "rzp_live_BB6pHJLZdvUA7t",
         paymentType,
         cartClose: false,
         page: 'checkout-information',
