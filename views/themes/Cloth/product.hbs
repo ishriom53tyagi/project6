@@ -127,7 +127,49 @@
                                 
                             </div>
 
+<<<<<<< HEAD
                         {{!-- <div class="col-md-4 btnAddToCart">
+=======
+                <p class="taxes col-md-10">Inclusive of all taxes</p>
+                {{/if}}
+                {{#if variants}}
+                <h4 class="col-md-10 product-option">{{ @root.__ "Options" }}</h4>
+                <div class="col-md-10">
+                    <select id="product_variant" class="form-control">
+                        {{#each variants}}
+                        <option value="{{this._id}}" data-price="{{this.price}}">{{this.title}}</option>
+                        {{/each}}
+                    </select>
+                </div>
+                {{/if}}
+                {{#if config.trackStock}}
+                {{#ifCond result.productStock '==' 0}}
+                <div class="col-md-10">
+                    <h4 class="text-danger text-center">
+                        Out of stock
+                    </h4>
+                </div>
+                {{/ifCond}}
+                {{/if}}
+                <div class="col-md-10 productOptions">
+                    <div class="input-group">
+                        <div class="input-group-prepend input-btn">
+                            <button class="form-control pull-left btn-number qty-btn-minus" type="button">
+                                <i class="fa fa-minus" aria-hidden="true"></i>
+                            </button>
+                        </div>
+                        <div class="col-quan">
+                            <input type="number" class="form-control add-color text-center dropdown no-pad"
+                                id="product_quantity" min="1" max="10" value="1">
+                        </div>
+                        <div class="input-group-append input-btn">
+                            <button class="form-control pull-left btn-number qty-btn-plus" type="button">
+                                <i class="fa fa-plus" aria-hidden="true"></i>
+                            </button>
+                        </div>
+
+                        <div class="col-md-4 btnAddToCart">
+>>>>>>> bb69645ef800411cbaae123f9fa57553664d1127
                             <button class="btn btn-primary btn-block product-add-to-cart" 
                                 type="button">{{ @root.__ "Add to cart" }}</button>
                         </div> --}}
