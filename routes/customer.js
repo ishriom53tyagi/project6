@@ -18,13 +18,15 @@ const { validateJson } = require('../lib/schema');
 const { restrict } = require('../lib/auth');
 
 //*********************************//
-
-const authy = require('authy')('V0qA6IGiXySlZIK5X328BUBQM0XTy9u7');
-
 const apiLimiter = rateLimit({
     windowMs: 300000, // 5 minutes
     max: 5
 });
+const authy = require('authy')('WZa2DkwJHO9JNX8VowJUb3mDhIby54XA');
+const accountSid = 'AC0826127e77b48fbfcd97e59886457f25'; 
+const authToken = 'a611844c9716f4fdf03d7f5f0a6e252f'; 
+const client = require('twilio')(accountSid, authToken); 
+ 
 
 router.post('/customer/register',async function(req, res) {
     const config = req.app.config;
@@ -33,22 +35,91 @@ router.post('/customer/register',async function(req, res) {
 
 	var isSuccessful = false;
 
-	var email = req.body.shipEmail;
+	//var email = req.body.shipEmail;
 	var phone = req.body.shipPhoneNumber;;
     var countryCode = '+91';
-    const customer =  await db.customers.findOne({ email: email });
+    const customer =  await db.customers.findOne({ phone: phone });
             if(customer){
                 req.session.message = "Customer with that email exist";
                 req.session.messageType = 'danger';
-                res.redirect('/customer/register');
+                res.redirect('/customer/login');
                 return;
             } 
-	
-	authy.register_user(email, phone, countryCode, function (regErr, regRes) {
+            const customerObj = {
+              //  email: req.session.customerEmail,
+                phone: phone,
+                password: bcrypt.hashSync(req.body.accountpassword, 10),
+                created: new Date()
+            };
+    
+            // email is ok to be used.
+            try{
+                const newCustomer = await db.customers.insertOne(customerObj);
+                indexCustomers(req.app)
+                .then(async () => {
+                    // Return the new customer
+                    const customerReturn = newCustomer.ops[0];
+                    delete customerReturn.password;
+        
+                    // Set the customer into the session
+                    req.session.customerPresent = true;
+                    req.session.customerId = customerReturn._id;
+                   // req.session.customerEmail = customerReturn.email;
+                    req.session.customerPhone = customerReturn.phone;
+                //    req.session.orderComment = req.body.orderComment;
+    
+                    // Return customer oject
+
+                    const db = req.app.db;
+
+                    const customer = await db.customers.findOne({ phone: req.session.customerPhone });
+                    // check if customer exists with that email
+                    if(customer === undefined || customer === null){
+                        res.status(400).json({
+                            message: 'A customer with that phone does not exist.'
+                        });
+                        return;
+                    }
+                    // we have a customer under that email so we compare the password
+                    bcrypt.compare(req.body.accountpassword, customer.password)
+                    .then((result) => {
+                        if(!result){
+                            // password is not correct
+                            res.status(400).json({
+                                message: 'Access denied. Check password and try again.'
+                            });
+                            return;
+                        }
+                      /*  res.render(`${config.themeViews}checkout-information`, {
+                            message: 'Account verified! 🎉',
+                            title: 'Success',
+                            config: req.app.config,
+                            helpers: req.handlebars.helpers,
+                            showFooter: true
+                          });  */
+                        //  res.send('Verified Account');
+                        req.session.message = "User Created";
+                        req.session.messageType = 'success';
+                          res.redirect('/');
+                          return;
+                    })
+                    .catch((err) => {
+                        res.status(400).json({
+                            message: 'Access denied. Check password and try again.'
+                        });
+                    });
+                });
+            }catch(ex){
+                console.error(colors.red('Failed to insert customer: ', ex));
+                res.status(400).json({
+                    message: 'Customer creation failed.'
+                });
+            }
+	/*authy.register_user(email, phone, countryCode, function (regErr, regRes) {
     	console.log('In Registration...');
     	if (regErr) {
        		console.log(regErr);
-               res.redirect('/customer/register');
+               res.redirect('/customer/login');
                return;
     	} else if (regRes) {
 			console.log(regRes);
@@ -64,26 +135,17 @@ router.post('/customer/register',async function(req, res) {
     				console.log(smsErr);
                     req.session.message = smsErr;
                     req.session.messageType = 'danger';
-                    res.redirect('/customer/register');
+                    res.redirect('/customer/login');
                     return;
     			} else if (smsRes) {
                     req.session.customerPhone = phone;
-                    req.session.customerEmail = email;
-                        res.render(`${config.themeViews}customer-register`, {
-                            title: 'Customer Register',
-                            categories: req.app.categories,
-                            config: req.app.config,
-                            session: req.session,
-                            requestId: regRes.user.id,
-                            message: clearSessionValue(req.session, 'message'),
-                            messageType: clearSessionValue(req.session, 'messageType'),
-                            helpers: req.handlebars.helpers,
-                            showFooter: 'showFooter'
-                        });
+                    res.redirect('/checkout/information');
+                    return;
     			}
 			});
     	}
-   	});
+       });*/
+       
 });
 
 router.post('/customer/confirm', async (req, res)=> {
@@ -743,17 +805,81 @@ router.get('/customer/terms', (req, res) => {
 // login the customer and check the password
 router.post('/customer/login_action', async (req, res) => {
     const db = req.app.db;
-
-    const customer = await db.customers.findOne({ email: mongoSanitize(req.body.loginEmail) });
+    const config = req.app.config;
+    /*const customer = await db.customers.findOne({ email: mongoSanitize(req.body.loginEmail) });
     // check if customer exists with that email
     if(customer === undefined || customer === null){
         res.status(400).json({
             message: 'A customer with that email does not exist.'
         });
         return;
-    }
+    } */
+    var phone = req.body.loginPhone;;
+    var countryCode = '+91';
+    console.log("Phone Number is:",phone);
+    var email = "sarthak@gmail.com"
+
+      client.messages 
+            .create({         
+                to: '+917889896521',
+                body: 'Test Message',  
+                messagingServiceSid: 'MG7465fe1509a5d379cd9ba7dba1187d63', 
+            }) 
+            .then(message => console.log(message.sid))
+            .done();
+
+   /* const customer =  await db.customers.findOne({ email: email });
+            if(customer){
+                req.session.message = "Customer with that email exist";
+                req.session.messageType = 'danger';
+                res.redirect('/customer/register');
+                return;
+            } */
+	
+	/*authy.register_user(email,phone, countryCode, function (regErr, regRes) {
+    	console.log('In Registration...');
+    	if (regErr) {
+            console.log("Error is happend here");
+       		console.log(regErr);
+               res.redirect('/customer/register');
+               return;
+    	} else if (regRes) {
+			console.log(regRes);
+			console.log("Here we go for the practice part"+regRes.user.id);
+
+            // Set the customer into the sessions
+
+
+
+    		authy.request_sms(regRes.user.id, function (smsErr, smsRes) {
+				console.log('Requesting SMS...');
+    			if (smsErr) {
+                    console.log('error is here');
+    				console.log(smsErr);
+                    req.session.message = smsErr;
+                    req.session.messageType = 'danger';
+                    res.redirect('/customer/register');
+                    return;
+    			} else if (smsRes) {
+                    req.session.customerPhone = phone;
+                   // req.session.customerEmail = email;
+                        res.render(`${config.themeViews}checkout-information`, {
+                            title: 'Customer Register',
+                            categories: req.app.categories,
+                            config: req.app.config,
+                            session: req.session,
+                            requestId: regRes.user.id,
+                            message: clearSessionValue(req.session, 'message'),
+                            messageType: clearSessionValue(req.session, 'messageType'),
+                            helpers: req.handlebars.helpers,
+                            showFooter: 'showFooter'
+                        });
+    			}
+			});
+    	}
+   	});
     // we have a customer under that email so we compare the password
-    bcrypt.compare(req.body.loginPassword, customer.password)
+   /* bcrypt.compare(req.body.loginPassword, customer.password)
     .then((result) => {
         if(!result){
             // password is not correct
@@ -761,10 +887,10 @@ router.post('/customer/login_action', async (req, res) => {
                 message: 'Access denied. Check password and try again.'
             });
             return;
-        }
+        } 
 
         // Customer login successful
-        req.session.customerPresent = true;
+       /* req.session.customerPresent = true;
         req.session.customerId = customer._id;
         req.session.customerEmail = customer.email;
         req.session.customerPhone = customer.phone;
@@ -778,7 +904,7 @@ router.post('/customer/login_action', async (req, res) => {
         res.status(400).json({
             message: 'Access denied. Check password and try again.'
         });
-    });
+    });*/
 });
 
 // customer forgotten password

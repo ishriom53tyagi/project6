@@ -27,8 +27,10 @@ const {
     getCountryList
 } = require('../lib/common');
 const countryList = getCountryList();
+
 var keyid = "rzp_live_BB6pHJLZdvUA7t";
 var keysecret = "wXaUfsRdgaRQptIteCItdOwl";
+
 var instance = new Razorpay({
     key_id: keyid,
     key_secret: keysecret
@@ -242,8 +244,10 @@ router.get('/checkout/pay',async (req,res)=>{
         showFoooter: 'showFooter'
     });
 });
+
 router.post('/checkout/confirm/razorpay',async (req,res)=>{
     const db = req.app.db;
+    const config = req.app.config;
     var bodymessage = req.body.razorpay_order_id + `|` + req.body.razorpay_payment_id;
     console.log(req.body);
     var secret = "wXaUfsRdgaRQptIteCItdOwl"; // from the dashboard
@@ -261,7 +265,11 @@ var customerObj = {
     "address": req.session.address
 };
 await db.customers.findOneAndUpdate({_id: common.getId(req.session.customerId)},{$set: customerObj});
+var customerId = null;
 var customer = await db.customers.findOne({_id: common.getId(req.session.customerId)});
+if(customer) {
+customerId =common.getId(req.session.customerId)
+}
     // order status
     let paymentStatus = 'Paid';
  
@@ -274,16 +282,16 @@ var customer = await db.customers.findOne({_id: common.getId(req.session.custome
         orderShipping: req.session.totalCartShipping,
         orderItemCount: req.session.totalCartItems,
         orderProductCount: req.session.totalCartProducts,
-        orderCustomer: common.getId(req.session.customerId),
+        orderCustomer: customerId,
         orderEmail: req.session.customerEmail,
        // orderCompany: req.session.customerCompany,
-        orderFirstname: customer.firstName,
-        orderLastname: customer.lastName,
-        orderAddr1: customer.addressline,
+        orderFirstname: req.session.firstName,
+        orderLastname: req.session.lastName,
+        orderAddr1: req.session.addressline,
        // orderAddr2: req.session.customerAddress2,
       //  orderCountry: req.session.customerCountry,
-        orderState: customer.state,
-        orderPostcode: customer.postcode,
+        orderState: req.session.state,
+        orderPostcode: req.session.postcode,
         orderPhoneNumber: req.session.customerPhone,
         //orderComment: req.session.orderComment,
         orderStatus: paymentStatus,
@@ -328,7 +336,7 @@ var customer = await db.customers.findOne({_id: common.getId(req.session.custome
 
                 // send the email with the response
                 // TODO: Should fix this to properly handle result
-                common.sendEmail(req.session.paymentEmailAddr, 'Your payment with ' + config.cartTitle, common.getEmailTemplate(paymentResults));
+               // common.sendEmail(req.session.paymentEmailAddr, 'Your payment with ' + config.cartTitle, common.getEmailTemplate(paymentResults));
 
                 // redirect to outcome
                 res.status(200).json({id: newId});
@@ -374,12 +382,12 @@ router.get('/checkout/information', async (req, res, next) => {
         res.redirect('/');
         return;
     }
-    if(!req.session.customerPresent){
+   /* if(!req.session.customerPresent){
         req.session.message = 'Login Required';
         req.session.messageType = 'danger';
         res.redirect('/customer/login');
         return;
-    }
+    } */
 
     let paymentType = '';
     if(req.session.cartSubscription){

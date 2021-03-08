@@ -256,6 +256,7 @@ $('.meanmenu-reveal').on('click',function(e){
                     method: 'POST',
                     url: '/customer/login_action',
                     data: {
+                        loginPhone :$('#customerPhone').val(),
                         loginEmail: $('#email').val(),
                         loginPassword: $('#password').val()
                     }
